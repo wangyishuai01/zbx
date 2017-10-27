@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zbx.dao.TCommentDao">
+	<resultMap id="BaseResultMap" type="com.cn.zbx.pojo.TComment">
+		<id column="comm_id" property="commId" jdbcType="BIGINT" />
+		<result column="comm_content" property="commContent" jdbcType="VARCHAR" />
+		<result column="res_id" property="resId" jdbcType="BIGINT" />
+		<result column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="comm_is_show" property="commIsShow" jdbcType="INTEGER" />
+		<result column="comm_is_delete" property="commIsDelete"
+			jdbcType="INTEGER" />
+		<result column="create_id" property="createId" jdbcType="BIGINT" />
+		<result column="comm_create_time" property="commCreateTime"
+			jdbcType="TIMESTAMP" />
+		<result column="comm_update_time" property="commUpdateTime"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		comm_id, comm_content, res_id, user_id, create_id
+	</sql>
+	<insert id="insertSelective" parameterType="com.cn.zbx.pojo.TComment">
+		insert into t_comment
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="commId != null">
+				comm_id,
+			</if>
+			<if test="commContent != null">
+				comm_content,
+			</if>
+			<if test="resId != null">
+				res_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="commIsShow != null">
+				comm_is_show,
+			</if>
+			<if test="commIsDelete != null">
+				comm_is_delete,
+			</if>
+			<if test="createId != null">
+				create_id,
+			</if>
+			<if test="commCreateTime != null">
+				comm_create_time,
+			</if>
+			<if test="commUpdateTime != null">
+				comm_update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="commId != null">
+				#{commId,jdbcType=BIGINT},
+			</if>
+			<if test="commContent != null">
+				#{commContent,jdbcType=VARCHAR},
+			</if>
+			<if test="resId != null">
+				#{resId,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="commIsShow != null">
+				#{commIsShow,jdbcType=INTEGER},
+			</if>
+			<if test="commIsDelete != null">
+				#{commIsDelete,jdbcType=INTEGER},
+			</if>
+			<if test="createId != null">
+				#{createId,jdbcType=BIGINT},
+			</if>
+			<if test="commCreateTime != null">
+				#{commCreateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="commUpdateTime != null">
+				#{commUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.cn.zbx.pojo.TComment">
+		update t_comment
+		<set>
+			<if test="commContent != null">
+				comm_content = #{commContent,jdbcType=VARCHAR},
+			</if>
+			<if test="resId != null">
+				res_id = #{resId,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="commIsShow != null">
+				comm_is_show = #{commIsShow,jdbcType=INTEGER},
+			</if>
+			<if test="commIsDelete != null">
+				comm_is_delete = #{commIsDelete,jdbcType=INTEGER},
+			</if>
+			<if test="createId != null">
+				create_id = #{createId,jdbcType=BIGINT},
+			</if>
+			<if test="commCreateTime != null">
+				comm_create_time = #{commCreateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="commUpdateTime != null">
+				comm_update_time = #{commUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where comm_id = #{commId,jdbcType=BIGINT}
+	</update>
+
+	<!-- 返回多条数据 -->
+	<select id="select" resultMap="BaseResultMap" parameterType="com.cn.zbx.pojo.TComment">
+		select <include refid="Base_Column_List" /> from t_comment
+		<where>
+			<if test="commId != null">
+				and comm_id = #{commId,jdbcType=BIGINT}
+			</if>
+			<if test="commContent != null">
+				and comm_content = #{commContent,jdbcType=VARCHAR}
+			</if>
+			<if test="resId != null">
+				and res_id = #{resId,jdbcType=BIGINT}
+			</if>
+			<if test="userId != null">
+				and user_id = #{userId,jdbcType=BIGINT}
+			</if>
+			<if test="commIsShow != null">
+				and comm_is_show = #{commIsShow,jdbcType=INTEGER}
+			</if>
+			<if test="commIsDelete != null">
+				and comm_is_delete = #{commIsDelete,jdbcType=INTEGER}
+			</if>
+			<if test="createId != null">
+				and create_id = #{createId,jdbcType=BIGINT}
+			</if>
+			<if test="commCreateTime != null">
+				and comm_create_time = #{commCreateTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="commUpdateTime != null">
+				and comm_update_time = #{commUpdateTime,jdbcType=TIMESTAMP}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 返回单条数据 -->
+	<select id="selectPojo" resultMap="BaseResultMap" parameterType="com.cn.zbx.pojo.TComment">
+		select <include refid="Base_Column_List" /> from t_comment
+		<where>
+			<if test="commId != null">
+				and comm_id = #{commId,jdbcType=BIGINT}
+			</if>
+			<if test="commContent != null">
+				and comm_content = #{commContent,jdbcType=VARCHAR}
+			</if>
+			<if test="resId != null">
+				and res_id = #{resId,jdbcType=BIGINT}
+			</if>
+			<if test="userId != null">
+				and user_id = #{userId,jdbcType=BIGINT}
+			</if>
+			<if test="commIsShow != null">
+				and comm_is_show = #{commIsShow,jdbcType=INTEGER}
+			</if>
+			<if test="commIsDelete != null">
+				and comm_is_delete = #{commIsDelete,jdbcType=INTEGER}
+			</if>
+			<if test="createId != null">
+				and create_id = #{createId,jdbcType=BIGINT}
+			</if>
+			<if test="commCreateTime != null">
+				and comm_create_time = #{commCreateTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="commUpdateTime != null">
+				and comm_update_time = #{commUpdateTime,jdbcType=TIMESTAMP}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 根据资源id查询所有相关评论信息 -->
+	<select id="selectCommentInfoByResId" resultType="com.cn.zbx.vo.CommentInfoVo" parameterType="long">
+		SELECT
+			u.user_id as userId,
+			u.user_name as userName,
+			u.user_nick as userNick,
+			com.comm_id as commId,
+			com.comm_content as commContent,
+			com.comm_create_time as commCreateTime
+		FROM
+			t_comment com
+		JOIN t_user u ON com.user_id = u.user_id
+		and com.res_id = #{resId,jdbcType=BIGINT}
+		ORDER BY
+			com.comm_create_time DESC
+	</select>
+</mapper>
