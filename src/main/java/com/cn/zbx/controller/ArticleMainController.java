@@ -1,7 +1,5 @@
 package com.cn.zbx.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cn.zbx.pojo.ArticleMain;
-import com.cn.zbx.pojo.Tclassify;
 import com.cn.zbx.service.IArticleMainService;
-import com.cn.zbx.service.ITClassifyService;
-import com.cn.zbx.vo.TClassifyVO;
+import com.cn.zbx.service.ICommentService;
+import com.cn.zbx.vo.ArticleVO;
 
 @Controller
 @RequestMapping(value="/Article")
@@ -28,6 +25,9 @@ public class ArticleMainController {
 	
 	@Autowired
 	IArticleMainService articleMainService;
+	
+	@Autowired
+	ICommentService commentService;
 	
 	@ResponseBody
 	@RequestMapping(value="/ArticleList", method = { RequestMethod.GET, RequestMethod.POST })
@@ -44,19 +44,58 @@ public class ArticleMainController {
 		ArticleMain artickeMain = new ArticleMain();
 		artickeMain.setPageCount(Integer.valueOf(pageCount));
 		artickeMain.setPageSize(Integer.valueOf(pageSize));
-		
-		List<ArticleMain> resultList = articleMainService.AllList(artickeMain);
-		
+		Integer number = articleMainService.selectCountBySelectParam(artickeMain);
+		if(number!=null && number > 0){
+			List<ArticleVO> resultList = articleMainService.selectBySelectParam(artickeMain);
+			for(ArticleVO article:resultList){
+				int count = commentService.selectByArticleId(article.getId());
+				article.setCommentCount(count);
+			}
 			resultMap.put("data", resultList);
-			resultMap.put("number", 1);
+			resultMap.put("number", number);
+			resultMap.put("success", true);
+		} else {
+			resultMap.put("success", false);
+		}
+		return JSONObject.toJSONString(resultMap);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteById", method = { RequestMethod.GET, RequestMethod.POST })
+	public String deleteById(HttpServletRequest request, HttpServletResponse response){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String articleId = request.getParameter("articleId");
+		if(articleId == null || "".equals(articleId)){
+			resultMap.put("success", false);
+			return JSONObject.toJSONString(resultMap);
+		}
+		int result = articleMainService.deleteByPrimaryKey(Integer.valueOf(articleId));
+		if(result <= 0){
+			resultMap.put("success", false);
+		} else {
+			/*
+			 * 是否需要删除评论！！！
+			 */
+			resultMap.put("success", true);
+		}
+		return JSONObject.toJSONString(resultMap);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/selectById", method = { RequestMethod.GET, RequestMethod.POST })
+	public String selectByPrimaryKey(HttpServletRequest request, HttpServletResponse response){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String articleId = request.getParameter("articleId");
+		if(articleId == null || "".equals(articleId)){
+			resultMap.put("success", false);
+			return JSONObject.toJSONString(resultMap);
+		}
+		ArticleMain articleMain = articleMainService.selectByPrimaryKey(Integer.valueOf(articleId));
+			resultMap.put("data", articleMain);
 			resultMap.put("success", true);
 		
 		return JSONObject.toJSONString(resultMap);
 	}
-	
-	
-	
-	
 	
 
 }

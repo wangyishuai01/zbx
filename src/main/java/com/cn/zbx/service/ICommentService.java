@@ -22,4 +22,5 @@ public interface ICommentService {
 	
 	int insertSelective(Comment record);
 	
+	int selectByArticleId(Integer articleId);
 }

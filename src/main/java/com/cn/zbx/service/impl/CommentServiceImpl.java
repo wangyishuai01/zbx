@@ -46,5 +46,12 @@ public class CommentServiceImpl implements ICommentService {
 		return commentMapper.insertSelective(record);
 	}
 
+	@Override
+	public int selectByArticleId(Integer articleId) {
+		// TODO Auto-generated method stub
+		
+		return commentMapper.selectByArticleId(articleId);
+	}
+
 	
 }

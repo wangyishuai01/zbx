@@ -9,9 +9,10 @@
     <result column="customer_id" property="customerId" jdbcType="INTEGER" />
     <result column="makedate" property="makedate" jdbcType="TIMESTAMP" />
     <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="articleId" property="articleId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, title, comment, commenttype, customer_id, makedate, modifydate
+    id, title, comment, commenttype, customer_id,articleId, makedate, modifydate
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -182,5 +183,12 @@
      	 limit #{startLimit}, #{pageSize}
       </if>
     </if>
+  </select>
+  
+  <select id="selectByArticleId" resultType="int" parameterType="java.lang.Integer" >
+    select 
+    	count(1)
+    from comment 
+    where  articleId = #{articleId,jdbcType=INTEGER}
   </select>
 </mapper>

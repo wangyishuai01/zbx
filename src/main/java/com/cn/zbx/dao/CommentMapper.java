@@ -21,4 +21,6 @@ public interface CommentMapper {
     List<CommentVO> selectBySelectParam(Comment record);
     
     int selectCountBySelectParam(Comment record);
+    
+    int selectByArticleId(Integer articleId);
 }

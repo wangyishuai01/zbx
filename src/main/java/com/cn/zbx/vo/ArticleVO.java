@@ -1,10 +1,9 @@
-package com.cn.zbx.pojo;
+package com.cn.zbx.vo;
 
 import java.util.Date;
 
-public class ArticleMain extends BasicPojo{
+public class ArticleVO {
     /** TODO */
-	private static final long serialVersionUID = 1L;
 
 	private Integer id;
 
@@ -27,8 +26,18 @@ public class ArticleMain extends BasicPojo{
     private Date modifydate;
 
     private byte[] content;
+    
+    private Integer commentCount;
+    
+    public Integer getCommentCount() {
+		return commentCount;
+	}
 
-    public Integer getId() {
+	public void setCommentCount(Integer commentCount) {
+		this.commentCount = commentCount;
+	}
+
+	public Integer getId() {
         return id;
     }
 

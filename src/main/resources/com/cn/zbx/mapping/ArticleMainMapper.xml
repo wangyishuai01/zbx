@@ -9,6 +9,7 @@
     <result column="excerpt" property="excerpt" jdbcType="VARCHAR" />
     <result column="isfree" property="isfree" jdbcType="INTEGER" />
     <result column="nocomment" property="nocomment" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
     <result column="makedate" property="makedate" jdbcType="TIMESTAMP" />
     <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -16,7 +17,7 @@
     <result column="content" property="content" jdbcType="LONGVARBINARY" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, title, imgurl, classid, excerpt, isfree, nocomment, makedate, modifydate
+    id, title, imgurl, classid, excerpt, isfree, nocomment, state,makedate, modifydate
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -184,10 +185,20 @@
   </select>
   
   
-  <select id="AllList" resultMap="BaseResultMap" parameterType="com.cn.zbx.vo.TClassifyVO" >
+  <select id="selectBySelectParam" resultType="com.cn.zbx.vo.ArticleVO" parameterType="com.cn.zbx.pojo.ArticleMain" >
     select 
     	<include refid="Base_Column_List" />
     from article_main  
-    
+    <if test="startLimit != null" >
+      <if test="pageSize != null" >
+     	 limit #{startLimit}, #{pageSize}
+      </if>
+    </if>
+  </select>
+  
+   <select id="selectCountBySelectParam" resultType="Integer" parameterType="com.cn.zbx.pojo.ArticleMain" >
+    select 
+    	count(1)
+    from article_main
   </select>
 </mapper>

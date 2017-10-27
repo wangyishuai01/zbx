@@ -21,8 +21,19 @@ public class Comment extends BasicPojo {
     private Date makedate;
 
     private Date modifydate;
+    
+    private Integer articleId;//文章id
+    
 
-    public Integer getId() {
+    public Integer getArticleId() {
+		return articleId;
+	}
+
+	public void setArticleId(Integer articleId) {
+		this.articleId = articleId;
+	}
+
+	public Integer getId() {
         return id;
     }
 

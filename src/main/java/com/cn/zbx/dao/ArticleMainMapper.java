@@ -3,6 +3,7 @@ package com.cn.zbx.dao;
 import java.util.List;
 
 import com.cn.zbx.pojo.ArticleMain;
+import com.cn.zbx.vo.ArticleVO;
 import com.cn.zbx.vo.TClassifyVO;
 
 public interface ArticleMainMapper {
@@ -21,5 +22,8 @@ public interface ArticleMainMapper {
     int updateByPrimaryKey(ArticleMain record);
     
     List<TClassifyVO> selectCountByClassIds(List<Integer> list);
-    List<ArticleMain> AllList(ArticleMain record);
+    
+    List<ArticleVO> selectBySelectParam(ArticleMain record);
+    
+    Integer selectCountBySelectParam(ArticleMain record);
 }
