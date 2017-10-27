@@ -126,8 +126,8 @@
 												<div class="col-md-12">
 													<div class="col-lg-3">内容：</div>
 													<div class="col-lg-9">
-														<span class="input-icon icon-right"> <textarea readonly="readonly"
-															id="comment"  style="width:100%;" rows="20"></textarea> 
+														<span class="input-icon icon-right"> <textarea readonly="readonly" 
+															id="comment"  style="width:100%;resize: none;" rows="20"></textarea> 
 														</span>
 													</div>
 												</div>
