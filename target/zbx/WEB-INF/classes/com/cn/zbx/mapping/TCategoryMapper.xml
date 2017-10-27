@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zbx.dao.TCategoryDao">
+	<resultMap id="BaseResultMap" type="com.cn.zbx.pojo.TCategory">
+		<id column="cate_id" property="cateId" jdbcType="BIGINT" />
+		<result column="cate_name" property="cateName" jdbcType="VARCHAR" />
+		<result column="cate_pid" property="catePid" jdbcType="BIGINT" />
+		<result column="cate_level" property="cateLevel" jdbcType="INTEGER" />
+		<result column="cate_is_delete" property="cateIsDelete" jdbcType="INTEGER" />
+		<result column="cate_create_time" property="cateCreateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		cate_id, cate_name, cate_pid, cate_level
+	</sql>
+	<insert id="insert" parameterType="com.cn.zbx.pojo.TCategory">
+		insert into t_category
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cateId != null">
+				cate_id,
+			</if>
+			<if test="cateName != null">
+				cate_name,
+			</if>
+			<if test="catePid != null">
+				cate_pid,
+			</if>
+			<if test="cateLevel != null">
+				cate_level,
+			</if>
+			<if test="cateIsDelete != null">
+				cate_is_delete,
+			</if>
+			<if test="cateCreateTime != null">
+				cate_create_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cateId != null">
+				#{cateId,jdbcType=BIGINT},
+			</if>
+			<if test="cateName != null">
+				#{cateName,jdbcType=VARCHAR},
+			</if>
+			<if test="catePid != null">
+				#{catePid,jdbcType=BIGINT},
+			</if>
+			<if test="cateLevel != null">
+				#{cateLevel,jdbcType=INTEGER},
+			</if>
+			<if test="cateIsDelete != null">
+				#{cateIsDelete,jdbcType=INTEGER},
+			</if>
+			<if test="cateCreateTime != null">
+				#{cateCreateTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="com.cn.zbx.pojo.TCategory">
+		update t_category
+		<set>
+			<if test="cateName != null">
+				cate_name = #{cateName,jdbcType=VARCHAR},
+			</if>
+			<if test="catePid != null">
+				cate_pid = #{catePid,jdbcType=BIGINT},
+			</if>
+			<if test="cateLevel != null">
+				cate_level = #{cateLevel,jdbcType=INTEGER},
+			</if>
+			<if test="cateIsDelete != null">
+				cate_is_delete = #{cateIsDelete,jdbcType=INTEGER},
+			</if>
+			<if test="cateCreateTime != null">
+				cate_create_time = #{cateCreateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where cate_id = #{cateId,jdbcType=BIGINT}
+	</update>
+	
+	<!-- 返回多条数据 -->
+	<select id="select" resultMap="BaseResultMap" parameterType="com.cn.zbx.pojo.TCategory">
+		select <include refid="Base_Column_List" /> from t_category
+		<where>
+			<if test="cateId != null">
+				and cate_id = #{cateId,jdbcType=BIGINT}
+			</if>
+			<if test="cateName != null">
+				and cate_name = #{cateName,jdbcType=VARCHAR}
+			</if>
+			<if test="catePid != null">
+				and cate_pid = #{catePid,jdbcType=BIGINT}
+			</if>
+			<if test="cateLevel != null">
+				and cate_level = #{cateLevel,jdbcType=INTEGER}
+			</if>
+			<if test="cateIsDelete != null">
+				and cate_is_delete = #{cateIsDelete,jdbcType=INTEGER}
+			</if>
+			<if test="cateCreateTime != null">
+				and cate_create_time = #{cateCreateTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="pageCount != null and pageSize != null">
+				limit ${(pageCount-1)*pageSize }, #{pageSize } 
+			</if>
+		</where>
+	</select>
+	
+	<!-- 返回单条数据 -->
+	<select id="selectByPojo" resultMap="BaseResultMap" parameterType="com.cn.zbx.pojo.TCategory">
+		select <include refid="Base_Column_List" /> from t_category
+		<where>
+			<if test="cateId != null">
+				and cate_id = #{cateId,jdbcType=BIGINT}
+			</if>
+			<if test="cateName != null">
+				and cate_name = #{cateName,jdbcType=VARCHAR}
+			</if>
+			<if test="catePid != null">
+				and cate_pid = #{catePid,jdbcType=BIGINT}
+			</if>
+			<if test="cateLevel != null">
+				and cate_level = #{cateLevel,jdbcType=INTEGER}
+			</if>
+			<if test="cateIsDelete != null">
+				and cate_is_delete = #{cateIsDelete,jdbcType=INTEGER}
+			</if>
+			<if test="cateCreateTime != null">
+				and cate_create_time = #{cateCreateTime,jdbcType=TIMESTAMP}
+			</if>
+		</where>
+	</select>
+
+</mapper>

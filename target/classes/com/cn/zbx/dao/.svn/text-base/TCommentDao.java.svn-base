@@ -1,0 +1,25 @@
+package com.cn.zbx.dao;
+
+import java.util.List;
+
+import com.cn.zbx.pojo.TComment;
+import com.cn.zbx.vo.CommentInfoVo;
+
+public interface TCommentDao {
+    
+	public int insertSelective(TComment record);
+
+	public int updateByPrimaryKeySelective(TComment record);
+
+	public List<TComment> select(TComment record);
+    
+	public TComment selectByPojo(TComment record);
+	
+	/**
+	 * 根据资源id查询所有相关评论信息
+	 * @param resId
+	 * @return
+	 */
+	public List<CommentInfoVo> selectCommentInfoByResId(Long resId);
+	
+}

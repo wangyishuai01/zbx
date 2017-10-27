@@ -1,0 +1,27 @@
+.nav{width: 100%; min-width: 1080px; height: 70px; position: fixed; top:0; border-bottom: 1px solid #333;background: #fff;z-index: 9;}
+.nav .n_body{width: 1080px;height: 100%; margin: 0 auto;}
+.nav .n_body div{float: left;height: 100%;line-height: 70px;}
+.nav .n_body .b_logo{width: 150px;padding-left: 70px;font-size:30px;font-weight: bold;}
+.nav .n_body .b_main{width: 500px;}
+.nav .n_body .b_main ul li{width: 120px;font-size:21px;font-weight: bold;text-align: center;}
+.nav .n_body .b_main ul li:hover{color: red;}
+
+.nav .n_body .b_soso{width: 250px;}
+.nav .n_body .b_soso .s_body{width: 100%;height: 40px;background: red;margin:15px 0;background: #e9e9e9;border-radius: 5px;}
+.nav .n_body .b_soso .s_body:hover{background: #dbdbdb;}
+.nav .n_body .b_soso .s_body .b_input{padding:10px 10px; line-height:0; height: 20px;width: 180px;}
+.nav .n_body .b_soso .s_body .b_input input{width: 100%;height: 100%;border: 0;outline:none;background: rgba(255,255,255,0)}
+.nav .n_body .b_soso .s_body .b_btn{line-height:0; height: 40px;width: 50px;}
+.nav .n_body .b_soso .s_body .b_btn input{line-height:0; height: 100%;width: 100%;border-radius: 0 5px 5px 0;border:0;outline:none;}
+
+.nav .n_body .b_login{width: 80px;height: 100%;float: right;}
+.nav .n_body .b_login > div:hover{color: red;}
+.nav .n_body .b_login .l_reg{width: 40px; height: 100%;line-height:70px; text-align:center;}
+.nav .n_body .b_login .l_login{width: 40px;height: 100%;line-height:70px; text-align:center;float: right;overflow: hidden;}
+.nav .n_body .b_login .login_success{width: 80px;height: 100%;line-height:120px; text-align:center;float: right;position: relative;}
+.nav .n_body .b_login .login_success img{width: 40px;height: 40px;position: absolute;left:18px;top:6px;border-radius:40px;}
+
+.nav .n_body .b_login .login_success .s_detail{width: 80px;height: 120px;position: absolute;left:0px;top:70px;z-index:10;background:#333;color:#fff;display: none;}
+.nav .n_body .b_login .login_success .s_detail div{width: 100%;height: 60px;text-align:center;line-height: 60px;}
+.nav .n_body .b_login .login_success .s_detail div:hover{background:#ccc;color:#000;}
+

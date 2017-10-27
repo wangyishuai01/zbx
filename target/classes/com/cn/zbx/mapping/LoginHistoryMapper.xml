@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zbx.dao.LoginHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.zbx.pojo.LoginHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="login_ip" property="loginIp" jdbcType="VARCHAR" />
+    <result column="login_address" property="loginAddress" jdbcType="VARCHAR" />
+    <result column="makedate" property="makedate" jdbcType="TIMESTAMP" />
+    <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, customer_id, customer_name, login_ip, login_address, makedate, modifydate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from login_history
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from login_history
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cn.zbx.pojo.LoginHistory" >
+    insert into login_history (id, customer_id, customer_name, 
+      login_ip, login_address, makedate, 
+      modifydate)
+    values (#{id,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, 
+      #{loginIp,jdbcType=VARCHAR}, #{loginAddress,jdbcType=VARCHAR}, #{makedate,jdbcType=TIMESTAMP}, 
+      #{modifydate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.LoginHistory" >
+    insert into login_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="customerName != null" >
+        customer_name,
+      </if>
+      <if test="loginIp != null" >
+        login_ip,
+      </if>
+      <if test="loginAddress != null" >
+        login_address,
+      </if>
+      <if test="makedate != null" >
+        makedate,
+      </if>
+      <if test="modifydate != null" >
+        modifydate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginIp != null" >
+        #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="loginAddress != null" >
+        #{loginAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null" >
+        #{makedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.zbx.pojo.LoginHistory" >
+    update login_history
+    <set >
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginIp != null" >
+        login_ip = #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="loginAddress != null" >
+        login_address = #{loginAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null" >
+        makedate = #{makedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.zbx.pojo.LoginHistory" >
+    update login_history
+    set customer_id = #{customerId,jdbcType=INTEGER},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      login_ip = #{loginIp,jdbcType=VARCHAR},
+      login_address = #{loginAddress,jdbcType=VARCHAR},
+      makedate = #{makedate,jdbcType=TIMESTAMP},
+      modifydate = #{modifydate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

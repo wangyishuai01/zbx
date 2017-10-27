@@ -1,0 +1,44 @@
+package com.cn.zbx.service;
+
+import java.util.List;
+
+import com.cn.zbx.pojo.TComment;
+import com.cn.zbx.vo.CommentInfoVo;
+
+public interface CommentService {
+	
+	/**
+	 * 添加评论
+	 * @param record
+	 * @return
+	 */
+	public boolean insert(TComment record);
+
+	/**
+	 * 修改评论
+	 * @param record
+	 * @return
+	 */
+	public boolean update(TComment record);
+
+	/**
+	 * 根据条件查询评论列表
+	 * @param record
+	 * @return
+	 */
+	public List<TComment> select(TComment record);
+    
+	/**
+	 * 根据条件查询一条评论
+	 * @param record
+	 * @return
+	 */
+	public TComment selectByPojo(TComment record);
+	
+	/**
+	 * 根据资源id查询所有相关评论信息
+	 * @param resId
+	 * @return
+	 */
+	public List<CommentInfoVo> selectCommentInfoByResId(Long resId);
+}

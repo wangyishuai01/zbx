@@ -1,0 +1,70 @@
+package com.cn.zbx.service.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.cn.zbx.commons.Constants;
+import com.cn.zbx.dao.TCommentDao;
+import com.cn.zbx.pojo.TComment;
+import com.cn.zbx.service.CommentService;
+import com.cn.zbx.util.Util;
+import com.cn.zbx.vo.CommentInfoVo;
+
+@Service("commentService")
+@Transactional
+public class CommentServiceImpl implements CommentService {
+	
+	@Resource
+	private TCommentDao commentDao;
+
+	@Override
+	public boolean insert(TComment record) {
+		// TODO Auto-generated method stub
+		if(record == null){
+			return false;
+		} else {
+			record.setCommCreateTime(new Date());
+			record.setCommUpdateTime(new Date());
+			return Util.isSuccessByNum(commentDao.insertSelective(record));
+		}
+	}
+
+	@Override
+	public boolean update(TComment record) {
+		// TODO Auto-generated method stub
+		return Util.isSuccessByNum(commentDao.updateByPrimaryKeySelective(record));
+	}
+
+	@Override
+	public List<TComment> select(TComment record) {
+		// TODO Auto-generated method stub
+		if(record == null){
+			record = new TComment();
+		}
+		record.setCommIsDelete(Constants.IS_DELETE_NOT);
+		return commentDao.select(record);
+	}
+
+	@Override
+	public TComment selectByPojo(TComment record) {
+		// TODO Auto-generated method stub
+		if(record == null){
+			return null;
+		}else{
+			record.setCommIsDelete(Constants.IS_DELETE_NOT);
+			return commentDao.selectByPojo(record);
+		}
+	}
+
+	@Override
+	public List<CommentInfoVo> selectCommentInfoByResId(Long resId) {
+		// TODO Auto-generated method stub
+		return commentDao.selectCommentInfoByResId(resId);
+	}
+
+}

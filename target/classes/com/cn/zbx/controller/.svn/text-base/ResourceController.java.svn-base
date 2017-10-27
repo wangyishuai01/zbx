@@ -1,0 +1,230 @@
+package com.cn.zbx.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.cn.zbx.pojo.TResource;
+import com.cn.zbx.pojo.TUser;
+import com.cn.zbx.pojo.tWatchRecord;
+import com.cn.zbx.service.CategoryService;
+import com.cn.zbx.service.ResourceService;
+import com.cn.zbx.service.UserService;
+import com.cn.zbx.service.WatchRecordService;
+import com.cn.zbx.util.ReturnJsonUtil;
+import com.cn.zbx.util.StringUtils;
+
+/**
+ * 资源模块
+ * @author zdl
+ */
+@Controller
+@RequestMapping(value="resource")
+public class ResourceController {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+	
+	@Resource
+	private ResourceService resourceServive;
+	
+	@Resource
+	private UserService userServive;
+	
+	@Resource
+	private CategoryService categoryService;
+	
+	@Resource
+	private WatchRecordService watchRecordService;
+	
+	/**
+	 * 获取首页展示资源
+	 * @param response
+	 * @param res
+	 */
+	@RequestMapping(value="getIndexResourceInfo")
+	@ResponseBody
+	public void getIndexResourceInfo(HttpServletResponse response){
+		Map<String , Object> map = new HashMap<String, Object>();
+		
+		TResource resParam = new TResource();
+		resParam.setResIntegral((long)0);
+		resParam.setResAuditType(3);
+		resParam.setResIsShow(1);
+		resParam.setResIsDelete(1);
+		resParam.setPageCount(1);
+		resParam.setPageSize(4);
+		List<TResource> freeResList = resourceServive.getResources(resParam);//查询免费的资源
+		map.put("freeResList",freeResList);
+		
+		resParam = new TResource();
+		resParam.setResAuditType(3);
+		resParam.setResIsShow(1);
+		resParam.setResIsDelete(1);
+		resParam.setSortFields("res_create_time");
+		resParam.setSort("desc");
+		resParam.setPageCount(1);
+		resParam.setPageSize(4);
+		List<TResource> newResList = resourceServive.getResources(resParam);//查询最新的资源
+		map.put("newResList",newResList);
+		
+		ReturnJsonUtil.returnDataMsg(map, response);
+	}
+	
+	/**
+	 * 编辑资源信息
+	 * @param response
+	 * @param res
+	 */
+	@RequestMapping(value="editResourceInfo")
+	@ResponseBody
+	public void editResourceInfo(HttpServletResponse response, TResource res){
+		boolean isSuccess = resourceServive.updateResource(res);
+		if(isSuccess){
+			LOGGER.info("修改资源信息成功");
+			ReturnJsonUtil.returnDataMsg(response);
+		}else{
+			LOGGER.info("修改资源信息失败");
+			ReturnJsonUtil.returnErrorMsg("002", "修改失败", response);
+		}
+	}
+	
+	/**
+	 * 校验登录用户是否可以查看指定资源
+	 * @param response
+	 * @param res
+	 */
+	@RequestMapping(value="checkUserIsCanLookRes")
+	@ResponseBody
+	public void checkUserIsCanLookResource(HttpServletResponse response, HttpServletRequest request,String resId){
+		String token = request.getHeader("token");
+		if(token == null){
+			ReturnJsonUtil.returnErrorMsg("0", "请登录", response);
+		} else {
+			TUser user = userServive.getUserByToken(token);
+			if(user == null){
+				ReturnJsonUtil.returnErrorMsg("0", "请登录", response);
+			} else {
+				if(resId == null || "".equals(resId)){
+					ReturnJsonUtil.returnErrorMsg("003", "资源不存在", response);
+				} else {
+					TResource resParam = new TResource();
+					resParam.setResId(Long.valueOf(resId));
+					TResource res = resourceServive.getResBySelectPojo(resParam);
+					if(res == null){
+						ReturnJsonUtil.returnErrorMsg("003", "资源不存在", response);
+					} else {
+						if(user.getUserIntegral() < res.getResIntegral()){
+							ReturnJsonUtil.returnErrorMsg("004", "积分不够", response);
+						} else {
+							ReturnJsonUtil.returnDataMsg(response);
+						}
+					}
+				}
+				
+			}
+		}
+	}
+	
+	/**
+	 * 按条件（resName,resType,cateId,pageCount,pageSize）resId倒叙查询资源（分页）
+	 * @param response
+	 * @param res
+	 */
+	@RequestMapping(value="getResInfoByParamPage")
+	@ResponseBody
+	public void getResInfoByParamPage(HttpServletResponse response, TResource res){
+		Map<String , Object> resultMap = new HashMap<String, Object>();
+		TResource resParam = new TResource();
+		if(StringUtils.isNotEmpty(res.getResName())){
+			resParam.setResName(res.getResName());
+		}
+		if(StringUtils.isNotEmpty(res.getResType()+"")){
+			resParam.setResType(res.getResType());
+		}
+		if(StringUtils.isNotEmpty(res.getCateId()+"")){
+			resParam.setCateId(res.getCateId());
+		}
+		resParam.setPageCount(res.getPageCount());
+		resParam.setPageSize(res.getPageSize());
+		resParam.setResAuditType(3);
+		resParam.setResIsShow(1);
+		resParam.setResIsDelete(1);
+		int count = resourceServive.getResCount(resParam);
+		if(count > 0){
+			resParam.setSortFields("res_id");
+			resParam.setSort("desc");
+			List<TResource> resList = resourceServive.getResources(resParam);
+			resultMap.put("list", resList);
+			int pageCountSum = count%res.getPageSize()==0 ? (count/res.getPageSize())
+					: ((count/res.getPageSize())+1);
+			resultMap.put("pageCountSum", pageCountSum);
+		} else {
+			resultMap.put("pageCountSum", 0);
+		}
+		ReturnJsonUtil.returnDataMsg(resultMap, response);
+	}
+	
+	/**
+	 * 根据资源id获取信息
+	 * @param response
+	 * @param resId
+	 */
+	@RequestMapping(value="getResByResId")
+	@ResponseBody
+	public void getResByResId(HttpServletRequest request,HttpServletResponse response, Long resId){
+		String token = request.getHeader("token");
+		if(token == null){
+			ReturnJsonUtil.returnErrorMsg("0", "请登录1", response);
+		} else {
+			TUser user = userServive.getUserByToken(token);
+			if(user == null){
+				ReturnJsonUtil.returnErrorMsg("0", "请登录2", response);
+			} else {
+				TResource res = resourceServive.getResByResId(resId);
+				if(res == null){
+					ReturnJsonUtil.returnErrorMsg("003", "资源不存在", response);
+				}else{
+					if(user.getUserIntegral() < res.getResIntegral()){
+						ReturnJsonUtil.returnErrorMsg("004", "积分不够", res.getCateId(),response);
+					} else {
+						//判断是是否看过
+						int count = watchRecordService.selectCountByPojo(new tWatchRecord(user.getUserId(), res.getResId()));
+						if(count > 0){
+							//看过视频
+						}else{
+							//修改积分
+							TUser record = new TUser();
+							record.setToken(token);
+							Integer integral = (int) (user.getUserIntegral() - res.getResIntegral());
+							record.setUserIntegral(integral);
+							userServive.update(record);
+							//添加记录
+							boolean insert = watchRecordService.insert(new tWatchRecord(user.getUserId(), res.getResId()));
+							if(!insert){
+								// TODO 记录失败，写入日志
+							}
+						}
+						//返回数据
+						Map<String,Object> map = new HashMap<String, Object>();
+						map.put("res", res);
+						List<TResource> resList = resourceServive.getResourcesByCateId(res.getCateId());
+						map.put("resList", resList);
+						ReturnJsonUtil.returnDataMsg(map, response);
+					}
+				}
+			}
+		}
+	}
+	
+	
+}

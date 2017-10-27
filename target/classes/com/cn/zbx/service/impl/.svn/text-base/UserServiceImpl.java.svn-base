@@ -1,0 +1,201 @@
+package com.cn.zbx.service.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.cn.zbx.commons.Constants;
+import com.cn.zbx.dao.TUserDao;
+import com.cn.zbx.pojo.TUser;
+import com.cn.zbx.service.UserService;
+import com.cn.zbx.util.JsonUtil;
+import com.cn.zbx.util.RedisUtil;
+import com.cn.zbx.util.Util;
+
+@Service("userService")
+@Transactional
+public class UserServiceImpl implements UserService{
+
+	@Resource
+	private TUserDao userDao;
+
+	public boolean getCode(String phone){
+		//生成验证码
+		String code = "";
+		for (int i = 0; i < 4; i++) {
+			code += (int) (Math.random() * 10);
+		}
+		code = "0000";
+		boolean sendSms = true;
+		if(sendSms){
+			if(RedisUtil.set(phone + "_code", code, 90)){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+	
+	public String loginByCode(String phone, String code){
+		if(RedisUtil.exists(phone + "_code")){
+			String string = RedisUtil.get(phone + "_code");
+			if(string == null){
+				return null;
+			}else{
+				if(string.equals(code)){
+					//查询用户是否存在
+					TUser user = getUserByPhone(phone);
+					String token = Util.getTokenByPhone(user);
+					if(user == null){
+						user = new TUser();
+						user.setUserPhone(phone);
+						user.setUserNick("普通用户");
+						user.setUserHeaderImg("img/defaultHeadImg/detailHeadImg.jpg");
+						//不存在创建用户并返回token
+						boolean insert = insert(user);
+						if(insert){
+							RedisUtil.set(token, JsonUtil.toJson(user), Constants.TOKEN_TIME_OUT);
+							return token;
+						}else{
+							return null;
+						}
+					}else{
+						RedisUtil.set(token, JsonUtil.toJson(user), Constants.TOKEN_TIME_OUT);
+						return token;
+					}
+				}else{
+					return null;
+				}
+			}
+		}else{
+			return null;
+		}
+	}
+	
+	public TUser getUserByToken(String token){
+		if(RedisUtil.exists(token)){
+			String userStr = RedisUtil.get(token);
+			TUser fromJson = JsonUtil.fromJson(userStr, TUser.class);
+			return fromJson;
+		}else{
+			return null;
+		}
+	}
+	
+	/**
+	 * 新增数据
+	 */
+	public boolean insert(TUser record) {
+		//对象为空时，返回false
+		if(null == record || null == record.getUserPhone()){
+			return false;
+		}else{
+			//填入必填项
+			record.setUserCreateTime(new Date());
+			record.setUserUpdateTime(new Date());
+			record.setUserState(1);
+			record.setUserIsDelete(Constants.IS_DELETE_NOT);
+			record.setUserIntegral(0);
+		}
+		return Util.isSuccessByNum(userDao.insert(record));
+	}
+
+	/**
+	 * 修改数据
+	 */
+	public boolean update(TUser record) {
+		//条件为null时返回false
+		if(null == record){
+			return false;
+		}else{
+			//以token控制修改用户个人信息
+			TUser user = getUserByToken(record.getToken());
+			record.setUserId(user.getUserId());
+			//更新修改时间
+			record.setUserUpdateTime(new Date());
+			boolean success = Util.isSuccessByNum(userDao.update(record));
+			if(success){
+				//修改缓存中的信息
+				RedisUtil.set(record.getToken(), JsonUtil.toJson(getUserById(user.getUserId())), Constants.TOKEN_TIME_OUT);
+			}
+			return success;
+		}
+		
+	}
+
+	/**
+	 * 返回多条数据
+	 */
+	public List<TUser> select(TUser record) {
+		//对象为null时创建一个对象
+		if(null == record){
+			record = new TUser();
+		}
+		//查询所有没有删除的数据
+		record.setUserIsDelete(Constants.IS_DELETE_NOT);
+		return userDao.select(record);
+	}
+
+	/**
+	 * 返回单条数据
+	 */
+	public TUser selectByPojo(TUser record) {
+		//没有条件时返回null
+		if(null == record){
+			return null;
+		}else{
+			//查询没有删除的数据
+			record.setUserIsDelete(Constants.IS_DELETE_NOT);
+			return userDao.selectByPojo(record);
+		}
+	}
+
+	public boolean delete(Long userId) {
+		if(null == userId || userId == 0){
+			return false;
+		}else{
+			//更新修改时间
+			TUser record = new TUser();
+			record.setUserId(userId);
+			record.setUserIsDelete(Constants.IS_DELETE_YES);
+			record.setUserUpdateTime(new Date());
+			return Util.isSuccessByNum(userDao.update(record));
+		}
+	}
+	
+	/**
+	 * 返回单条数据
+	 */
+	public TUser getUserByPhone(String phone) {
+		//没有条件时返回null
+		if(null == phone){
+			return null;
+		}else{
+			//查询没有删除的数据
+			TUser record = new TUser();
+			record.setUserPhone(phone);
+			record.setUserIsDelete(Constants.IS_DELETE_NOT);
+			return userDao.selectByPojo(record);
+		}
+	}
+	
+	public TUser getUserById(Long userId) {
+		//没有条件时返回null
+		if(null == userId){
+			return null;
+		}else{
+			//查询没有删除的数据
+			TUser record = new TUser();
+			record.setUserId(userId);
+			record.setUserIsDelete(Constants.IS_DELETE_NOT);
+			return userDao.selectByPojo(record);
+		}
+	}
+
+}

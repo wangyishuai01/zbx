@@ -1,0 +1,195 @@
+package com.cn.zbx.pojo;
+
+import java.util.Date;
+
+public class TResource  extends BasicPojo{
+    private Long resId;
+
+    private String resName;
+
+    private String resInfo;
+
+    private Integer resType;
+
+    private String resUrl;
+
+    private Long userId;
+
+    private Long cateId;
+    
+    private Long resIntegral;
+
+    private Integer resAuditType;
+
+    private Integer resIsShow;
+    
+    private Integer resIsDelete;
+    
+    private String resCoverImg;
+    
+    private String resHomework;
+
+    private Date resCreateTime;
+
+    private Date resUpdateTime;
+
+    public Long getResId() {
+        return resId;
+    }
+
+    public void setResId(Long resId) {
+        this.resId = resId;
+    }
+
+    public String getResName() {
+        return resName;
+    }
+
+    public void setResName(String resName) {
+        this.resName = resName == null ? null : resName.trim();
+    }
+
+    public String getResInfo() {
+        return resInfo;
+    }
+
+    public void setResInfo(String resInfo) {
+        this.resInfo = resInfo == null ? null : resInfo.trim();
+    }
+
+    public Integer getResType() {
+        return resType;
+    }
+
+    public void setResType(Integer resType) {
+        this.resType = resType;
+    }
+
+    public String getResUrl() {
+        return resUrl;
+    }
+
+    public void setResUrl(String resUrl) {
+        this.resUrl = resUrl == null ? null : resUrl.trim();
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getCateId() {
+        return cateId;
+    }
+
+    public void setCateId(Long cateId) {
+        this.cateId = cateId;
+    }
+    
+    public Long getResIntegral() {
+        return resIntegral;
+    }
+
+    public void setResIntegral(Long resIntegral) {
+        this.resIntegral = resIntegral;
+    }
+
+    public Integer getResAuditType() {
+        return resAuditType;
+    }
+
+    public void setResAuditType(Integer resAuditType) {
+        this.resAuditType = resAuditType;
+    }
+
+    public Integer getResIsShow() {
+        return resIsShow;
+    }
+
+    public void setResIsShow(Integer resIsShow) {
+        this.resIsShow = resIsShow;
+    }
+
+    public Integer getResIsDelete() {
+        return resIsDelete;
+    }
+
+    public void setResIsDelete(Integer resIsDelete) {
+        this.resIsDelete = resIsDelete;
+    }
+
+    public String getResCoverImg() {
+		return resCoverImg;
+	}
+
+	public void setResCoverImg(String resCoverImg) {
+		this.resCoverImg = resCoverImg;
+	}
+
+	public String getResHomework() {
+		return resHomework;
+	}
+
+	public void setResHomework(String resHomework) {
+		this.resHomework = resHomework;
+	}
+
+	public Date getResCreateTime() {
+        return resCreateTime;
+    }
+
+    public void setResCreateTime(Date resCreateTime) {
+        this.resCreateTime = resCreateTime;
+    }
+
+    public Date getResUpdateTime() {
+        return resUpdateTime;
+    }
+
+    public void setResUpdateTime(Date resUpdateTime) {
+        this.resUpdateTime = resUpdateTime;
+    }
+
+	public TResource() {
+		super();
+	}
+
+	public TResource(Long resId, String resName, String resInfo,
+			Integer resType, String resUrl, Long userId, Long cateId,
+			Long resIntegral, Integer resAuditType, Integer resIsShow,
+			Integer resIsDelete, String resCoverImg, String resHomework,
+			Date resCreateTime, Date resUpdateTime) {
+		super();
+		this.resId = resId;
+		this.resName = resName;
+		this.resInfo = resInfo;
+		this.resType = resType;
+		this.resUrl = resUrl;
+		this.userId = userId;
+		this.cateId = cateId;
+		this.resIntegral = resIntegral;
+		this.resAuditType = resAuditType;
+		this.resIsShow = resIsShow;
+		this.resIsDelete = resIsDelete;
+		this.resCoverImg = resCoverImg;
+		this.resHomework = resHomework;
+		this.resCreateTime = resCreateTime;
+		this.resUpdateTime = resUpdateTime;
+	}
+
+	@Override
+	public String toString() {
+		return "TResource [resId=" + resId + ", resName=" + resName
+				+ ", resInfo=" + resInfo + ", resType=" + resType + ", resUrl="
+				+ resUrl + ", userId=" + userId + ", cateId=" + cateId
+				+ ", resIntegral=" + resIntegral + ", resAuditType="
+				+ resAuditType + ", resIsShow=" + resIsShow + ", resIsDelete="
+				+ resIsDelete + ", resCoverImg=" + resCoverImg
+				+ ", resHomework=" + resHomework + ", resCreateTime="
+				+ resCreateTime + ", resUpdateTime=" + resUpdateTime + "]";
+	}
+    
+}

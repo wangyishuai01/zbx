@@ -1,0 +1,202 @@
+package com.cn.zbx.pojo;
+
+import java.util.Date;
+
+public class TUser extends BasicPojo{
+    private Long userId;
+
+    private String userNick;
+
+    private String userName;
+
+    private String userPhone;
+
+    private String userEmail;
+
+    private String userPwd;
+
+    private String userHeaderImg;
+
+    private Integer userState;
+
+    private Date userCreateTime;
+
+    private Date userUpdateTime;
+
+    private Integer userIsDelete;
+
+    private Integer userIntegral;
+
+    
+    /**
+     * 附加字段，用于token的传输
+     */
+    private String token;
+    
+    public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getUserNick() {
+        return userNick;
+    }
+
+    public void setUserNick(String userNick) {
+        this.userNick = userNick == null ? null : userNick.trim();
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone == null ? null : userPhone.trim();
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail == null ? null : userEmail.trim();
+    }
+
+    public String getUserPwd() {
+        return userPwd;
+    }
+
+    public void setUserPwd(String userPwd) {
+        this.userPwd = userPwd == null ? null : userPwd.trim();
+    }
+
+    public String getUserHeaderImg() {
+        return userHeaderImg;
+    }
+
+    public void setUserHeaderImg(String userHeaderImg) {
+        this.userHeaderImg = userHeaderImg == null ? null : userHeaderImg.trim();
+    }
+
+    public Integer getUserState() {
+        return userState;
+    }
+
+    public void setUserState(Integer userState) {
+        this.userState = userState;
+    }
+
+    public Date getUserCreateTime() {
+        return userCreateTime;
+    }
+
+    public void setUserCreateTime(Date userCreateTime) {
+        this.userCreateTime = userCreateTime;
+    }
+
+    public Date getUserUpdateTime() {
+        return userUpdateTime;
+    }
+
+    public void setUserUpdateTime(Date userUpdateTime) {
+        this.userUpdateTime = userUpdateTime;
+    }
+
+    public Integer getUserIsDelete() {
+        return userIsDelete;
+    }
+
+    public void setUserIsDelete(Integer userIsDelete) {
+        this.userIsDelete = userIsDelete;
+    }
+
+    public Integer getUserIntegral() {
+        return userIntegral;
+    }
+
+    public void setUserIntegral(Integer userIntegral) {
+        this.userIntegral = userIntegral;
+    }
+
+	@Override
+	public String toString() {
+		return "TUser [userId=" + userId + ", userNick=" + userNick
+				+ ", userName=" + userName + ", userPhone=" + userPhone
+				+ ", userEmail=" + userEmail + ", userPwd=" + userPwd
+				+ ", userHeaderImg=" + userHeaderImg + ", userState="
+				+ userState + ", userCreateTime=" + userCreateTime
+				+ ", userUpdateTime=" + userUpdateTime + ", userIsDelete="
+				+ userIsDelete + ", userIntegral=" + userIntegral + "]";
+	}
+
+	public TUser(Long userId, String userNick, String userName,
+			String userPhone, String userEmail, String userPwd,
+			String userHeaderImg, Integer userState, Date userCreateTime,
+			Date userUpdateTime, Integer userIsDelete, Integer userIntegral) {
+		super();
+		this.userId = userId;
+		this.userNick = userNick;
+		this.userName = userName;
+		this.userPhone = userPhone;
+		this.userEmail = userEmail;
+		this.userPwd = userPwd;
+		this.userHeaderImg = userHeaderImg;
+		this.userState = userState;
+		this.userCreateTime = userCreateTime;
+		this.userUpdateTime = userUpdateTime;
+		this.userIsDelete = userIsDelete;
+		this.userIntegral = userIntegral;
+	}
+
+	public TUser() {
+		super();
+	}
+
+	public TUser(Date startTime, Date endTime) {
+		super(startTime, endTime);
+	}
+
+	public TUser(Integer pageSize, Integer pageCount, Date startTime,
+			Date endTime, String sortFields, String sort) {
+		super(pageSize, pageCount, startTime, endTime, sortFields, sort);
+	}
+
+	public TUser(Integer pageSize, Integer pageCount, Date startTime,
+			Date endTime) {
+		super(pageSize, pageCount, startTime, endTime);
+	}
+
+	public TUser(Integer pageSize, Integer pageCount, String sortFields,
+			String sort) {
+		super(pageSize, pageCount, sortFields, sort);
+	}
+
+	public TUser(Integer pageSize, Integer pageCount) {
+		super(pageSize, pageCount);
+	}
+
+	public TUser(String sortFields, String sort) {
+		super(sortFields, sort);
+	}
+ 
+	
+}

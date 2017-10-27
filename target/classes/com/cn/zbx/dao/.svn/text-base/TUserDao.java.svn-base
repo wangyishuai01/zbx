@@ -1,0 +1,17 @@
+package com.cn.zbx.dao;
+
+import java.util.List;
+
+import com.cn.zbx.pojo.TUser;
+
+public interface TUserDao {
+	
+	public int insert(TUser record);
+
+	public int update(TUser record);
+
+	public List<TUser> select(TUser record);
+    
+	public TUser selectByPojo(TUser record);
+	
+}

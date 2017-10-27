@@ -1,0 +1,50 @@
+package com.cn.zbx.service;
+
+import java.util.List;
+
+import com.cn.zbx.pojo.TUser;
+
+
+public interface UserService {
+	
+	public boolean getCode(String phone);
+	
+	public String loginByCode(String phone, String code);
+	
+	public TUser getUserByToken(String token);
+	
+	/**
+	 * 根据对象参数添加数据
+	 * @param record
+	 * @return
+	 */
+	public boolean insert(TUser record);
+
+	/**
+	 * 根据对象参数修改数据
+	 * @param record
+	 * @return
+	 */
+	public boolean update(TUser record);
+
+	/**
+	 * 根据对象参数查询数据
+	 * @param record
+	 * @return 返回List<TUser> 多条数据
+	 */
+	public List<TUser> select(TUser record);
+    
+	/**
+	 * 根据对象参数查询数据
+	 * @param record
+	 * @return 返回TUser 单条数据
+	 */
+	public TUser selectByPojo(TUser record);
+    
+	/**
+	 * 根据id删除数据
+	 * @param userId
+	 * @return
+	 */
+	public boolean delete(Long userId);
+}

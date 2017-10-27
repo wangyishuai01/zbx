@@ -1,0 +1,19 @@
+package com.cn.zbx.dao;
+
+import java.util.List;
+
+import com.cn.zbx.pojo.TResource;
+
+public interface TResourceDao {
+    
+	public int insert(TResource record);
+
+	public int update(TResource record);
+
+	public List<TResource> select(TResource record);
+	
+	public int selectCount(TResource record);
+    
+	public TResource selectPojo(TResource record);
+	
+}

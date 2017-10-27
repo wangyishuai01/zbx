@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zbx.dao.VideoMainMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.zbx.pojo.VideoMain" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="videopath" property="videopath" jdbcType="VARCHAR" />
+    <result column="imgurl" property="imgurl" jdbcType="VARCHAR" />
+    <result column="articleid" property="articleid" jdbcType="INTEGER" />
+    <result column="suffix" property="suffix" jdbcType="VARCHAR" />
+    <result column="size" property="size" jdbcType="INTEGER" />
+    <result column="playtime" property="playtime" jdbcType="INTEGER" />
+    <result column="isfree" property="isfree" jdbcType="INTEGER" />
+    <result column="nocomment" property="nocomment" jdbcType="INTEGER" />
+    <result column="makedate" property="makedate" jdbcType="TIMESTAMP" />
+    <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, videopath, imgurl, articleid, suffix, size, playtime, isfree, nocomment, 
+    makedate, modifydate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from video_main
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from video_main
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cn.zbx.pojo.VideoMain" >
+    insert into video_main (id, title, videopath, 
+      imgurl, articleid, suffix, 
+      size, playtime, isfree, 
+      nocomment, makedate, modifydate
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{videopath,jdbcType=VARCHAR}, 
+      #{imgurl,jdbcType=VARCHAR}, #{articleid,jdbcType=INTEGER}, #{suffix,jdbcType=VARCHAR}, 
+      #{size,jdbcType=INTEGER}, #{playtime,jdbcType=INTEGER}, #{isfree,jdbcType=INTEGER}, 
+      #{nocomment,jdbcType=INTEGER}, #{makedate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.VideoMain" >
+    insert into video_main
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="videopath != null" >
+        videopath,
+      </if>
+      <if test="imgurl != null" >
+        imgurl,
+      </if>
+      <if test="articleid != null" >
+        articleid,
+      </if>
+      <if test="suffix != null" >
+        suffix,
+      </if>
+      <if test="size != null" >
+        size,
+      </if>
+      <if test="playtime != null" >
+        playtime,
+      </if>
+      <if test="isfree != null" >
+        isfree,
+      </if>
+      <if test="nocomment != null" >
+        nocomment,
+      </if>
+      <if test="makedate != null" >
+        makedate,
+      </if>
+      <if test="modifydate != null" >
+        modifydate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="videopath != null" >
+        #{videopath,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null" >
+        #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="articleid != null" >
+        #{articleid,jdbcType=INTEGER},
+      </if>
+      <if test="suffix != null" >
+        #{suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=INTEGER},
+      </if>
+      <if test="playtime != null" >
+        #{playtime,jdbcType=INTEGER},
+      </if>
+      <if test="isfree != null" >
+        #{isfree,jdbcType=INTEGER},
+      </if>
+      <if test="nocomment != null" >
+        #{nocomment,jdbcType=INTEGER},
+      </if>
+      <if test="makedate != null" >
+        #{makedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.zbx.pojo.VideoMain" >
+    update video_main
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="videopath != null" >
+        videopath = #{videopath,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null" >
+        imgurl = #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="articleid != null" >
+        articleid = #{articleid,jdbcType=INTEGER},
+      </if>
+      <if test="suffix != null" >
+        suffix = #{suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        size = #{size,jdbcType=INTEGER},
+      </if>
+      <if test="playtime != null" >
+        playtime = #{playtime,jdbcType=INTEGER},
+      </if>
+      <if test="isfree != null" >
+        isfree = #{isfree,jdbcType=INTEGER},
+      </if>
+      <if test="nocomment != null" >
+        nocomment = #{nocomment,jdbcType=INTEGER},
+      </if>
+      <if test="makedate != null" >
+        makedate = #{makedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.zbx.pojo.VideoMain" >
+    update video_main
+    set title = #{title,jdbcType=VARCHAR},
+      videopath = #{videopath,jdbcType=VARCHAR},
+      imgurl = #{imgurl,jdbcType=VARCHAR},
+      articleid = #{articleid,jdbcType=INTEGER},
+      suffix = #{suffix,jdbcType=VARCHAR},
+      size = #{size,jdbcType=INTEGER},
+      playtime = #{playtime,jdbcType=INTEGER},
+      isfree = #{isfree,jdbcType=INTEGER},
+      nocomment = #{nocomment,jdbcType=INTEGER},
+      makedate = #{makedate,jdbcType=TIMESTAMP},
+      modifydate = #{modifydate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

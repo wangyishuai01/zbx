@@ -1,0 +1,83 @@
+package com.cn.zbx.service.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.cn.zbx.commons.Constants;
+import com.cn.zbx.dao.TCategoryDao;
+import com.cn.zbx.pojo.TCategory;
+import com.cn.zbx.service.CategoryService;
+import com.cn.zbx.util.Util;
+
+@Service("categoryService")
+@Transactional
+public class CategoryServiceImpl implements CategoryService {
+	
+	@Resource
+	private TCategoryDao categoryDao;
+
+	@Override
+	public boolean insert(TCategory record) {
+		if(record == null){
+			return false;
+		}else{
+			record.setCateCreateTime(new Date());
+			return Util.isSuccessByNum(categoryDao.insert(record));
+		}
+	}
+
+	@Override
+	public boolean update(TCategory record) {
+		return Util.isSuccessByNum(categoryDao.update(record));
+	}
+
+	@Override
+	public TCategory getByCateId(Long cateId) {
+		return categoryDao.selectByPojo(new TCategory(cateId));
+	}
+
+	@Override
+	public List<TCategory> getListByCatePid(Long catePid) {
+		TCategory record = new TCategory(null,catePid,null);
+		return categoryDao.select(record );
+	}
+
+	@Override
+	public List<TCategory> getListByCateLevel(Integer cateLevel) {
+		TCategory record = new TCategory(null,null,cateLevel);
+		return categoryDao.select(record );
+	}
+
+	@Override
+	public List<TCategory> get(TCategory record) {
+		if(record == null){
+			record = new TCategory();
+		}
+		record.setCateIsDelete(Constants.IS_DELETE_NOT);
+		return categoryDao.select(record);
+	}
+
+	@Override
+	public TCategory getByPojo(TCategory record) {
+		if(record == null){
+			return null;
+		}else{
+			record.setCateIsDelete(Constants.IS_DELETE_NOT);
+			return categoryDao.selectByPojo(record);
+		}
+	}
+
+	@Override
+	public boolean del(Long cateId) {
+		TCategory record = new TCategory(cateId);
+		record.setCateIsDelete(Constants.IS_DELETE_YES);
+		return Util.isSuccessByNum(categoryDao.update(record ));
+	}
+
+	
+}
