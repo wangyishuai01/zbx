@@ -6,7 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>评论管理</title>
-<script src="${ctx }/js/jquery-1.9.1.js"></script>
 <style type="text/css">
 *{
 	margin: auto;

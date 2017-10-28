@@ -6,7 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>类别管理</title>
-<script src="${ctx }/js/jquery-1.9.1.js"></script>
 <style type="text/css">
 *{
 	margin: auto;
@@ -48,7 +47,8 @@
 									</div>
 								</div>
 								<div class="table-toolbar">
-									<span>分类名称：</span> <input maxlength="20" type="text" id="className" />&nbsp;&nbsp;&nbsp;&nbsp;
+									<span>分类名称：</span>
+									<input maxlength="20" type="text" id="className" class="form-control" style="width:250px;">
 									<a class="btn btn-default shiny" onclick="init();">查询</a>
 								</div>
 								<table class="table table-bordered table-striped table-condensed table-hover flip-content" >
@@ -273,12 +273,13 @@ function editClassify(classid){
 					var res = data[i];
 					$("#name").val(res.name);
 					$("#pid").val(res.pid);
+					$("#isDisplay input[type='radio']:checked").removeAttr("checked");
 					if(res.isdisplay == "1"){
 						$("#isDisplay1").attr("checked","checked");
-						$("#isDisplay0").removeAttr("checked");
+						//$("#isDisplay0").attr("checked",false);
 					} else {
+						//$("#isDisplay1").attr("checked",false);
 						$("#isDisplay0").attr("checked","checked");
-						$("#isDisplay1").removeAttr("checked");
 					}
 				}
 				var data1 = result.pdata;
@@ -398,7 +399,7 @@ function addTClassify(){
 	$("#addDiv").show();
 }
 function saveAdd(){
-	var isdisplay = $("#AddisDisplay input[checked='checked']").val();
+	var isdisplay = $("#AddisDisplay input[type='radio']:checked").val();alert(isdisplay);
 	var pid = $("#AddPid").val();
 	$.ajax({
 		url : rootPath+"/tclassify/addtClassify.do",
