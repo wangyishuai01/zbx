@@ -241,7 +241,7 @@ function init(){
 							+ "| <a href='javascript:deleteClassify("+res.classid+")'>删除</a><br>";
 					if(res.spareField1 == "1"){
 						str += "<a class='hidden_font' href='javascript:return false;'>显示</a> "
-							+ "| <a href='javascript:updateIsDisplay("+res.classid+",0)'>隐藏</a></td>";
+							+ "| <a href='javascript:updateIsDisplay("+res.classid+",0)'>隐藏</a></th>";
 					} else {
 						str += "<a href='javascript:updateIsDisplay("+res.classid+",1)'>显示</a> "
 							+ "| <a class='hidden_font' href='javascript:return false;'>隐藏</a></th>";

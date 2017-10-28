@@ -1,12 +1,8 @@
-package com.cn.zbx.pojo;
+package com.cn.zbx.vo;
 
 import java.util.Date;
 
-public class Customer extends BasicPojo{
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class CustomerVO {
 
 	private Integer id;
 
@@ -31,6 +27,14 @@ public class Customer extends BasicPojo{
     private Date modifydate;
     
     private Integer isdisable;
+    
+    private Date logindate;
+    
+    private String spareField1;
+	
+	private String spareField2;
+	
+	private String spareField3;
 
     public Integer getId() {
         return id;
@@ -126,5 +130,37 @@ public class Customer extends BasicPojo{
 
 	public void setIsdisable(Integer isdisable) {
 		this.isdisable = isdisable;
+	}
+
+	public Date getLogindate() {
+		return logindate;
+	}
+
+	public void setLogindate(Date logindate) {
+		this.logindate = logindate;
+	}
+
+	public String getSpareField1() {
+		return spareField1;
+	}
+
+	public void setSpareField1(String spareField1) {
+		this.spareField1 = spareField1;
+	}
+
+	public String getSpareField2() {
+		return spareField2;
+	}
+
+	public void setSpareField2(String spareField2) {
+		this.spareField2 = spareField2;
+	}
+
+	public String getSpareField3() {
+		return spareField3;
+	}
+
+	public void setSpareField3(String spareField3) {
+		this.spareField3 = spareField3;
 	}
 }

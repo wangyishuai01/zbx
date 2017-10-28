@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
-import com.cn.zbx.pojo.Comment;
-import com.cn.zbx.service.ICommentService;
-import com.cn.zbx.vo.CommentVO;
+import com.cn.zbx.pojo.Customer;
+import com.cn.zbx.service.ICustomerService;
+import com.cn.zbx.vo.CustomerVO;
 
 @Controller
 @RequestMapping(value="/customer")
 public class CustomerController {
 	
 	@Autowired
-	ICommentService commentService;
+	ICustomerService customerService;
 	
 	@ResponseBody
 	@RequestMapping(value="/initCustomerMain", method = { RequestMethod.GET, RequestMethod.POST })
@@ -38,12 +38,12 @@ public class CustomerController {
 		if(pageSize == null || "".equals(pageSize)){
 			pageSize = "10";
 		}
-		Comment CommentParam = new Comment();
-		CommentParam.setPageCount(Integer.valueOf(pageCount));
-		CommentParam.setPageSize(Integer.valueOf(pageSize));
-		int number = commentService.selectCountBySelectParam(CommentParam);
+		Customer CustomerParam = new Customer();
+		CustomerParam.setPageCount(Integer.valueOf(pageCount));
+		CustomerParam.setPageSize(Integer.valueOf(pageSize));
+		int number = customerService.selectCountBySelectParam(CustomerParam);
 		if(number > 0){
-			List<CommentVO> commentList = commentService.selectBySelectParam(CommentParam);
+			List<CustomerVO> commentList = customerService.selectBySelectParam(CustomerParam);
 			resultMap.put("data", commentList);
 			resultMap.put("number", number);
 			resultMap.put("success", true);
@@ -54,52 +54,29 @@ public class CustomerController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/deleteById", method = { RequestMethod.GET, RequestMethod.POST })
-	public String deleteById(HttpServletRequest request, HttpServletResponse response){
+	@RequestMapping(value="/customerEditState", method = { RequestMethod.GET, RequestMethod.POST })
+	public String customerEditState(HttpServletRequest request, HttpServletResponse response){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		
-		String CommentId = request.getParameter("commentId");
-		if(CommentId == null || "".equals(CommentId)){
-			resultMap.put("success", false);
-		}
-		int result = commentService.deleteByPrimaryKey(Integer.valueOf(CommentId));
-		if(result <= 0){
-			resultMap.put("success", false);
-		} else {
-			resultMap.put("success", true);
-		}
-		return JSONObject.toJSONString(resultMap);
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/addtComment", method = { RequestMethod.GET, RequestMethod.POST })
-	public String addtComment(HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		Date currentDate = new Date();
-		String commentTitle = request.getParameter("commentTitle");
-		String comment = request.getParameter("comment");
-		String commentType = request.getParameter("commentType");
-		String customerId = request.getParameter("customerId");
-		if(commentTitle == null || "".equals(commentTitle) 
-				|| commentType == null || "".equals(commentType)
-				|| customerId == null || "".equals(customerId)){
-			resultMap.put("success", false);
-		} else {
-			Comment commentParam = new Comment();
-			commentParam.setTitle(commentTitle);
-			commentParam.setComment(comment);
-			commentParam.setCommenttype(commentType);
-			commentParam.setCustomerId(Integer.valueOf(customerId));
-			commentParam.setMakedate(currentDate);
-			commentParam.setModifydate(currentDate);
-			int result = commentService.insertSelective(commentParam);
+		String CustomerId = request.getParameter("customerId");
+		String isdisable = request.getParameter("isdisable");
+		if(CustomerId != null && !"".equals(CustomerId)){
+			if(isdisable == null || "".equals(isdisable)){
+				isdisable = "1";
+			}
+			Customer CustomerParam = new Customer();
+			CustomerParam.setId(Integer.valueOf(CustomerId));;
+			CustomerParam.setIsdisable(Integer.valueOf(isdisable));;
+			int result = customerService.updateByPrimaryKeySelective(CustomerParam);
 			if(result <= 0){
 				resultMap.put("success", false);
 			} else {
 				resultMap.put("success", true);
 			}
+		} else {
+			resultMap.put("success", false);
 		}
 		return JSONObject.toJSONString(resultMap);
 	}
+	
 	
 }

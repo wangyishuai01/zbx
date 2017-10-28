@@ -13,9 +13,10 @@
     <result column="birthday" property="birthday" jdbcType="DATE" />
     <result column="makedate" property="makedate" jdbcType="TIMESTAMP" />
     <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="isdisable" property="isdisable" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, password, mobile, email, realname, sex, age, birthday, makedate, modifydate
+    id, name, password, mobile, email, realname, sex, age, birthday, makedate, modifydate, isdisable
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -31,11 +32,11 @@
     insert into customer (id, name, password, 
       mobile, email, realname, 
       sex, age, birthday, makedate, 
-      modifydate)
+      modifydate, isdisable)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, 
       #{sex,jdbcType=CHAR}, #{age,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, #{makedate,jdbcType=TIMESTAMP}, 
-      #{modifydate,jdbcType=TIMESTAMP})
+      #{modifydate,jdbcType=TIMESTAMP}, #{isdisable,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.cn.zbx.pojo.Customer" >
     insert into customer
@@ -73,6 +74,9 @@
       <if test="modifydate != null" >
         modifydate,
       </if>
+      <if test="isdisable != null" >
+        isdisable,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -107,6 +111,9 @@
       </if>
       <if test="modifydate != null" >
         #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdisable != null" >
+        #{isdisable,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -143,6 +150,9 @@
       <if test="modifydate != null" >
         modifydate = #{modifydate,jdbcType=TIMESTAMP},
       </if>
+      <if test="isdisable != null" >
+        isdisable = #{isdisable,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -157,7 +167,92 @@
       age = #{age,jdbcType=INTEGER},
       birthday = #{birthday,jdbcType=DATE},
       makedate = #{makedate,jdbcType=TIMESTAMP},
-      modifydate = #{modifydate,jdbcType=TIMESTAMP}
+      modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      isdisable = #{isdisable,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectCountBySelectParam" resultType="int" parameterType="com.cn.zbx.pojo.Customer" >
+  	select count(1) 
+	from customer
+	<if test="name != null" >
+	  name = #{name,jdbcType=VARCHAR}
+	</if>
+	<if test="password != null" >
+	  password = #{password,jdbcType=VARCHAR}
+	</if>
+	<if test="mobile != null" >
+	  mobile = #{mobile,jdbcType=VARCHAR}
+	</if>
+	<if test="email != null" >
+	  email = #{email,jdbcType=VARCHAR}
+	</if>
+	<if test="realname != null" >
+	  realname = #{realname,jdbcType=VARCHAR}
+	</if>
+	<if test="sex != null" >
+	  sex = #{sex,jdbcType=CHAR}
+	</if>
+	<if test="age != null" >
+	  age = #{age,jdbcType=INTEGER}
+	</if>
+	<if test="birthday != null" >
+	  birthday = #{birthday,jdbcType=DATE}
+	</if>
+	<if test="makedate != null" >
+	  makedate = #{makedate,jdbcType=TIMESTAMP}
+	</if>
+	<if test="modifydate != null" >
+	  modifydate = #{modifydate,jdbcType=TIMESTAMP}
+	</if>
+	<if test="isdisable != null" >
+	  isdisable = #{isdisable,jdbcType=INTEGER} 
+	</if>
+  </select>
+  
+   <select id="selectBySelectParam" resultType="com.cn.zbx.vo.CustomerVO" parameterType="com.cn.zbx.pojo.Customer" >
+	select cus.*, 
+		   (select max(l.makedate) from login_history l where l.customer_id = cus.id) as logindate 
+	from customer cus
+	<if test="name != null" >
+	  name = #{name,jdbcType=VARCHAR}
+	</if>
+	<if test="password != null" >
+	  password = #{password,jdbcType=VARCHAR}
+	</if>
+	<if test="mobile != null" >
+	  mobile = #{mobile,jdbcType=VARCHAR}
+	</if>
+	<if test="email != null" >
+	  email = #{email,jdbcType=VARCHAR}
+	</if>
+	<if test="realname != null" >
+	  realname = #{realname,jdbcType=VARCHAR}
+	</if>
+	<if test="sex != null" >
+	  sex = #{sex,jdbcType=CHAR}
+	</if>
+	<if test="age != null" >
+	  age = #{age,jdbcType=INTEGER}
+	</if>
+	<if test="birthday != null" >
+	  birthday = #{birthday,jdbcType=DATE}
+	</if>
+	<if test="makedate != null" >
+	  makedate = #{makedate,jdbcType=TIMESTAMP}
+	</if>
+	<if test="modifydate != null" >
+	  modifydate = #{modifydate,jdbcType=TIMESTAMP}
+	</if>
+	<if test="isdisable != null" >
+	  isdisable = #{isdisable,jdbcType=INTEGER} 
+	</if>
+	order by logindate desc 
+    <if test="startLimit != null" >
+      <if test="pageSize != null" >
+     	 limit #{startLimit}, #{pageSize}
+      </if>
+    </if>
+   </select>
+  
 </mapper>

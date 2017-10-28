@@ -1,6 +1,9 @@
 package com.cn.zbx.dao;
 
+import java.util.List;
+
 import com.cn.zbx.pojo.Customer;
+import com.cn.zbx.vo.CustomerVO;
 
 public interface CustomerMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,8 @@ public interface CustomerMapper {
     int updateByPrimaryKeySelective(Customer record);
 
     int updateByPrimaryKey(Customer record);
+    
+    List<CustomerVO> selectBySelectParam(Customer record);
+    
+    int selectCountBySelectParam(Customer record);
 }

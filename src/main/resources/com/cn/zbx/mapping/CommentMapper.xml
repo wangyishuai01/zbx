@@ -122,25 +122,25 @@
     from comment com, customer cus
     where com.customer_id = cus.id
     <if test="id != null" >
-      and com.id = #{id,jdbcType=INTEGER},
+      and com.id = #{id,jdbcType=INTEGER}
     </if>
     <if test="title != null" >
-      and com.title = #{title,jdbcType=VARCHAR},
+      and com.title = #{title,jdbcType=VARCHAR}
     </if>
     <if test="comment != null" >
-      and com.comment = #{comment,jdbcType=VARCHAR},
+      and com.comment = #{comment,jdbcType=VARCHAR}
     </if>
     <if test="commenttype != null" >
-      and com.commenttype = #{commenttype,jdbcType=CHAR},
+      and com.commenttype = #{commenttype,jdbcType=CHAR}
     </if>
     <if test="customerId != null" >
-      and com.customer_id = #{customerId,jdbcType=INTEGER},
+      and com.customer_id = #{customerId,jdbcType=INTEGER}
     </if>
     <if test="makedate != null" >
-      and com.makedate = #{makedate,jdbcType=TIMESTAMP},
+      and com.makedate = #{makedate,jdbcType=TIMESTAMP}
     </if>
     <if test="modifydate != null" >
-      and com.modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      and com.modifydate = #{modifydate,jdbcType=TIMESTAMP}
     </if>
   </select>
   
@@ -157,25 +157,25 @@
     from comment com, customer cus
     where com.customer_id = cus.id
     <if test="id != null" >
-      and com.id = #{id,jdbcType=INTEGER},
+      and com.id = #{id,jdbcType=INTEGER}
     </if>
     <if test="title != null" >
-      and com.title = #{title,jdbcType=VARCHAR},
+      and com.title = #{title,jdbcType=VARCHAR}
     </if>
     <if test="comment != null" >
-      and com.comment = #{comment,jdbcType=VARCHAR},
+      and com.comment = #{comment,jdbcType=VARCHAR}
     </if>
     <if test="commenttype != null" >
-      and com.commenttype = #{commenttype,jdbcType=CHAR},
+      and com.commenttype = #{commenttype,jdbcType=CHAR}
     </if>
     <if test="customerId != null" >
-      and com.customer_id = #{customerId,jdbcType=INTEGER},
+      and com.customer_id = #{customerId,jdbcType=INTEGER}
     </if>
     <if test="makedate != null" >
-      and com.makedate = #{makedate,jdbcType=TIMESTAMP},
+      and com.makedate = #{makedate,jdbcType=TIMESTAMP}
     </if>
     <if test="modifydate != null" >
-      and com.modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      and com.modifydate = #{modifydate,jdbcType=TIMESTAMP}
     </if>
     order by com.makedate desc 
     <if test="startLimit != null" >
