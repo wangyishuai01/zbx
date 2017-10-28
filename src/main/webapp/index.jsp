@@ -163,7 +163,7 @@
 					</a>
 					<a class='btn' style="height: 45px; width: 100px; color: white; font-size: 20px; 
 					background-color: #2970e4; border-color: #2970e4; border-radius: 0px;" 
-					onclick="openUrl('index.jsp');" id='navigatColor_'>首   页</a>
+					href="" id='navigatColor_'>首   页</a>
 				</div>
 				<!-- /Navbar Barnd -->
 
@@ -191,7 +191,7 @@
 				<!-- Sidebar Menu -->
 				<ul class="nav sidebar-menu">
 					<!--Dashboard-->
-					<li class="active"><a href="index.jsp"> <i
+					<li class="active"><a href="/index.jsp"> <i
 							class="menu-icon glyphicon glyphicon-home"></i> <span
 							class="menu-text"> 首页 </span>
 							
@@ -222,14 +222,17 @@
 				<!-- Page Body -->
 				<div id="pageBody">
 					<div id="index_img_div"  class="posr">
-						<div class="posa ind_img1">
+						<%-- <div class="posa ind_img1">
 							<img src="${ctx}/images/indexImg_01.png"/>
+						</div> --%>
+						<div style="text-align:center;margin:50px;letter-spacing:5px;">
+							<span style="font-weight:bold;font-size:40px;">欢迎登录智博炫后台管理系统</span>
+						</div>
+						<div style="text-align:center;margin:50px;">
+							<span style="font-weight:bold;font-size:40px;">Welcome To Zhibo Hyun Background Management System</span>
 						</div>
 						<div class="posa ind_img2">
 							<img src="${ctx}/images/indexImg_02.png"/>
-						</div>
-						<div class="posa ind_img3">
-							<img src="${ctx}/images/indexImg_03new.png"/>
 						</div>
 					</div>					
 				</div>
