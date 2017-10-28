@@ -30,7 +30,7 @@
 			<!-- Page Body -->
 			<div class="page-body" id="pageBodyRight">
 				<div class="row">
-					<div class="col-xs-12 col-md-12">
+					<div style="float:center;width:80%">
 						<div class="widget">
 						<div class="widget-header ">
 								<h5 class="widget-caption">评论管理</h5>
