@@ -16,6 +16,8 @@ public class CommentVO {
     
     private String customerName;
     
+    private Integer commentToId;//文章id或者视屏id
+    
     private String spareField1;
 	
 	private String spareField2;
@@ -72,6 +74,14 @@ public class CommentVO {
 
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
+	}
+	
+	public Integer getCommentToId() {
+		return commentToId;
+	}
+
+	public void setCommentToId(Integer commentToId) {
+		this.commentToId = commentToId;
 	}
 
 	public String getSpareField1() {

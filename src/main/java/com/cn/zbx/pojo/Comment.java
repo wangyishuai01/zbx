@@ -22,15 +22,14 @@ public class Comment extends BasicPojo {
 
     private Date modifydate;
     
-    private Integer articleId;//文章id
-    
+    private Integer commentToId;//文章id或者视屏id
 
-    public Integer getArticleId() {
-		return articleId;
+	public Integer getCommentToId() {
+		return commentToId;
 	}
 
-	public void setArticleId(Integer articleId) {
-		this.articleId = articleId;
+	public void setCommentToId(Integer commentToId) {
+		this.commentToId = commentToId;
 	}
 
 	public Integer getId() {

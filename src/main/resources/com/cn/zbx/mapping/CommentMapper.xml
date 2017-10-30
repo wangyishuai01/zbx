@@ -10,9 +10,10 @@
     <result column="makedate" property="makedate" jdbcType="TIMESTAMP" />
     <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
     <result column="articleId" property="articleId" jdbcType="INTEGER" />
+    <result column="commenttoid" property="commentToId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, title, comment, commenttype, customer_id,articleId, makedate, modifydate
+    id, title, comment, commenttype, customer_id,articleId, makedate, modifydate, commenttoid
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -27,10 +28,10 @@
   <insert id="insert" parameterType="com.cn.zbx.pojo.Comment" >
     insert into comment (id, title, comment, 
       commenttype, customer_id, makedate, 
-      modifydate)
+      modifydate,commenttoid)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
       #{commenttype,jdbcType=CHAR}, #{customerId,jdbcType=INTEGER}, #{makedate,jdbcType=TIMESTAMP}, 
-      #{modifydate,jdbcType=TIMESTAMP})
+      #{modifydate,jdbcType=TIMESTAMP}),#{commentToId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.cn.zbx.pojo.Comment" >
     insert into comment
@@ -56,6 +57,9 @@
       <if test="modifydate != null" >
         modifydate,
       </if>
+      <if test="commentToId != null" >
+        commenttoid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -78,6 +82,9 @@
       </if>
       <if test="modifydate != null" >
         #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentToId != null" >
+        #{commentToId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -102,6 +109,9 @@
       <if test="modifydate != null" >
         modifydate = #{modifydate,jdbcType=TIMESTAMP},
       </if>
+      <if test="commentToId != null" >
+        commenttoid = #{commentToId,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -112,7 +122,8 @@
       commenttype = #{commenttype,jdbcType=CHAR},
       customer_id = #{customerId,jdbcType=INTEGER},
       makedate = #{makedate,jdbcType=TIMESTAMP},
-      modifydate = #{modifydate,jdbcType=TIMESTAMP}
+      modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      commenttoid = #{commentToId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
   
@@ -142,6 +153,9 @@
     <if test="modifydate != null" >
       and com.modifydate = #{modifydate,jdbcType=TIMESTAMP}
     </if>
+    <if test="commentToId != null" >
+      and com.commenttoid = #{commentToId,jdbcType=TIMESTAMP}
+    </if>
   </select>
   
   <select id="selectBySelectParam" resultType="com.cn.zbx.vo.CommentVO" parameterType="com.cn.zbx.pojo.Comment" >
@@ -153,7 +167,8 @@
     	com.customer_id as customerId, 
     	cus.name as customerName,
     	com.makedate, 
-    	com.modifydate
+    	com.modifydate,
+    	com.commenttoid as commentToId
     from comment com, customer cus
     where com.customer_id = cus.id
     <if test="id != null" >
@@ -177,6 +192,9 @@
     <if test="modifydate != null" >
       and com.modifydate = #{modifydate,jdbcType=TIMESTAMP}
     </if>
+    <if test="commentToId != null" >
+      and com.commenttoid = #{commentToId,jdbcType=INTEGER}
+    </if>
     order by com.makedate desc 
     <if test="startLimit != null" >
       <if test="pageSize != null" >
@@ -189,6 +207,6 @@
     select 
     	count(1)
     from comment 
-    where  articleId = #{articleId,jdbcType=INTEGER}
+    where  commenttoid = #{articleId,jdbcType=INTEGER} and commenttype = '1'
   </select>
 </mapper>

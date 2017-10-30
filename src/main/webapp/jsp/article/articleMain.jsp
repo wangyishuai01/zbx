@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript" charset="utf-8" src="${ctx }/ueditor1_4_3_3/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="${ctx }/ueditor1_4_3_3/ueditor.all.js"> </script>
+<script type="text/javascript" charset="utf-8" src="${ctx }/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx }/ueditor/ueditor.all.js"> </script>
 
-<script type="text/javascript" charset="utf-8" src="${ctx }/ueditor1_4_3_3/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx }/ueditor/lang/zh-cn/zh-cn.js"></script>
 <title>文章管理</title>
 <script src="${ctx }/js/jquery-1.9.1.js"></script>
 <style type="text/css">
