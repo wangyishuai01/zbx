@@ -180,10 +180,10 @@
 												<div class="col-lg-6">
 													<div id="AddisDisplay">
 														<label> <input  type="radio"
-															id="AddisDisplay1" name="isDisplay" value="1" checked="checked"> <span
+															id="AddisDisplay1" name="AddisDisplay" value="1" checked="checked"> <span
 															class="text">显示</span>
 														</label> <label> <input  type="radio"
-															id="AddisDisplay0" name="isDisplay" value="0"> <span
+															id="AddisDisplay0" name="AddisDisplay" value="0"> <span
 															class="text">不显示</span>
 														</label>
 													</div>
@@ -273,14 +273,15 @@ function editClassify(classid){
 					var res = data[i];
 					$("#name").val(res.name);
 					$("#pid").val(res.pid);
-					$("#isDisplay input[type='radio']:checked").removeAttr("checked");
+					var isDisplayStr = "";
 					if(res.isdisplay == "1"){
-						$("#isDisplay1").attr("checked","checked");
-						//$("#isDisplay0").attr("checked",false);
+						isDisplayStr = "<label><input type='radio' id='isDisplay1' name='isDisplay' value='1' checked='checked'><span class='text'>显示</span></label>"
+									 + "&nbsp;&nbsp;<label><input  type='radio' id='isDisplay0' name='isDisplay' value='0'><span class='text'>不显示</span></label>";
 					} else {
-						//$("#isDisplay1").attr("checked",false);
-						$("#isDisplay0").attr("checked","checked");
+						isDisplayStr = "<label><input type='radio' id='isDisplay1' name='isDisplay' value='1'><span class='text'>显示</span></label>"
+							 + "&nbsp;&nbsp;<label><input checked='checked' type='radio' id='isDisplay0' name='isDisplay' value='0'><span class='text'>不显示</span></label>";
 					}
+					$("#isDisplay").html(isDisplayStr);
 				}
 				var data1 = result.pdata;
 				var pid = $("#pid").val();
