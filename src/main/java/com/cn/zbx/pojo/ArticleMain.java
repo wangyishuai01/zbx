@@ -27,8 +27,18 @@ public class ArticleMain extends BasicPojo{
     private Date modifydate;
 
     private byte[] content;
+    
+    private String contentStr;
+    
+    public String getContentStr() {
+		return contentStr;
+	}
 
-    public Integer getId() {
+	public void setContentStr(String contentStr) {
+		this.contentStr = contentStr;
+	}
+
+	public Integer getId() {
         return id;
     }
 

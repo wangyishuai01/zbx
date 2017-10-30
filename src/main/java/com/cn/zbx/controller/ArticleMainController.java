@@ -91,6 +91,37 @@ public class ArticleMainController {
 			return JSONObject.toJSONString(resultMap);
 		}
 		ArticleMain articleMain = articleMainService.selectByPrimaryKey(Integer.valueOf(articleId));
+		if(articleMain.getContent()!=null){
+			String str = new String(articleMain.getContent());
+			articleMain.setContentStr(str);
+			System.out.println("************8"+str);
+		}
+		
+			resultMap.put("data", articleMain);
+			resultMap.put("success", true);
+		
+		return JSONObject.toJSONString(resultMap);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/articleUpdate", method = { RequestMethod.GET, RequestMethod.POST })
+	public String update(HttpServletRequest request, HttpServletResponse response,ArticleMain article){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		int  articleMain = articleMainService.updateByPrimaryKeySelective(article);
+			resultMap.put("data", articleMain);
+			resultMap.put("success", true);
+		
+		return JSONObject.toJSONString(resultMap);
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/uploadImg", method = { RequestMethod.GET, RequestMethod.POST })
+	public String uploadImg(HttpServletRequest request, HttpServletResponse response,ArticleMain article){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		int  articleMain = articleMainService.updateByPrimaryKeySelective(article);
 			resultMap.put("data", articleMain);
 			resultMap.put("success", true);
 		

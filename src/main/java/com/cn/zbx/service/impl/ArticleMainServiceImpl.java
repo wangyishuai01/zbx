@@ -64,4 +64,10 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 		return articleMainMapper.selectByPrimaryKey(id);
 	}
 
+	@Override
+	public int updateByPrimaryKeySelective(ArticleMain record) {
+		// TODO Auto-generated method stub
+		return articleMainMapper.updateByPrimaryKeySelective(record);
+	}
+
 }

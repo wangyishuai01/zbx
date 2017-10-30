@@ -25,4 +25,6 @@ public interface IArticleMainService {
 	int deleteByPrimaryKey(Integer id);
 	
 	ArticleMain selectByPrimaryKey(Integer id);
+	
+	int updateByPrimaryKeySelective(ArticleMain record);
 }

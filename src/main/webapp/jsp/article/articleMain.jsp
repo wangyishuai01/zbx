@@ -5,7 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>类别管理</title>
+<script type="text/javascript" charset="utf-8" src="${ctx }/ueditor1_4_3_3/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx }/ueditor1_4_3_3/ueditor.all.js"> </script>
+
+<script type="text/javascript" charset="utf-8" src="${ctx }/ueditor1_4_3_3/lang/zh-cn/zh-cn.js"></script>
+<title>文章管理</title>
 <script src="${ctx }/js/jquery-1.9.1.js"></script>
 <style type="text/css">
 *{
@@ -47,7 +51,8 @@
 										</a>
 									</div>
 								</div> -->
-								<div class="table-toolbar">
+								<div id="hidediv1">
+								<div class="table-toolbar" >
 									<span>类别：</span> <input maxlength="20" type="text" id="articleName" />
 									<span>类型：</span> <input maxlength="20" type="text" id="articleType" />
 									<span>文章标题：</span> <input maxlength="20" type="text" id="articleTitle" />
@@ -86,87 +91,37 @@
 									<input value="下一页" type="button" onclick="next()"/>
 									<input value="尾页" type="button" onclick="last()"/>
 								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- edit -->
-				<div class="modal modal-darkorange" id="showArticleDiv">
-					<div class="modal-dialog" style="margin: 60px auto;width:700px;">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button aria-hidden="true" data-dismiss="modal" class="close"
-									type="button" onclick="closeEditDiv();">×</button>
-								<h4 class="modal-title">编辑文章信息</h4>
-							</div>
-							<div class="modal-body">
-								<div class="bootbox-body">
-									<div class="row" style="padding: 10px;">
-										<div class="col-lg-12 col-sm-12 col-xs-12">
-											<div class="col-md-12">
-												<div class="col-lg-6">标题：</div>
-												<div class="col-lg-6">
-													<span class="input-icon icon-right"> <input
-														type="text"
-														id="title" name="title" class="form-control" style="width:100%;">
-													</span>
-												</div>
-											</div>
-											<br>&nbsp;<br>
-											<div class="col-md-12">
-												<div class="col-lg-6">状态：</div>
-												<div class="col-lg-6">
-													<select class="form-control" id="state"></select> 
-												</div>
-											</div>
-											<br>&nbsp;<br>
-											<div class="col-md-12">
-												<div class="col-lg-6">评论权限：</div>
-												<div class="col-lg-6">
-													<select class="form-control" id="nocomment"></select> 
-												</div>
-											</div>
-											<br>&nbsp;<br>
-											<div class="col-md-12">
-												<div class="col-lg-6" >是否显示：</div>
-												<div class="col-lg-6">
-													<div id="isDisplay">
-														<label> <input  type="radio"
-															id="" name="" value="1" checked="checked"> <span
-															class="text">显示</span>
-														</label> <label> <input  type="radio"
-															id="isDisplay0" name="isDisplay" value="0"> <span
-															class="text">不显示</span>
-														</label>
-													</div>
-												</div>
-											</div>
-											<br>&nbsp;<br>
-												<div class="col-md-12">
-													<div class="col-lg-3">内容：</div>
-													<div class="col-lg-9">
-														<span class="input-icon icon-right"> <textarea 
-															id="content"  style="width:100%;" rows="20"></textarea> 
-														</span>
-													</div>
-												</div>
-											<input type="hidden" id="classId" value="">
-											<input type="hidden" id="pid" value="">
-										</div>
+								</div>
+						<!-- 编辑器 -->
+								<div id="hideeditor">
+								<div class="table-toolbar" >
+								 <input type="hidden" id="articleid" />
+									<span>文章标题：</span> <input maxlength="20" type="text" id="title" />
+									<span>状态：</span> <select id="state">
+													  <option value="1">启用</option>
+													  <option value="0">禁用</option>
+													</select>
+									<span>评论权限：</span> <select id="nocomment">
+													  <option value="1">允许</option>
+													  <option value="0">禁止</option>
+													</select>
+													<!-- <input maxlength="20" type="text" id="nocomment" /> -->
+									<button onclick="closeUeditor()">取消编辑</button>
+								</div>
+									<script id="editor" type="text/plain"
+										style="width:1024px;height:500px;"></script>
+									<div id="">
+										<button onclick="submit()">提交</button>
 									</div>
 								</div>
-							</div>
-							<div class="modal-footer">
-								<button class="btn btn-default" type="button"
-									onclick="saveEdit();">保存</button>
-								<button data-dismiss="modal" class="btn btn-default"
-									onclick="closeEditDiv();" type="button">取消</button>
+
+
+
 							</div>
 						</div>
-						<!-- /.modal-content -->
 					</div>
-					<!-- /.modal-dialog -->
 				</div>
+				
 				
 			</div>
 			<!-- /Page Body -->
@@ -175,6 +130,7 @@
 	</div>
 </body>
 <script type="text/javascript">
+var ue;
 var rootPath = "${pageContext.request.contextPath}";
 var pageCount = 1, pageSize = 10, pageMax = 100;
 function init(){
@@ -197,12 +153,22 @@ function init(){
 				result = result.data;
 				for(var i=0; i<result.length; i++){
 					var res = result[i];
+					if(res.state==1){
+						res.state="启用";
+					}else{
+						res.state="禁用";
+					}
+					if(res.nocomment==1){
+						res.nocomment="允许";
+					}else{
+						res.nocomment="禁止";
+					}
 					var str = "<tr id='comment_tr"+res.id+"' class='comment_tr'>"
 					+ "<th>"+res.title+"</th><th style='text-align: center;'>"+res.state+"</th>"
-					+ "<th style='text-align: center;'>"+res.nocomment+"</th>"
+					+ "<th style='text-align: center;'>"+res.commentCount+"</th>"
 					+ "<th style='text-align: center;'>"+res.commentCount+"</th>"
 					+ "<th style='text-align: center;'>"+res.nocomment+"</th>"
-					+ "<th style='text-align: center;'><a href='javascript:showOneArticle("+res.id+")'>编辑</a>"
+					+ "<th style='text-align: center;'><a href='javascript:createEditor("+res.id+")'>编辑</a>"
 					+ " | <a href='javascript:showOneComment("+res.id+")'>视频</a>"
 					+ " | <a href='javascript:deleteArticle("+res.id+")'>删除</a>"
 					+ " | <a href='javascript:showOneComment("+res.id+")'>分类</a></th>";
@@ -239,57 +205,15 @@ function deleteArticle(articleId){
 	}
 }
 
-//编辑
-function showOneArticle(articleId){
-	$.ajax({
-		url : rootPath+"/Article/selectById.do",
-		type : "post",
-		dataType : "json",
-		data : {
-			"articleId" : articleId 
-		},
-		success : function(result) {
-			result = JSON.parse(result);
-			if(result.success){
-				var data = result.data;
-				$("#title").val(data.title);
-				$("#state").val(data.state);
-				$("#nocomment").val(data.nocomment);
-				$("#content").val(data.content);
-			}
-		}
-	});
-	$("#showArticleDiv").show();
-	
-}
 
-
-function saveEdit(){
-	var isdisplay = $("#isDisplay input[checked='checked']").val();
-	$.ajax({
-		url : rootPath+"/tclassify/updateSelectById.do",
-		type : "post",
-		dataType : "json",
-		data : {
-			"id" : $("#classId").val(),
-			"name" : $("#name").val(),
-			"pid" : $("#Pid").val(),
-			"isdisplay" : isdisplay
-		},
-		success : function(result) {
-			result = JSON.parse(result);
-			if(result.success){
-				alert("修改成功！");
-				init();
-			} else {
-				alert("修改失败！");
-			}
-			$("#editDiv").hide();
-		}
-	});
-}
 function closeEditDiv(){
 	$("#showArticleDiv").hide();
+}
+
+function closeUeditor(){
+	$("#hidediv1").show();
+	$("#hideeditor").hide();
+	ue.setContent('');
 }
 
 
@@ -342,9 +266,71 @@ function tab(data) {
 	}
 }
 
+//编辑器
+function createEditor(articleId) {
+	$("#articleid").val(articleId);
+	$.ajax({
+		url : rootPath+"/Article/selectById.do",
+		type : "post",
+		dataType : "json",
+		data : {
+			"articleId" : articleId 
+		},
+		success : function(result) {
+			result = JSON.parse(result);
+			if(result.success){
+				var data = result.data;
+				$("#title").val(data.title);
+				$("#state").val(data.state);
+				$("#nocomment").val(data.nocomment);
+				$("#content").val(data.content);
+				$("#hidediv1").hide();
+			    $("#hideeditor").show();
+			    if(data.contentStr!=null){
+			    	var str = data.contentStr;
+				    ue.setContent(str);
+			    }
+			    
+			}
+		}
+	}); 
+    }
+    
+
+function submit() {
+	var content = UE.getEditor('editor').getContent();
+	$.ajax({
+		url : rootPath+"/Article/articleUpdate.do",
+		type : "post",
+		dataType : "json",
+		data : {
+			"id" : $("#articleid").val(), 
+			"title" : $("#title").val(), 
+			"state" : $("#state").val(), 
+			"nocomment" : $("#nocomment").val(), 
+			"content" : content 
+		},
+		success : function(result) {
+			result = JSON.parse(result);
+			if(result.success){
+				init();
+				alert("编辑成功");
+			}
+		}
+	}); 
+	$("#hidediv1").show();
+	$("#hideeditor").hide();
+	ue.setContent('');
+	
+} 
+
+
 $(document).ready(function(){
 	init();
 	$("#pageSelect").change(init);
+	//创建编辑器
+	 ue = UE.getEditor('editor');
+	 $("#hideeditor").hide();
 });
 </script>
 </html>
