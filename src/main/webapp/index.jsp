@@ -30,7 +30,7 @@
 	margin-right: 15px;
 }
 .ind_img1{left:30px;top:30px;}
-.ind_img2{left:50%;top:50%;margin-left:-200px;margin-top:-200px;}
+.ind_img2{left:50%;top:50%;margin-left:-200px;margin-top:-100px;}
 .ind_img3{right:30px;bottom:30px;}
 </style>
 
@@ -79,6 +79,16 @@
 			"id='navigatColor_" + LoneList[i].id + "'>" + LoneList[i].name + "</a>";
 		}
 		$("#LOne").append(Aoption);
+	    
+		$(".btn").mouseover(function(){
+			$(this).css("background-color","#5599FF");
+	    });
+		$(".btn").mouseout(function(){
+			$(this).css("background-color","#2970e4");
+	    });
+		$(".btn").click(function(){
+	        alert('click function is running !');
+	    });
 	});
 </script>
 <script type="text/javascript">   
@@ -225,10 +235,10 @@
 						<%-- <div class="posa ind_img1">
 							<img src="${ctx}/images/indexImg_01.png"/>
 						</div> --%>
-						<div style="text-align:center;margin:50px;letter-spacing:5px;">
+						<div style="text-align:center;margin:20px;letter-spacing:5px;">
 							<span style="font-weight:bold;font-size:40px;">欢迎登录智博炫后台管理系统</span>
 						</div>
-						<div style="text-align:center;margin:50px;">
+						<div style="text-align:center;margin:20px;">
 							<span style="font-weight:bold;font-size:40px;">Welcome To Zhibo Hyun Background Management System</span>
 						</div>
 						<div class="posa ind_img2">
