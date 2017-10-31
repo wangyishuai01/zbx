@@ -132,6 +132,8 @@
 <script type="text/javascript">
 var ue;
 var rootPath = "${pageContext.request.contextPath}";
+
+
 var pageCount = 1, pageSize = 10, pageMax = 100;
 function init(){
 	pageSize = $("#pageSelect").val();

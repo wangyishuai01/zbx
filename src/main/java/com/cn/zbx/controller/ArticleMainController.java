@@ -116,17 +116,7 @@ public class ArticleMainController {
 	}
 	
 	
-	@ResponseBody
-	@RequestMapping(value="/uploadImg", method = { RequestMethod.GET, RequestMethod.POST })
-	public String uploadImg(HttpServletRequest request, HttpServletResponse response,ArticleMain article){
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		
-		int  articleMain = articleMainService.updateByPrimaryKeySelective(article);
-			resultMap.put("data", articleMain);
-			resultMap.put("success", true);
-		
-		return JSONObject.toJSONString(resultMap);
-	}
+	
 	
 
 }

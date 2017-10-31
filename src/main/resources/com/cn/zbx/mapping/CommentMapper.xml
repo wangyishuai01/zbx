@@ -9,11 +9,10 @@
     <result column="customer_id" property="customerId" jdbcType="INTEGER" />
     <result column="makedate" property="makedate" jdbcType="TIMESTAMP" />
     <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
-    <result column="articleId" property="articleId" jdbcType="INTEGER" />
     <result column="commenttoid" property="commentToId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, title, comment, commenttype, customer_id,articleId, makedate, modifydate, commenttoid
+    id, title, comment, commenttype, customer_id,commenttoid, makedate, modifydate, commenttoid
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -207,6 +206,6 @@
     select 
     	count(1)
     from comment 
-    where  commenttoid = #{articleId,jdbcType=INTEGER} and commenttype = '1'
+    where  commenttoid = #{commentToId,jdbcType=INTEGER} and commenttype = '1'
   </select>
 </mapper>

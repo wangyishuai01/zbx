@@ -47,10 +47,10 @@ public class CommentServiceImpl implements ICommentService {
 	}
 
 	@Override
-	public int selectByArticleId(Integer articleId) {
+	public int selectByArticleId(Integer commentToId) {
 		// TODO Auto-generated method stub
 		
-		return commentMapper.selectByArticleId(articleId);
+		return commentMapper.selectByArticleId(commentToId);
 	}
 
 	
