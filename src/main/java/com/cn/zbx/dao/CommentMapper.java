@@ -22,5 +22,5 @@ public interface CommentMapper {
     
     int selectCountBySelectParam(Comment record);
     
-    int selectByArticleId(Integer articleId);
+    int selectByArticleId(Integer commentToId);
 }
