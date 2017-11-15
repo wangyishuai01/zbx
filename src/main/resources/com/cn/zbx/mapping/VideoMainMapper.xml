@@ -174,4 +174,101 @@
       modifydate = #{modifydate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectCountBySelectParam" resultType="int" parameterType="com.cn.zbx.vo.VideoVO" >
+    select 
+    	count(1)
+    from video_main v 
+    join article_main a on v.articleid=a.id 
+    <if test="classid != null" >
+      and a.classid = #{classid,jdbcType=INTEGER}
+    </if>
+    where 1=1
+    <if test="title != null" >
+      and v.title = #{title,jdbcType=VARCHAR},
+    </if>
+    <if test="videopath != null" >
+      and v.videopath = #{videopath,jdbcType=VARCHAR},
+    </if>
+    <if test="imgurl != null" >
+      and v.imgurl = #{imgurl,jdbcType=VARCHAR},
+    </if>
+    <if test="articleid != null" >
+      and v.articleid = #{articleid,jdbcType=INTEGER},
+    </if>
+    <if test="suffix != null" >
+      and v.suffix = #{suffix,jdbcType=VARCHAR},
+    </if>
+    <if test="size != null" >
+      and v.size = #{size,jdbcType=INTEGER},
+    </if>
+    <if test="playtime != null" >
+      and v.playtime = #{playtime,jdbcType=INTEGER},
+    </if>
+    <if test="isfree != null" >
+      and v.isfree = #{isfree,jdbcType=INTEGER},
+    </if>
+    <if test="nocomment != null" >
+      and v.nocomment = #{nocomment,jdbcType=INTEGER},
+    </if>
+    <if test="makedate != null" >
+      and v.makedate = #{makedate,jdbcType=TIMESTAMP},
+    </if>
+    <if test="modifydate != null" >
+      and v.modifydate = #{modifydate,jdbcType=TIMESTAMP},
+    </if>
+  </select>
+  
+  <select id="selectBySelectParam" resultType="com.cn.zbx.vo.VideoVO" parameterType="com.cn.zbx.vo.VideoVO" >
+    select v.*,
+    	a.classid as classid,
+    	a.title as articleTitle,
+    	(select count(1) from cus_buy_history c where c.buy_type='2' and c.product_id=v.id) as buyCount, 
+    	(select count(1) from comment c where c.commenttype='2' and c.commenttoid=v.id) as commentCount 
+    from video_main v 
+    join article_main a on v.articleid=a.id 
+    <if test="classid != null" >
+      and a.classid = #{classid,jdbcType=INTEGER}
+    </if>
+    where 1=1
+    <if test="title != null" >
+      and v.title = #{title,jdbcType=VARCHAR},
+    </if>
+    <if test="videopath != null" >
+      and v.videopath = #{videopath,jdbcType=VARCHAR},
+    </if>
+    <if test="imgurl != null" >
+      and v.imgurl = #{imgurl,jdbcType=VARCHAR},
+    </if>
+    <if test="articleid != null" >
+      and v.articleid = #{articleid,jdbcType=INTEGER},
+    </if>
+    <if test="suffix != null" >
+      and v.suffix = #{suffix,jdbcType=VARCHAR},
+    </if>
+    <if test="size != null" >
+      and v.size = #{size,jdbcType=INTEGER},
+    </if>
+    <if test="playtime != null" >
+      and v.playtime = #{playtime,jdbcType=INTEGER},
+    </if>
+    <if test="isfree != null" >
+      and v.isfree = #{isfree,jdbcType=INTEGER},
+    </if>
+    <if test="nocomment != null" >
+      and v.nocomment = #{nocomment,jdbcType=INTEGER},
+    </if>
+    <if test="makedate != null" >
+      and v.makedate = #{makedate,jdbcType=TIMESTAMP},
+    </if>
+    <if test="modifydate != null" >
+      and v.modifydate = #{modifydate,jdbcType=TIMESTAMP},
+    </if>
+    order by v.makedate desc 
+    <if test="startLimit != null" >
+      <if test="pageSize != null" >
+     	 limit #{startLimit}, #{pageSize}
+      </if>
+    </if>
+  </select>
 </mapper>

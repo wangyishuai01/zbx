@@ -218,4 +218,31 @@ public class TClassifyController {
 		return JSONObject.toJSONString(resultMap);
 	}
 
+	@ResponseBody
+	@RequestMapping(value="/selectClassifyByParamV2", method = { RequestMethod.GET, RequestMethod.POST })
+	public String selectClassifyByParamV2(HttpServletRequest request, HttpServletResponse response, Tclassify tclassify){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		Tclassify tclassifyParam = new Tclassify();
+		if(tclassify.getId() != null && !"".equals(tclassify.getId())){
+			tclassifyParam.setId(tclassify.getId());
+		}
+		if(tclassify.getName() != null && !"".equals(tclassify.getName())){
+			tclassifyParam.setName(tclassify.getName());
+		}
+		if(tclassify.getPid() != null && !"".equals(tclassify.getPid())){
+			tclassifyParam.setPid(tclassify.getPid());
+		}
+		if(tclassify.getIsdisplay() != null && !"".equals(tclassify.getIsdisplay())){
+			tclassifyParam.setIsdisplay(tclassify.getIsdisplay());
+		}
+		List<Tclassify> tclassifyList = tClassifyService.selectBySelectParam(tclassifyParam);
+		if(tclassifyList != null && tclassifyList.size() > 0){
+			resultMap.put("data", tclassifyList);
+			resultMap.put("success", true);
+		} else {
+			resultMap.put("success", false);
+		}
+		return JSONObject.toJSONString(resultMap);
+	}
 }

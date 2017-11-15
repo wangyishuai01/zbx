@@ -2,8 +2,13 @@ package com.cn.zbx.pojo;
 
 import java.util.Date;
 
-public class VideoMain {
-    private Integer id;
+public class VideoMain extends BasicPojo{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer id;
 
     private String title;
 
