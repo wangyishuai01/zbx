@@ -29,9 +29,9 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
         String contextPath = request.getContextPath();  
         String url = requestUri.substring(contextPath.length());  
         if(url.length() > 0){
-        	String substring = url.substring(1,url.length());
-        	String className = substring.substring(0, substring.indexOf("/"));//调用的类�?
-        	String funcName = substring.substring(substring.indexOf("/")+1,substring.length());//调用的方法名
+//        	String substring = url.substring(1,url.length());
+//        	String className = substring.substring(0, substring.indexOf("/"));//调用的类�?
+//        	String funcName = substring.substring(substring.indexOf("/")+1,substring.length());//调用的方法名
         	LOGGER.info("requestUri ---- => :{}",requestUri );   
 //        	LOGGER.info("contextPath --- => :{}",contextPath );  
 //        	LOGGER.info("url ----------- => :{}",url );  

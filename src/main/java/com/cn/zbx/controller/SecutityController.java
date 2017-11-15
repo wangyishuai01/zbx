@@ -9,16 +9,10 @@ package com.cn.zbx.controller;
 
 import java.net.URLEncoder;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -96,7 +90,7 @@ public class SecutityController {
 		return "redirect:/login.jsp";
 	}
 
-	public static List getDTOList(String jsonString, Class clazz, Map map) {
+	/*public static List getDTOList(String jsonString, Class clazz, Map map) {
 
 		JSONArray array = JSONArray.fromObject(jsonString);
 		List list = new ArrayList();
@@ -105,5 +99,5 @@ public class SecutityController {
 			list.add(JSONObject.toBean(jsonObject, clazz, map));
 		}
 		return list;
-	}
+	}*/
 }

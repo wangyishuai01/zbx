@@ -1,7 +1,7 @@
 package com.cn.zbx.task;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+/*import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;*/
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TimerTask {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(TimerTask.class);
+//	private static final Logger LOGGER = LoggerFactory.getLogger(TimerTask.class);
 	
 	/** 
      * 定时计算。每天凌晨 01:00 执行一次 
