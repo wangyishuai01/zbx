@@ -209,6 +209,7 @@ public class TClassifyController {
 		if(tclassify.getIsdisplay() != null && !"".equals(tclassify.getIsdisplay())){
 			tclassifyParam.setIsdisplay(tclassify.getIsdisplay());
 		}
+		tclassifyParam.setModifydate(new Date());
 		int result = tClassifyService.updateByPrimaryKeySelective(tclassifyParam);
 		if(result <= 0){
 			resultMap.put("success", false);

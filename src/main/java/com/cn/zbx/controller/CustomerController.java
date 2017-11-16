@@ -1,5 +1,6 @@
 package com.cn.zbx.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +65,8 @@ public class CustomerController {
 			}
 			Customer CustomerParam = new Customer();
 			CustomerParam.setId(Integer.valueOf(CustomerId));;
-			CustomerParam.setIsdisable(Integer.valueOf(isdisable));;
+			CustomerParam.setIsdisable(Integer.valueOf(isdisable));
+			CustomerParam.setModifydate(new Date());
 			int result = customerService.updateByPrimaryKeySelective(CustomerParam);
 			if(result <= 0){
 				resultMap.put("success", false);
