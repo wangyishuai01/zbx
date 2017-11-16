@@ -83,7 +83,7 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<button aria-hidden="true" data-dismiss="modal" class="close"
-									type="button" onclick="closeCommentDivDiv();">×</button>
+									type="button" onclick="closeCommentDiv();">×</button>
 								<h4 class="modal-title">评论详细信息</h4>
 							</div>
 							<div class="modal-body">
@@ -137,7 +137,7 @@
 							</div>
 							<div class="modal-footer">
 								<button data-dismiss="modal" class="btn btn-default"
-									onclick="closeCommentDivDiv();" type="button">取消</button>
+									onclick="closeCommentDiv();" type="button">取消</button>
 							</div>
 						</div>
 						<!-- /.modal-content -->
@@ -264,7 +264,7 @@ function showOneComment(commentid){
 	$("#showCommentDiv").show();
 }
 
-function closeCommentDivDiv(){
+function closeCommentDiv(){
 	$("#showCommentDiv").hide();
 }
 

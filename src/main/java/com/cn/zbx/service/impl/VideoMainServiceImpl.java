@@ -37,7 +37,7 @@ public class VideoMainServiceImpl implements IVideoMainService {
 	@Override
 	public int updateByPrimaryKeySelective(VideoMain record) {
 		// TODO Auto-generated method stub
-		return 0;
+		return VideoMainMapper.updateByPrimaryKeySelective(record);
 	}
 
 	@Override

@@ -27,4 +27,6 @@ public interface IArticleMainService {
 	ArticleMain selectByPrimaryKey(Integer id);
 	
 	int updateByPrimaryKeySelective(ArticleMain record);
+	
+	List<ArticleMain> selectArticleNoContentBySelectParam(ArticleMain record);
 }

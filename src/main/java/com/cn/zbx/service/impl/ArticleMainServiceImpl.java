@@ -70,4 +70,28 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 		return articleMainMapper.updateByPrimaryKeySelective(record);
 	}
 
+	@Override
+	public List<ArticleMain> selectArticleNoContentBySelectParam(
+			ArticleMain record) {
+		// TODO Auto-generated method stub
+		List<ArticleMain> resultList = new ArrayList<ArticleMain>();
+		List<ArticleVO> articleVOList = articleMainMapper.selectBySelectParam(record);
+		ArticleMain oo;
+		for(ArticleVO o : articleVOList){
+			oo = new ArticleMain();
+			oo.setId(o.getId());
+			oo.setTitle(o.getTitle());
+			oo.setImgurl(o.getImgurl());
+			oo.setClassid(o.getClassid());
+			oo.setExcerpt(o.getExcerpt());
+			oo.setIsfree(o.getIsfree());
+			oo.setNocomment(o.getNocomment());
+			oo.setState(o.getState());
+			oo.setMakedate(o.getMakedate());
+			oo.setModifydate(o.getModifydate());
+			resultList.add(oo);
+		}
+		return resultList;
+	}
+
 }

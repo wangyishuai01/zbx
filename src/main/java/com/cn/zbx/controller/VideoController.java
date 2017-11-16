@@ -1,6 +1,5 @@
 package com.cn.zbx.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cn.zbx.pojo.VideoMain;
 import com.cn.zbx.service.IVideoMainService;
 import com.cn.zbx.vo.VideoVO;
 
@@ -57,6 +57,46 @@ public class VideoController {
 			resultMap.put("success", true);
 		} else {
 			resultMap.put("success", false);
+		}
+		return JSONObject.toJSONString(resultMap);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/updateSelectById", method = { RequestMethod.GET, RequestMethod.POST })
+	public String updateSelectById(HttpServletRequest request, HttpServletResponse response, VideoMain video){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		VideoMain videoParam = new VideoMain();
+		if(video.getId() != null && !"".equals(video.getId())){
+			videoParam.setId(video.getId());
+		}
+		if(video.getTitle() != null && !"".equals(video.getTitle())){
+			videoParam.setTitle(video.getTitle());
+		}
+		if(video.getVideopath() != null && !"".equals(video.getVideopath())){
+			videoParam.setVideopath(video.getVideopath());
+		}
+		if(video.getImgurl() != null && !"".equals(video.getImgurl())){
+			videoParam.setImgurl(video.getImgurl());
+		}
+		if(video.getArticleid() != null && !"".equals(video.getArticleid())){
+			videoParam.setArticleid(video.getArticleid());
+		}
+		if(video.getSuffix() != null && !"".equals(video.getSuffix())){
+			videoParam.setSuffix(video.getSuffix());
+		}
+		if(video.getIsfree() != null && !"".equals(video.getIsfree())){
+			videoParam.setIsfree(video.getIsfree());
+		}
+		if(video.getNocomment() != null && !"".equals(video.getNocomment())){
+			videoParam.setNocomment(video.getNocomment());
+		}
+		videoParam.setModifydate(new Date());
+		int result = videoMainService.updateByPrimaryKeySelective(videoParam);
+		if(result <= 0){
+			resultMap.put("success", false);
+		} else {
+			resultMap.put("success", true);
 		}
 		return JSONObject.toJSONString(resultMap);
 	}
