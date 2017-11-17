@@ -139,6 +139,12 @@ public class ArticleMainController {
 		if(article.getState() != null && !"".equals(article.getState())){
 			articleParam.setState(article.getState());
 		}
+		if(article.getPageCount() != null && !"".equals(article.getPageCount())){
+			articleParam.setPageCount(article.getPageCount());
+		}
+		if(article.getPageSize() != null && !"".equals(article.getPageSize())){
+			articleParam.setPageSize(article.getPageSize());
+		}
 		
 		Integer number = articleMainService.selectCountBySelectParam(articleParam);
 		if(number!=null && number > 0){
