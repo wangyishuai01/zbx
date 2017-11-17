@@ -76,7 +76,7 @@
 				</div>
 				<!-- edit -->
 				<div class="modal modal-darkorange" id="editDiv">
-					<div class="modal-dialog" style="margin: 60px auto;width:700px;">
+					<div class="modal-dialog" style="margin: 150px auto;width:400px;">
 						<div class="modal-content">
 							<div class="modal-header">
 								<button aria-hidden="true" data-dismiss="modal" class="close"
@@ -88,35 +88,16 @@
 									<div class="row" style="padding: 10px;">
 										<div class="col-lg-12 col-sm-12 col-xs-12">
 											<div class="col-md-12">
-												<div class="col-lg-6">用户名：</div>
-												<div class="col-lg-6">
-													<span class="input-icon icon-right">
-														<input type="text" id="name" name="name" class="form-control" style="width:100%;">
-														<input type="hidden" id="">
-													</span>
-												</div>
+												用&nbsp;户&nbsp;名：&nbsp;&nbsp;<input type="text" id="name" disabled="disabled" class="form-control" style="width:75%;">
+													<input type="hidden" id="customerId" value="">
 											</div>
 											<br>&nbsp;<br>
 											<div class="col-md-12">
-												<div class="col-lg-6">新密码：</div>
-												<div class="col-lg-6">
-													<select class="form-control" id="Pid"></select> 
-												</div>
+												新&nbsp;密&nbsp;码：&nbsp;&nbsp;<input type="password" id="password" class="form-control" style="width:75%;">
 											</div>
 											<br>&nbsp;<br>
 											<div class="col-md-12">
-												<div class="col-lg-6" >确认密码：</div>
-												<div class="col-lg-6">
-													<div id="isDisplay">
-														<label> <input  type="radio"
-															id="isDisplay1" name="isDisplay" value="1" checked="checked"> <span
-															class="text">显示</span>
-														</label> <label> <input  type="radio"
-															id="isDisplay0" name="isDisplay" value="0"> <span
-															class="text">不显示</span>
-														</label>
-													</div>
-												</div>
+												确认密码：&nbsp;<input type="password" id="repassword" class="form-control" style="width:75%;">
 											</div>
 											<input type="hidden" id="classId" value="">
 											<input type="hidden" id="pid" value="">
@@ -205,7 +186,7 @@ function init(){
 						str += "<th style='text-align: center;'><a href='javascript:editIsdisable("+res.id+",1)'>启用</a>";
 					}
 					str += " | <a href='javascript:return false;'>查看统计</a>"
-						+ " | <a href='javascript:editPassword("+res.id+")'>修改密码 </a></th></tr>";
+						+ " | <a href='javascript:editPassword("+res.id+","+res.name+")'>修改密码 </a></th></tr>";
 					$('.table').find('tbody').append(str);
 				}
 			} else {
@@ -236,8 +217,46 @@ function editIsdisable(cusId, isdisable){
 	});
 }
 
-function editPassword(cusId){
+function editPassword(cusId, cusName){
+	$("#name").val(cusName);
+	$("#customerId").val(cusId);
 	$("#editDiv").show();
+}
+
+function saveEdit(){
+	var customerId = $("#customerId").val();
+	var password = $("#password").val();
+	var rePassword = $("#repassword").val();
+	if(password != rePassword){
+		alert("两次密码不一致！");
+		return;
+	}
+	if(!(password.length>=6&&password.length<=11)){
+		alert("密码长度为6~11位！");
+		return;
+	}
+	if(customerId != ""){
+		$.ajax({
+			url : rootPath+"/customer/customerEditPassword.do",
+			type : "post",
+			dataType : "json",
+			data : {
+				"customerId" : customerId,
+				"password" : password
+			},
+			success : function(result) {
+				result = JSON.parse(result);
+				if(result.success){
+					alert("修改成功！");
+					closeEditDiv();
+				} else {
+					alert("修改失败！");
+				}
+			}
+		});
+	} else {
+		alert("用户为空！");
+	}
 }
 
 function closeEditDiv(){

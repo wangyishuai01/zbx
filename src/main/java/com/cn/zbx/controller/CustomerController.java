@@ -79,5 +79,28 @@ public class CustomerController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/customerEditPassword", method = { RequestMethod.GET, RequestMethod.POST })
+	public String customerEditPassword(HttpServletRequest request, HttpServletResponse response){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String CustomerId = request.getParameter("customerId");
+		String password = request.getParameter("password");
+		if(CustomerId != null && !"".equals(CustomerId)){
+			Customer CustomerParam = new Customer();
+			CustomerParam.setId(Integer.valueOf(CustomerId));;
+			CustomerParam.setPassword(password);
+			CustomerParam.setModifydate(new Date());
+			int result = customerService.updateByPrimaryKeySelective(CustomerParam);
+			if(result <= 0){
+				resultMap.put("success", false);
+			} else {
+				resultMap.put("success", true);
+			}
+		} else {
+			resultMap.put("success", false);
+		}
+		return JSONObject.toJSONString(resultMap);
+	}
+	
 	
 }
