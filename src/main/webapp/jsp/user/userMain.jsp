@@ -287,7 +287,10 @@ function tab(data) {
 
 $(document).ready(function(){
 	init();
-	$("#pageSelect").change(init);
+	$("#pageSelect").change(function(){
+		pageCount = 1;
+		init();
+	});
 });
 </script>
 </html>

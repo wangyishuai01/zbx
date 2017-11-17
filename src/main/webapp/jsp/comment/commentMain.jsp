@@ -45,8 +45,9 @@
 								<table class="table table-bordered table-striped table-condensed table-hover flip-content" >
 									<thead class="flip-content bordered-darkorange">
 										<tr role="row">
+											<th width="5%" style="text-align: center;">序号</th>
 											<th width="20%" style="text-align: center;">标题</th>
-											<th width="30%" style="text-align: center;">内容</th>
+											<th width="25%" style="text-align: center;">内容</th>
 											<th width="15%" style="text-align: center;">发布人</th>
 											<th width="20%" style="text-align: center;">时间</th>
 											<th width="15%" style="text-align: center;">操作</th>
@@ -195,6 +196,7 @@ function init(){
 					var makeDate = new Date();
 					makeDate.setTime(res.makedate);
 					var str = "<tr id='comment_tr"+res.id+"' class='comment_tr'>"
+							+ "<th style='text-align: center;'>"+((pageCount-1)*pageSize+(i+1))+"</th>"
 							+ "<th>"+res.title+"</th><th class='line-limit-length'>"+res.comment+"</th>"
 							+ "<th style='text-align: center;'>"+res.customerName+"</th>"
 							+ "<th style='text-align: center;'>"+(makeDate.format('yyyy-MM-dd h:m:s'))+"</th>"
@@ -318,7 +320,10 @@ function tab(data) {
 
 $(document).ready(function(){
 	init();
-	$("#pageSelect").change(init);
+	$("#pageSelect").change(function(){
+		pageCount = 1;
+		init();
+	});
 });
 </script>
 </html>

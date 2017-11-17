@@ -329,7 +329,10 @@ function submit() {
 
 $(document).ready(function(){
 	init();
-	$("#pageSelect").change(init);
+	$("#pageSelect").change(function(){
+		pageCount = 1;
+		init();
+	});
 	//创建编辑器
 	 ue = UE.getEditor('editor');
 	 $("#hideeditor").hide();

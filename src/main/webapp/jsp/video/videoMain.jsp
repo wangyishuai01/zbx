@@ -133,16 +133,16 @@
 											<tbody>
 											</tbody>
 										</table>
-										<div class="pull-right" style="margin-top: 5px;">
+										<!-- <div class="pull-right" style="margin-top: 5px;">
 											<form id="supplierInfo_form" action="">
 												<div class="col-lg-12">
 													<select id="pageSelect1" name="pageSize1">
-														<option selected="selected">5</option>
-														<option>10</option>
+														<option selected="selected">4</option>
+														<option>8</option>
 													</select>
 												</div>
 											</form>
-										</div>
+										</div> -->
 										<div class="page">
 											<input value="首页" type="button" onclick="first1()"/>
 											<input value="上一页" type="button" onclick="previous1()"/>
@@ -197,8 +197,8 @@ function init(){
 				for(var i=0; i<result.length; i++){
 					var res = result[i];
 					var str = "<tr id='video_tr"+res.id+"' class='video_tr'>"
-							+ "<th style='max-width: "+(document.body.clientWidth*0.25)+"px' class='line-limit-length'>"+res.title+"</th>"
-							+ "<th style='max-width: "+(document.body.clientWidth*0.3)+"px' class='line-limit-length'>"+res.articleTitle+"</th>"
+							+ "<th>"+res.title+"</th>"
+							+ "<th>"+res.articleTitle+"</th>"
 							+ "<th style='text-align: center;'>"+res.buyCount+"</th><th style='text-align: center;'>"+res.commentCount+"</th>";
 					if(res.nocomment == "0"){
 						str += "<th style='text-align: center;color:red;'>禁止</th>";
@@ -303,9 +303,9 @@ function editCommentPower(videoId, power){
 	});
 }
 
-var pageCount1 = 1, pageSize1 = 10, pageMax1 = 100;
+var pageCount1 = 1, pageSize1 = 5, pageMax1 = 100;
 function init1(){
-	pageSize1 = $("#pageSelect1").val();
+//	pageSize1 = $("#pageSelect1").val();
 	var articleTitle = $("#articleTitle").val();
 	var classifyId1 = $("#videoSecClass1").val();
 	var articleState = $("#articleState").val();
@@ -330,7 +330,8 @@ function init1(){
 					var res = result[i];
 					var str = "<tr id='article_tr"+res.id+"' class='article_tr'>"
 							+ "<th style='text-align: center;'><input type='radio' value='"+res.id+"' name='article_tr'></th>"
-							+ "<th style='max-width: 340px' class='line-limit-length'>"+res.title+"</th><th style='max-width: 382px' class='line-limit-length'>"+(res.excerpt==undefined?"暂无":res.excerpt)+"</th>";
+							+ "<th style='max-width: 340px' class='line-limit-length'>"+res.title+"</th>"
+							+ "<th style='max-width: 382px' class='line-limit-length'>"+((res.excerpt==undefined||res.excerpt=='')?"暂无":res.excerpt)+"</th>";
 					if(res.state == "1"){
 						str += "<th style='text-align: center;'>启用</th>";
 					} else {
@@ -470,7 +471,10 @@ function last1(){
 function openEditDiv(videoId){
 	$("#videoId").val(videoId);
 	init1();
-	$("#pageSelect1").change(init1);
+//	$("#pageSelect1").change(function(){
+//		pageCount1 = 1;
+//		init1();
+//	});
 	initFirstClasstify1();
 	$("#videoFirClass1").change(initSecondClasstify1);
 	$("#editDiv").show();
@@ -531,7 +535,10 @@ function tab(data) {
 
 $(document).ready(function(){
 	init();
-	$("#pageSelect").change(init);
+	$("#pageSelect").change(function(){
+		pageCount = 1;
+		init();
+	});
 	initFirstClasstify();
 	$("#videoFirClass").change(initSecondClasstify);
 });

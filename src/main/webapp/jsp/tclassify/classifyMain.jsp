@@ -54,7 +54,8 @@
 								<table class="table table-bordered table-striped table-condensed table-hover flip-content" >
 									<thead class="flip-content bordered-darkorange">
 										<tr role="row">
-											<th width="70%">类别</th>
+											<th width="5%" style="text-align: center;">序号</th>
+											<th width="65%">类别</th>
 											<th width="15%" style="text-align: center;">文章数</th>
 											<th width="15%" style="text-align: center;">操作</th>
 										</tr>
@@ -236,6 +237,7 @@ function init(){
 				for(var i=0; i<result.length; i++){
 					var res = result[i];
 					var str = "<tr id='tclassify_tr"+res.classid+"' class='tclassify_tr'>"
+							+ "<th style='text-align: center;'>"+((pageCount-1)*pageSize+(i+1))+"</th>"
 							+ "<th>"+res.name+"</th><th style='text-align: center;'>"+res.count+"</th>"
 							+ "<th style='text-align: center;'><a href='javascript:editClassify("+res.classid+")'>编辑</a> "
 							+ "| <a href='javascript:deleteClassify("+res.classid+")'>删除</a><br>";
@@ -478,7 +480,10 @@ function tab(data) {
 
 $(document).ready(function(){
 	init();
-	$("#pageSelect").change(init);
+	$("#pageSelect").change(function(){
+		pageCount = 1;
+		init();
+	});
 });
 </script>
 </html>
