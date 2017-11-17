@@ -81,31 +81,31 @@
 							<div class="modal-header">
 								<button aria-hidden="true" data-dismiss="modal" class="close"
 									type="button" onclick="closeEditDiv();">×</button>
-								<h4 class="modal-title">编辑分类信息</h4>
+								<h4 class="modal-title">修改密码</h4>
 							</div>
 							<div class="modal-body">
 								<div class="bootbox-body">
 									<div class="row" style="padding: 10px;">
 										<div class="col-lg-12 col-sm-12 col-xs-12">
 											<div class="col-md-12">
-												<div class="col-lg-6">分类名称：</div>
+												<div class="col-lg-6">用户名：</div>
 												<div class="col-lg-6">
-													<span class="input-icon icon-right"> <input
-														type="text"
-														id="name" name="name" class="form-control" style="width:100%;">
+													<span class="input-icon icon-right">
+														<input type="text" id="name" name="name" class="form-control" style="width:100%;">
+														<input type="hidden" id="">
 													</span>
 												</div>
 											</div>
 											<br>&nbsp;<br>
 											<div class="col-md-12">
-												<div class="col-lg-6">分类上级类别：</div>
+												<div class="col-lg-6">新密码：</div>
 												<div class="col-lg-6">
 													<select class="form-control" id="Pid"></select> 
 												</div>
 											</div>
 											<br>&nbsp;<br>
 											<div class="col-md-12">
-												<div class="col-lg-6" >是否显示：</div>
+												<div class="col-lg-6" >确认密码：</div>
 												<div class="col-lg-6">
 													<div id="isDisplay">
 														<label> <input  type="radio"
@@ -204,7 +204,8 @@ function init(){
 					} else {
 						str += "<th style='text-align: center;'><a href='javascript:editIsdisable("+res.id+",1)'>启用</a>";
 					}
-					str += " | <a href='javascript:return false;'>查看统计</a></th></tr>";
+					str += " | <a href='javascript:return false;'>查看统计</a>"
+						+ " | <a href='javascript:editPassword("+res.id+")'>修改密码 </a></th></tr>";
 					$('.table').find('tbody').append(str);
 				}
 			} else {
@@ -233,6 +234,10 @@ function editIsdisable(cusId, isdisable){
 			}
 		}
 	});
+}
+
+function editPassword(cusId){
+	$("#editDiv").show();
 }
 
 function closeEditDiv(){
