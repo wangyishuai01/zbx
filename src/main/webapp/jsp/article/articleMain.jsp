@@ -44,71 +44,75 @@
 								</div>
 							</div>
 							<div class="widget-body" id="pro">
-								<!-- <div class="table-toolbar">
+								<div class="table-toolbar">
 									<div class="clearfix">
-										<a onclick="addTClassify();" class="btn btn-primary"> 
-											<i class="fa fa-plus"></i> 添加分类
+										<a onclick="" class="btn btn-primary"> 
+											<i class="fa fa-plus"></i> 添加文章
 										</a>
 									</div>
-								</div> -->
+								</div>
 								<div id="hidediv1">
-								<div class="table-toolbar" >
-									<span>类别：</span> <input maxlength="20" type="text" id="articleName" />
-									<span>类型：</span> <input maxlength="20" type="text" id="articleType" />
-									<span>文章标题：</span> <input maxlength="20" type="text" id="articleTitle" />
-									<span>关键字：</span> <input maxlength="20" type="text" id="articleKey" />
-									<a class="btn btn-default shiny" onclick="init();">搜索</a>
+									<div class="table-toolbar" >
+										<span>文章类别：</span>
+										<select id="articleFirClass" class="form-control" style="width:200px;"></select>
+										<span>文章类型：</span>
+										<select id="articleSecClass" class="form-control" style="width:200px;"><option value=''>--请选择--</option></select>
+										<span>文章标题：</span> 
+										<input  class="form-control" style="width:200px;" id="articleTitle" />
+										<span>关键字：</span> 
+										<input  class="form-control" style="width:200px;" id="articleKey" />
+										<a class="btn btn-default shiny" onclick="query();">查询</a>
+									</div>
+									<table class="table table-bordered table-striped table-condensed table-hover flip-content" >
+										<thead class="flip-content bordered-darkorange">
+											<tr role="row">
+												<th width="5%" style="text-align: center;">序号</th>
+												<th width="48%">标题</th>
+												<th width="8%" style="text-align: center;">状态</th>
+												<th width="8%" style="text-align: center;">阅读</th>
+												<th width="8%" style="text-align: center;">评论</th>
+												<th width="8%" style="text-align: center;">评论权限</th>
+												<th width="15%" style="text-align: center;">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+									<div class="pull-right" style="margin-top: 5px;">
+										<form id="supplierInfo_form" action="">
+											<div class="col-lg-12">
+												<select id="pageSelect" name="pageSize">
+													<option>5</option>
+													<option selected="selected">10</option>
+													<option>15</option>
+													<option>20</option>
+												</select>
+											</div>
+										</form>
+									</div>
+									<div class="page">
+										<input value="首页" type="button" onclick="first()"/>
+										<input value="上一页" type="button" onclick="previous()"/>
+										<input value="下一页" type="button" onclick="next()"/>
+										<input value="尾页" type="button" onclick="last()"/>
+									</div>
 								</div>
-								<table class="table table-bordered table-striped table-condensed table-hover flip-content" >
-									<thead class="flip-content bordered-darkorange">
-										<tr role="row">
-											<th width="5%" style="text-align: center;">序号</th>
-											<th width="45%">标题</th>
-											<th width="8%" style="text-align: center;">状态</th>
-											<th width="8%" style="text-align: center;">阅读</th>
-											<th width="8%" style="text-align: center;">评论</th>
-											<th width="10%" style="text-align: center;">评论权限</th>
-											<th width="16%" style="text-align: center;">操作</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-								<div class="pull-right" style="margin-top: 5px;">
-									<form id="supplierInfo_form" action="">
-										<div class="col-lg-12">
-											<select id="pageSelect" name="pageSize">
-												<option>5</option>
-												<option selected="selected">10</option>
-												<option>15</option>
-												<option>20</option>
-											</select>
-										</div>
-									</form>
-								</div>
-								<div class="page">
-									<input value="首页" type="button" onclick="first()"/>
-									<input value="上一页" type="button" onclick="previous()"/>
-									<input value="下一页" type="button" onclick="next()"/>
-									<input value="尾页" type="button" onclick="last()"/>
-								</div>
-								</div>
-						<!-- 编辑器 -->
+								<!-- 编辑器 -->
 								<div id="hideeditor">
-								<div class="table-toolbar" >
-								 <input type="hidden" id="articleid" />
-									<span>文章标题：</span> <input maxlength="20" type="text" id="title" />
-									<span>状态：</span> <select id="state">
-													  <option value="1">启用</option>
-													  <option value="0">禁用</option>
-													</select>
-									<span>评论权限：</span> <select id="nocomment">
-													  <option value="1">允许</option>
-													  <option value="0">禁止</option>
-													</select>
-													<!-- <input maxlength="20" type="text" id="nocomment" /> -->
-									<button onclick="closeUeditor()">取消编辑</button>
-								</div>
+									<div class="table-toolbar" >
+									 	<input type="hidden" id="articleid" />
+										<span>文章标题：</span> <input maxlength="20" type="text" id="title" />
+										<span>状态：</span> <select id="state">
+														  <option value="1">启用</option>
+														  <option value="0">禁用</option>
+														</select>
+										<span>评论权限：</span> <select id="nocomment">
+														  <option value="1">允许</option>
+														  <option value="0">禁止</option>
+														</select>
+														<!-- <input maxlength="20" type="text" id="nocomment" /> -->
+										<button onclick="closeUeditor()">取消编辑</button>
+									</div>
 									<script id="editor" type="text/plain"
 										style="width:1024px;height:500px;"></script>
 									<div id="">
@@ -116,13 +120,10 @@
 									</div>
 								</div>
 
-
-
 							</div>
 						</div>
 					</div>
 				</div>
-				
 				
 			</div>
 			<!-- /Page Body -->
@@ -133,12 +134,11 @@
 <script type="text/javascript">
 var ue;
 var rootPath = "${pageContext.request.contextPath}";
-
-
 var pageCount = 1, pageSize = 10, pageMax = 100;
 function init(){
 	pageSize = $("#pageSelect").val();
-	var className = $("#className").val();
+	var articleTitle = $("#articleTitle").val();
+	var classifyId = $("#articleSecClass").val();
 	$.ajax({
 		url : rootPath+"/Article/ArticleList.do",
 		type : "post",
@@ -146,7 +146,8 @@ function init(){
 		data : {
 			"pageCount" : pageCount,
 			"pageSize" : pageSize,
-			"className" : className
+			"title" : articleTitle,
+			"classid" : classifyId
 		},
 		success : function(result) {
 			$("tr[class='comment_tr']").remove();
@@ -156,27 +157,26 @@ function init(){
 				result = result.data;
 				for(var i=0; i<result.length; i++){
 					var res = result[i];
-					if(res.state==1){
-						res.state="启用";
-					}else{
-						res.state="禁用";
-					}
-					if(res.nocomment==1){
-						res.nocomment="允许";
-					}else{
-						res.nocomment="禁止";
-					}
 					var str = "<tr id='comment_tr"+res.id+"' class='comment_tr'>"
-					+ "<th style='text-align: center;'>"+((pageCount-1)*pageSize+(i+1))+"</th>"
-					+ "<th>"+res.title+"</th><th style='text-align: center;'>"+res.state+"</th>"
-					+ "<th style='text-align: center;'>"+res.commentCount+"</th>"
-					+ "<th style='text-align: center;'>"+res.commentCount+"</th>"
-					+ "<th style='text-align: center;'>"+res.nocomment+"</th>"
-					+ "<th style='text-align: center;'><a href='javascript:createEditor("+res.id+")'>编辑</a>"
-					+ " | <a href='javascript:showOneComment("+res.id+")'>视频</a>"
-					+ " | <a href='javascript:deleteArticle("+res.id+")'>删除</a>"
-					+ " | <a href='javascript:showOneComment("+res.id+")'>分类</a></th>";
-			str += "</tr>";
+							+ "<th style='text-align: center;'>"+((pageCount-1)*pageSize+(i+1))+"</th>"
+							+ "<th>"+res.title+"</th>";
+					if(res.state==1){
+						str += "<th style='text-align: center;'>启用</th>";
+					}else{
+						str += "<th style='text-align: center;color: red;'>禁用</th>";
+					}
+					str += "<th style='text-align: center;'>"+res.commentCount+"</th>"
+						+ "<th style='text-align: center;'>"+res.commentCount+"</th>";
+					if(res.nocomment==1){
+						str += "<th style='text-align: center;'>允许</th>";
+					}else{
+						str += "<th style='text-align: center;color: red;'>禁止</th>";
+					}
+					str += "<th style='text-align: center;'><a href='javascript:createEditor("+res.id+")'>编辑</a>"
+						+ " | <a href='javascript:showOneComment("+res.id+")'>视频</a>"
+						+ " | <a href='javascript:deleteArticle("+res.id+")'>删除</a>"
+						+ " | <a href='javascript:showOneComment("+res.id+")'>分类</a></th>";
+					str += "</tr>";
 					$('.table').find('tbody').append(str);
 				}
 			} else {
@@ -220,7 +220,66 @@ function closeUeditor(){
 	ue.setContent('');
 }
 
+function initFirstClasstify(){
+	$.ajax({
+		url : rootPath+"/tclassify/selectClassifyByParamV2.do",
+		type : "post",
+		dataType : "json",
+		data : {
+			"pid" : "0" 
+		},
+		success : function(result) {
+			result = JSON.parse(result);
+			if(result.success){
+				var data1 = result.data;
+				var option = "<option value=''>--请选择--</option>";
+				for(var i=0; i<data1.length; i++){
+					var res = data1[i];
+					option += "<option value='"+res.id+"'>"+res.name+"</option>";
+				}
+				$("#articleFirClass").html(option);
+			}
+		}
+	});
+}
+function initSecondClasstify(){
+	var firstClassifyId = $("#articleFirClass").val();
+	if(firstClassifyId != ''){
+		$.ajax({
+			url : rootPath+"/tclassify/selectClassifyByParamV2.do",
+			type : "post",
+			dataType : "json",
+			data : {
+				"pid" : firstClassifyId 
+			},
+			success : function(result) {
+				result = JSON.parse(result);
+				var option = "<option value=''>--请选择--</option>";
+				if(result.success){
+					var data1 = result.data;
+					for(var i=0; i<data1.length; i++){
+						var res = data1[i];
+						option += "<option value='"+res.id+"'>"+res.name+"</option>";
+					}
+				}
+				$("#articleSecClass").html(option);
+			}
+		});
+	} else {
+		var option = "<option value=''>--请选择--</option>";
+		$("#videoSecClass").html(option);
+	}
+}
 
+function query(){
+	var firstClassifyId = $("#videoFirClass").val();
+	var secondClassifyId = $("#videoSecClass").val();
+	if(firstClassifyId != '' && secondClassifyId == ''){
+		alert("请选择文章类型！");
+		return false;
+	}
+	init();
+}
 
 function first(){
 	if(pageCount == 1){
@@ -335,6 +394,8 @@ $(document).ready(function(){
 		pageCount = 1;
 		init();
 	});
+	initFirstClasstify();
+	$("#articleFirClass").change(initSecondClasstify);
 	//创建编辑器
 	 ue = UE.getEditor('editor');
 	 $("#hideeditor").hide();
