@@ -31,25 +31,40 @@ public class ArticleMainController {
 	
 	@ResponseBody
 	@RequestMapping(value="/ArticleList", method = { RequestMethod.GET, RequestMethod.POST })
-	public String initClassifyMain(HttpServletRequest request, HttpServletResponse response){
+	public String initClassifyMain(HttpServletRequest request, HttpServletResponse response, ArticleMain article){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		String pageCount = request.getParameter("pageCount");
-		String pageSize = request.getParameter("pageSize");
-		if(pageCount == null || "".equals(pageCount)){
-			pageCount = "1";
+
+		ArticleMain articleParam = new ArticleMain();
+		if(article.getId() != null && !"".equals(article.getId())){
+			articleParam.setId(article.getId());
 		}
-		if(pageSize == null || "".equals(pageSize)){
-			pageSize = "10";
+		if(article.getTitle() != null && !"".equals(article.getTitle())){
+			articleParam.setTitle(article.getTitle());
 		}
-		ArticleMain artickeMain = new ArticleMain();
-		artickeMain.setPageCount(Integer.valueOf(pageCount));
-		artickeMain.setPageSize(Integer.valueOf(pageSize));
-		Integer number = articleMainService.selectCountBySelectParam(artickeMain);
-		if(number!=null && number > 0){
-			List<ArticleVO> resultList = articleMainService.selectBySelectParam(artickeMain);
-			for(ArticleVO article:resultList){
-				int count = commentService.selectByArticleId(article.getId());
-				article.setCommentCount(count);
+		if(article.getClassid() != null && !"".equals(article.getClassid())){
+			articleParam.setClassid(article.getClassid());
+		}
+		if(article.getIsfree() != null && !"".equals(article.getIsfree())){
+			articleParam.setIsfree(article.getIsfree());
+		}
+		if(article.getNocomment() != null && !"".equals(article.getNocomment())){
+			articleParam.setNocomment(article.getNocomment());
+		}
+		if(article.getState() != null && !"".equals(article.getState())){
+			articleParam.setState(article.getState());
+		}
+		if(article.getPageCount() != null && !"".equals(article.getPageCount())){
+			articleParam.setPageCount(article.getPageCount());
+		}
+		if(article.getPageSize() != null && !"".equals(article.getPageSize())){
+			articleParam.setPageSize(article.getPageSize());
+		}
+		Integer number = articleMainService.selectCountBySelectParam(articleParam);
+		if(number != null && number > 0){
+			List<ArticleVO> resultList = articleMainService.selectBySelectParam(articleParam);
+			for(ArticleVO article1:resultList){
+				int count = commentService.selectByArticleId(article1.getId());
+				article1.setCommentCount(count);
 			}
 			resultMap.put("data", resultList);
 			resultMap.put("number", number);
