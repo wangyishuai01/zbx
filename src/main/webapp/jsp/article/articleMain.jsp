@@ -62,7 +62,8 @@
 								<table class="table table-bordered table-striped table-condensed table-hover flip-content" >
 									<thead class="flip-content bordered-darkorange">
 										<tr role="row">
-											<th width="50%">标题</th>
+											<th width="5%" style="text-align: center;">序号</th>
+											<th width="45%">标题</th>
 											<th width="8%" style="text-align: center;">状态</th>
 											<th width="8%" style="text-align: center;">阅读</th>
 											<th width="8%" style="text-align: center;">评论</th>
@@ -166,6 +167,7 @@ function init(){
 						res.nocomment="禁止";
 					}
 					var str = "<tr id='comment_tr"+res.id+"' class='comment_tr'>"
+					+ "<th style='text-align: center;'>"+((pageCount-1)*pageSize+(i+1))+"</th>"
 					+ "<th>"+res.title+"</th><th style='text-align: center;'>"+res.state+"</th>"
 					+ "<th style='text-align: center;'>"+res.commentCount+"</th>"
 					+ "<th style='text-align: center;'>"+res.commentCount+"</th>"

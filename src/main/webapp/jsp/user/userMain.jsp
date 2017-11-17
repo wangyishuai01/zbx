@@ -42,7 +42,8 @@
 								<table class="table table-bordered table-striped table-condensed table-hover flip-content" >
 									<thead class="flip-content bordered-darkorange">
 										<tr role="row">
-											<th width="50%">用户名</th>
+											<th width="5%" style="text-align: center;">序号</th>
+											<th width="45%">用户名</th>
 											<th width="15%" style="text-align: center;">状态（启用/禁用）</th>
 											<th width="15%" style="text-align: center;">用户最近登录</th>
 											<th width="20%" style="text-align: center;">操作</th>
@@ -184,6 +185,7 @@ function init(){
 					var res = result[i];
 					
 					var str = "<tr id='customer_tr"+res.id+"' class='customer_tr'>"
+							+ "<th style='text-align: center;'>"+((pageCount-1)*pageSize+(i+1))+"</th>"
 							+ "<th>"+res.name+"</th>";
 					if(res.isdisable == "1"){
 						str += "<th style='text-align: center;'>启用</th>";

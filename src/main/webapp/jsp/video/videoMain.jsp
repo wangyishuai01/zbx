@@ -60,12 +60,13 @@
 								<table class="table table-bordered table-striped table-condensed table-hover flip-content" >
 									<thead class="flip-content bordered-darkorange">
 										<tr role="row">
+											<th width="5%" style="text-align: center;">序号</th>
 											<th width="30%">视屏标题</th>
 											<th width="30%">文章标题</th>
 											<th width="5%" style="text-align: center;">购买次数</th>
 											<th width="5%" style="text-align: center;">评论次数</th>
 											<th width="10%" style="text-align: center;">评论权限</th>
-											<th width="20%" style="text-align: center;">操作</th>
+											<th width="15%" style="text-align: center;">操作</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -125,7 +126,8 @@
 											<thead class="flip-content bordered-darkorange">
 												<tr role="row">
 													<th width="5%" style="text-align: center;">选择</th>
-													<th width="40%" style="text-align: center;">文章标题</th>
+													<th width="5%" style="text-align: center;">序号</th>
+													<th width="35%" style="text-align: center;">文章标题</th>
 													<th width="45%" style="text-align: center;">文章摘要</th>
 													<th width="10%" style="text-align: center;">文章状态</th>
 												</tr>
@@ -197,6 +199,7 @@ function init(){
 				for(var i=0; i<result.length; i++){
 					var res = result[i];
 					var str = "<tr id='video_tr"+res.id+"' class='video_tr'>"
+							+ "<th style='text-align: center;'>"+((pageCount-1)*pageSize+(i+1))+"</th>"
 							+ "<th>"+res.title+"</th>"
 							+ "<th>"+res.articleTitle+"</th>"
 							+ "<th style='text-align: center;'>"+res.buyCount+"</th><th style='text-align: center;'>"+res.commentCount+"</th>";
@@ -330,8 +333,9 @@ function init1(){
 					var res = result[i];
 					var str = "<tr id='article_tr"+res.id+"' class='article_tr'>"
 							+ "<th style='text-align: center;'><input type='radio' value='"+res.id+"' name='article_tr'></th>"
-							+ "<th style='max-width: 340px' class='line-limit-length'>"+res.title+"</th>"
-							+ "<th style='max-width: 382px' class='line-limit-length'>"+((res.excerpt==undefined||res.excerpt=='')?"暂无":res.excerpt)+"</th>";
+							+ "<th style='text-align: center;'>"+((pageCount1-1)*pageSize1+(i+1))+"</th>"
+							+ "<th style='max-width: 300px' class='line-limit-length'>"+res.title+"</th>"
+							+ "<th style='max-width: 342px' class='line-limit-length'>"+((res.excerpt==undefined||res.excerpt=='')?"暂无":res.excerpt)+"</th>";
 					if(res.state == "1"){
 						str += "<th style='text-align: center;'>启用</th>";
 					} else {
