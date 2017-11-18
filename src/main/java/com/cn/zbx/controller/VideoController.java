@@ -1,6 +1,5 @@
 package com.cn.zbx.controller;
 
-import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -104,7 +103,7 @@ public class VideoController {
 	}
 	
 	/**
-	 * 编辑视屏信息功能 包括价格
+	 * 编辑视频信息功能 包括价格
 	 * @param request
 	 * @param response
 	 * @param video
@@ -231,7 +230,7 @@ public class VideoController {
 	}
 	
 	/**
-	 * 新增视屏功能
+	 * 新增视频功能
 	 * @param request
 	 * @param response
 	 * @param video

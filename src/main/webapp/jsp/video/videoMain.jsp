@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>视屏管理</title>
+<title>视频管理</title>
 <style type="text/css">
 *{
 	margin: auto;
@@ -32,7 +32,7 @@
 					<div class="col-xs-12 col-md-12">
 						<div class="widget">
 						<div class="widget-header ">
-								<h5 class="widget-caption">视屏管理</h5>
+								<h5 class="widget-caption">视频管理</h5>
 								<div class="widget-buttons">
 									<a href="#" data-toggle="maximize"></a> <a href="#"
 										data-toggle="collapse" onclick="tab('pro');"> <i
@@ -44,16 +44,16 @@
 								<div class="table-toolbar">
 									<div class="clearfix">
 										<a onclick="openUrl('/jsp/video/addVideo.jsp')" class="btn btn-primary"> 
-											<i class="fa fa-plus"></i> 添加视屏
+											<i class="fa fa-plus"></i> 添加视频
 										</a>
 									</div>
 								</div>
 								<div class="table-toolbar">
-									<span>视屏类别：</span>
+									<span>视频类别：</span>
 									<select id="videoFirClass" class="form-control" style="width:250px;"></select>
-									<span>视屏类型：</span>
+									<span>视频类型：</span>
 									<select id="videoSecClass" class="form-control" style="width:250px;"><option value=''>--请选择--</option></select>
-									<span>视屏标题：</span>
+									<span>视频标题：</span>
 									<input maxlength="20" type="text" id="videoTitle" class="form-control" style="width:250px;">
 									<a class="btn btn-default shiny" onclick="query();">查询</a>
 								</div>
@@ -61,7 +61,7 @@
 									<thead class="flip-content bordered-darkorange">
 										<tr role="row">
 											<th width="5%" style="text-align: center;">序号</th>
-											<th width="30%">视屏标题</th>
+											<th width="30%">视频标题</th>
 											<th width="35%">文章标题</th>
 											<th width="5%" style="text-align: center;">购买次数</th>
 											<th width="5%" style="text-align: center;">评论次数</th>
@@ -207,14 +207,14 @@ function query(){
 	var firstClassifyId = $("#videoFirClass").val();
 	var secondClassifyId = $("#videoSecClass").val();
 	if(firstClassifyId != '' && secondClassifyId == ''){
-		alert("请选择视屏类型！");
+		alert("请选择视频类型！");
 		return false;
 	}
 	init();
 }
 
 function deleteVideo(videoId){
-	if(confirm("确定删除该视屏吗？")){
+	if(confirm("确定删除该视频吗？")){
 		$.ajax({
 			url : rootPath+"/video/deleteVideoById.do",
 			type : "post",

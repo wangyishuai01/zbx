@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>视屏管理</title>
+<title>视频管理</title>
 <style type="text/css">
 *{
 	margin: auto;
@@ -42,7 +42,7 @@
 					<div style="float:center;width:80%">
 						<div class="widget">
 						<div class="widget-header ">
-								<h5 class="widget-caption">编辑视屏</h5>
+								<h5 class="widget-caption">编辑视频</h5>
 								<div class="widget-buttons">
 									<a href="#" data-toggle="maximize"></a> <a href="#"
 										data-toggle="collapse" onclick="tab('pro');"> <i
@@ -55,7 +55,7 @@
 									<div class="col-md-12">
 										<div class="col-md-12">
 											<span class="input-icon icon-right"> 
-												视屏名称：<input type="text" id="videoName" name="videoName" class="form-control" style="width:76%;">
+												视频名称：<input type="text" id="videoName" name="videoName" class="form-control" style="width:76%;">
 											</span>
 										</div>
 									</div>
@@ -107,11 +107,11 @@
 									<br>&nbsp;<br>
 									<div class="col-md-12">
 										<div class="col-md-6">
-											视屏类别：
+											视频类别：
 											<select id="videoFirClass1" disabled="disabled" class="form-control" style="width:50%;"></select>
 										</div>
 										<div class="col-md-6">
-											视屏类型：
+											视频类型：
 											<select id="videoSecClass1" disabled="disabled" class="form-control" style="width:50%;"></select>
 										</div>
 									</div>
@@ -127,7 +127,7 @@
 									<div class="col-md-12" id="showButton" style="display: none;">
 										<div style="float: right;margin-right: 18%;">
 											<button class="btn btn-default shiny" type="button"
-												onclick="">浏览查看视屏</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												onclick="">浏览查看视频</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<button data-dismiss="modal" class="btn btn-default shiny"
 												onclick='returnVideoMain();' type="button">返回</button>
 										</div>
@@ -410,7 +410,7 @@ function returnRelationArticleInfo(){
 
 function saveEditCheck(){
 	if($("#videoName").val().length > 50){
-		alert("视屏名字长度不能大于50！");
+		alert("视频名字长度不能大于50！");
 		return false;
 	}
 	if($("input[name='isFree']:checked").val() == "0"){
@@ -501,6 +501,7 @@ $(document).ready(function(){
 		$("input[name='isFree']").attr("disabled","disabled");
 		$("#editButton").hide();
 		$("#showButton").show();
+		$("h5[]").html("查看视频");
 	}
 	$("input[name='isFree']").click(function(){
 		if($(this).val()=="1"){

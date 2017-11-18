@@ -74,7 +74,7 @@ public class VideoMainServiceImpl implements IVideoMainService {
 	}
 
 	/**
-	 * 编辑视屏信息功能 包括价格
+	 * 编辑视频信息功能 包括价格
 	 */
 	@Override
 	public boolean editVideoInfoByVideoId(Map<String, Object> mapParam) {
@@ -107,7 +107,7 @@ public class VideoMainServiceImpl implements IVideoMainService {
 	}
 
 	/**
-	 * 新增视屏信息 包括价格
+	 * 新增视频信息 包括价格
 	 */
 	@Override
 	@Transactional

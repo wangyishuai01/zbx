@@ -22,7 +22,7 @@ public class Comment extends BasicPojo {
 
     private Date modifydate;
     
-    private Integer commentToId;//文章id或者视屏id
+    private Integer commentToId;//文章id或者视频id
 
 	public Integer getCommentToId() {
 		return commentToId;
