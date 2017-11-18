@@ -116,7 +116,6 @@
 										</div>
 									</div>
 									<br>&nbsp;<br>
-									<input type="hidden" id="videoId" value="">
 									<div class="col-md-12" id="editButton">
 										<div style="float: right;margin-right: 18%;">
 											<button class="btn btn-default shiny" type="button"
@@ -187,7 +186,6 @@
 											<input value="尾页" type="button" onclick="last()"/>
 										</div>
 									</div>
-									<input type="hidden" id="videoId" value="">
 								</div>
 							</div>
 							<div class="modal-footer">
