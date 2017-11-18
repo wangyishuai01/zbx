@@ -107,6 +107,7 @@ public class VideoMainServiceImpl implements IVideoMainService {
 				} else {
 					price.setId(Integer.valueOf(videoPriceId));
 					price.setPrice(Double.valueOf(videoPrice));
+					price.setModifydate(currentDate);
 					int num1 = PriceMapper.updateByPrimaryKeySelective(price);
 					if(num1 <= 0){
 						return false;
