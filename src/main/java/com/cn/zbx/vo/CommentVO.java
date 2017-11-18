@@ -16,7 +16,7 @@ public class CommentVO {
     
     private String customerName;
     
-    private Integer commentToId;//文章id或者视屏id
+    private Integer commentToId;//文章id或者视频id
     
     private String spareField1;
 	
