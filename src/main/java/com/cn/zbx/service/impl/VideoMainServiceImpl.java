@@ -1,11 +1,13 @@
 package com.cn.zbx.service.impl;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cn.zbx.dao.PriceMapper;
 import com.cn.zbx.dao.VideoMainMapper;
@@ -104,6 +106,43 @@ public class VideoMainServiceImpl implements IVideoMainService {
 		return true;
 	}
 
-	
-	
+	/**
+	 * 新增视屏信息 包括价格
+	 */
+	@Override
+	@Transactional
+	public boolean addVideoInfo(Map<String, Object> mapParam) {
+		// TODO Auto-generated method stub
+		Date currentDate = new Date();
+		VideoMain video = new VideoMain();
+		Price price = new Price();
+		String videoPrice = String.valueOf(mapParam.get("videoPrice"));
+		try {
+			video = (VideoMain)MapUtil.mapToBean(mapParam, video.getClass());
+			int num = VideoMainMapper.insertSelective(video);
+			
+			if(num > 0 && video.getIsfree() == 0){
+				price.setType(2);
+				price.setProductId(video.getId());
+				price.setPrice(Double.valueOf(videoPrice));
+				price.setPlayNumber(0);
+				price.setSumPrice(0.00);
+				price.setAgainPayDays(10);
+				price.setMakedate(currentDate);
+				price.setModifydate(currentDate);
+				int num1 = PriceMapper.insertSelective(price);
+				if(num1 <= 0){
+					return false;
+				}
+			} else if(num <= 0){
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
 }

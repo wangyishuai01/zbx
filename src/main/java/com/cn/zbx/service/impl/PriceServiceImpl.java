@@ -32,4 +32,10 @@ public class PriceServiceImpl implements IPriceService {
 		return PriceMapper.selectCountBySelectParam(record);
 	}
 
+	@Override
+	public int insertSelective(Price record) {
+		// TODO Auto-generated method stub
+		return PriceMapper.insertSelective(record);
+	}
+
 }

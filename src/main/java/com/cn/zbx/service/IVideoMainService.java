@@ -31,4 +31,6 @@ public interface IVideoMainService {
 	
 	boolean editVideoInfoByVideoId(Map<String, Object> mapParam);
 	
+	boolean addVideoInfo(Map<String, Object> mapParam);
+	
 }

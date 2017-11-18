@@ -17,4 +17,5 @@ public interface IPriceService {
 	
 	int selectCountBySelectParam(Price record);
 	
+	int insertSelective(Price record);
 }
