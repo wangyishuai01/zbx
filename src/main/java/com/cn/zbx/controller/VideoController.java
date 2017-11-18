@@ -111,7 +111,7 @@ public class VideoController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/editVideoInfoById", method = { RequestMethod.GET, RequestMethod.POST })
-	public String updateSelectById(HttpServletRequest request, HttpServletResponse response, 
+	public String editVideoInfoById(HttpServletRequest request, HttpServletResponse response, 
 			VideoMain video, String videoPrice, String videoPriceOld, String videoPriceId){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
