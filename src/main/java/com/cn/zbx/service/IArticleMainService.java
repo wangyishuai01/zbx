@@ -32,4 +32,8 @@ public interface IArticleMainService {
 	List<ArticleMain> selectArticleNoContentBySelectParam(ArticleMain record);
 	
 	Map<String, Object> selectClassifyByArticleId(Integer id);
+	
+	boolean editArticleInfoByVideoId(Map<String, Object> mapParam);
+	
+	boolean addArticleInfo(Map<String, Object> mapParam);
 }

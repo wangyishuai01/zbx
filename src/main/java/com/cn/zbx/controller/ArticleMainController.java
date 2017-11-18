@@ -1,5 +1,6 @@
 package com.cn.zbx.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cn.zbx.pojo.ArticleMain;
+import com.cn.zbx.pojo.VideoMain;
 import com.cn.zbx.service.IArticleMainService;
 import com.cn.zbx.service.ICommentService;
+import com.cn.zbx.util.MapUtil;
 import com.cn.zbx.vo.ArticleVO;
 
 @Controller
@@ -193,4 +196,67 @@ public class ArticleMainController {
 		return JSONObject.toJSONString(resultMap);
 	}
 
+	/**
+	 * 编辑文章信息功能 包括价格
+	 * @param request
+	 * @param response
+	 * @param article
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/editArticleInfoById", method = { RequestMethod.GET, RequestMethod.POST })
+	public String editArticleInfoById(HttpServletRequest request, HttpServletResponse response, 
+			ArticleMain article, String articlePrice, String articlePriceOld, String articlePriceId){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		ArticleMain articleParam = new ArticleMain();
+		if(article.getId() != null && !"".equals(article.getId())){
+			articleParam.setId(article.getId());
+		}
+		if(article.getTitle() != null && !"".equals(article.getTitle())){
+			articleParam.setTitle(article.getTitle());
+		}
+		if(article.getImgurl() != null && !"".equals(article.getImgurl())){
+			articleParam.setImgurl(article.getImgurl());
+		}
+		if(article.getClassid() != null && !"".equals(article.getClassid())){
+			articleParam.setClassid(article.getClassid());
+		}
+		if(article.getExcerpt() != null && !"".equals(article.getExcerpt())){
+			articleParam.setExcerpt(article.getExcerpt());
+		}
+		if(article.getIsfree() != null && !"".equals(article.getIsfree())){
+			articleParam.setIsfree(article.getIsfree());
+		}
+		if(article.getNocomment() != null && !"".equals(article.getNocomment())){
+			articleParam.setNocomment(article.getNocomment());
+		}
+		if(article.getState() != null && !"".equals(article.getState())){
+			articleParam.setState(article.getState());
+		}
+		if(article.getContent() != null && !"".equals(article.getContent())){
+			articleParam.setContent(article.getContent());
+		}
+		articleParam.setModifydate(new Date());
+		try {
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap = MapUtil.objectToMap(articleParam);
+			paramMap.put("articlePrice", articlePrice);
+			paramMap.put("articlePriceOld", articlePriceOld);
+			paramMap.put("articlePriceId", articlePriceId);
+			
+			boolean result = articleMainService.editArticleInfoByVideoId(paramMap);
+			if(result){
+				resultMap.put("success", true);
+			} else {
+				resultMap.put("success", false);
+			}
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			resultMap.put("msg", "数据转化错误！");
+			resultMap.put("success", false);
+		}
+		return JSONObject.toJSONString(resultMap);
+	}
+	
 }

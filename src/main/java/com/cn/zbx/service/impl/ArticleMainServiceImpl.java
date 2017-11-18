@@ -2,6 +2,7 @@ package com.cn.zbx.service.impl;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -9,9 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cn.zbx.dao.ArticleMainMapper;
+import com.cn.zbx.dao.PriceMapper;
 import com.cn.zbx.pojo.ArticleMain;
+import com.cn.zbx.pojo.Price;
 import com.cn.zbx.pojo.Tclassify;
+import com.cn.zbx.pojo.VideoMain;
 import com.cn.zbx.service.IArticleMainService;
+import com.cn.zbx.util.MapUtil;
+import com.cn.zbx.util.StringUtils;
 import com.cn.zbx.vo.ArticleVO;
 import com.cn.zbx.vo.TClassifyVO;
 
@@ -25,6 +31,9 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 	
 	@Autowired
 	ArticleMainMapper articleMainMapper;
+	
+	@Autowired
+	PriceMapper PriceMapper;
 
 	@Override
 	public List<TClassifyVO> selectCountByClassIds(List<Tclassify> list) {
@@ -99,6 +108,94 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 	public Map<String, Object> selectClassifyByArticleId(Integer id) {
 		// TODO Auto-generated method stub
 		return articleMainMapper.selectClassifyByArticleId(id);
+	}
+
+	/**
+	 * 编辑文章信息功能 包括价格
+	 */
+	@Override
+	public boolean editArticleInfoByVideoId(Map<String, Object> mapParam) {
+		// TODO Auto-generated method stub
+		Date currentDate = new Date();
+		ArticleMain article = new ArticleMain();
+		Price price = new Price();
+		String articlePriceId = String.valueOf(mapParam.get("articlePriceId"));
+		String articlePrice = String.valueOf(mapParam.get("articlePrice"));
+		String articlePriceOld = String.valueOf(mapParam.get("articlePriceOld"));
+		try {
+			article = (ArticleMain)MapUtil.mapToBean(mapParam, article.getClass());
+			int num = articleMainMapper.updateByPrimaryKeySelective(article);
+			
+			if(num > 0 && !articlePrice.equals(articlePriceOld) && article.getIsfree() == 0){
+				if(!StringUtils.isNotEmpty(articlePriceId)){
+					price.setType(1);
+					price.setProductId(article.getId());
+					price.setPrice(Double.valueOf(articlePrice));
+					price.setPlayNumber(0);
+					price.setSumPrice(0.00);
+					price.setAgainPayDays(10);
+					price.setMakedate(currentDate);
+					price.setModifydate(currentDate);
+					int num1 = PriceMapper.insertSelective(price);
+					if(num1 <= 0){
+						return false;
+					}
+				} else {
+					price.setId(Integer.valueOf(articlePriceId));
+					price.setPrice(Double.valueOf(articlePrice));
+					price.setModifydate(currentDate);
+					int num1 = PriceMapper.updateByPrimaryKeySelective(price);
+					if(num1 <= 0){
+						return false;
+					}
+				}
+			} else if(num <= 0){
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 新增文章信息 包括价格
+	 */
+	@Override
+	public boolean addArticleInfo(Map<String, Object> mapParam) {
+		// TODO Auto-generated method stub
+		Date currentDate = new Date();
+		ArticleMain article = new ArticleMain();
+		Price price = new Price();
+		String articlePrice = String.valueOf(mapParam.get("articlePrice"));
+		try {
+			article = (ArticleMain)MapUtil.mapToBean(mapParam, article.getClass());
+			int num = articleMainMapper.insertSelective(article);
+			
+			if(num > 0 && article.getIsfree() == 0){
+				price.setType(1);
+				price.setProductId(article.getId());
+				price.setPrice(Double.valueOf(articlePrice));
+				price.setPlayNumber(0);
+				price.setSumPrice(0.00);
+				price.setAgainPayDays(10);
+				price.setMakedate(currentDate);
+				price.setModifydate(currentDate);
+				int num1 = PriceMapper.insertSelective(price);
+				if(num1 <= 0){
+					return false;
+				}
+			} else if(num <= 0){
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 }
