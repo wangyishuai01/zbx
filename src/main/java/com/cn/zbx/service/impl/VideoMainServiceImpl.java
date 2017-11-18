@@ -15,6 +15,7 @@ import com.cn.zbx.pojo.Price;
 import com.cn.zbx.pojo.VideoMain;
 import com.cn.zbx.service.IVideoMainService;
 import com.cn.zbx.util.MapUtil;
+import com.cn.zbx.util.StringUtils;
 import com.cn.zbx.vo.VideoVO;
 
 /**
@@ -79,6 +80,7 @@ public class VideoMainServiceImpl implements IVideoMainService {
 	@Override
 	public boolean editVideoInfoByVideoId(Map<String, Object> mapParam) {
 		// TODO Auto-generated method stub
+		Date currentDate = new Date();
 		VideoMain video = new VideoMain();
 		Price price = new Price();
 		String videoPriceId = String.valueOf(mapParam.get("videoPriceId"));
@@ -89,11 +91,26 @@ public class VideoMainServiceImpl implements IVideoMainService {
 			int num = VideoMainMapper.updateByPrimaryKeySelective(video);
 			
 			if(num > 0 && !videoPrice.equals(videoPriceOld) && video.getIsfree() == 0){
-				price.setId(Integer.valueOf(videoPriceId));
-				price.setPrice(Double.valueOf(videoPrice));
-				int num1 = PriceMapper.updateByPrimaryKeySelective(price);
-				if(num1 <= 0){
-					return false;
+				if(!StringUtils.isNotEmpty(videoPriceId)){
+					price.setType(2);
+					price.setProductId(video.getId());
+					price.setPrice(Double.valueOf(videoPrice));
+					price.setPlayNumber(0);
+					price.setSumPrice(0.00);
+					price.setAgainPayDays(10);
+					price.setMakedate(currentDate);
+					price.setModifydate(currentDate);
+					int num1 = PriceMapper.insertSelective(price);
+					if(num1 <= 0){
+						return false;
+					}
+				} else {
+					price.setId(Integer.valueOf(videoPriceId));
+					price.setPrice(Double.valueOf(videoPrice));
+					int num1 = PriceMapper.updateByPrimaryKeySelective(price);
+					if(num1 <= 0){
+						return false;
+					}
 				}
 			} else if(num <= 0){
 				return false;
