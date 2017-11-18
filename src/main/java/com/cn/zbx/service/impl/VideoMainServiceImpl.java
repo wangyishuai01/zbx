@@ -2,13 +2,17 @@ package com.cn.zbx.service.impl;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cn.zbx.dao.PriceMapper;
 import com.cn.zbx.dao.VideoMainMapper;
+import com.cn.zbx.pojo.Price;
 import com.cn.zbx.pojo.VideoMain;
 import com.cn.zbx.service.IVideoMainService;
+import com.cn.zbx.util.MapUtil;
 import com.cn.zbx.vo.VideoVO;
 
 /**
@@ -21,6 +25,9 @@ public class VideoMainServiceImpl implements IVideoMainService {
 	
 	@Autowired
 	VideoMainMapper VideoMainMapper;
+	
+	@Autowired
+	PriceMapper PriceMapper;
 
 	@Override
 	public List<VideoVO> selectBySelectParam(VideoVO record) {
@@ -31,7 +38,7 @@ public class VideoMainServiceImpl implements IVideoMainService {
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return VideoMainMapper.deleteByPrimaryKey(id);
 	}
 
 	@Override
@@ -50,6 +57,51 @@ public class VideoMainServiceImpl implements IVideoMainService {
 	public int insertSelective(VideoMain record) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public List<VideoMain> selectBySelectParam(VideoMain record) {
+		// TODO Auto-generated method stub
+		return VideoMainMapper.selectBySelectParam1(record);
+	}
+
+	@Override
+	public int selectCountBySelectParam(VideoMain record) {
+		// TODO Auto-generated method stub
+		return VideoMainMapper.selectCountBySelectParam1(record);
+	}
+
+	/**
+	 * 编辑视屏信息功能 包括价格
+	 */
+	@Override
+	public boolean editVideoInfoByVideoId(Map<String, Object> mapParam) {
+		// TODO Auto-generated method stub
+		VideoMain video = new VideoMain();
+		Price price = new Price();
+		String videoPriceId = String.valueOf(mapParam.get("videoPriceId"));
+		String videoPrice = String.valueOf(mapParam.get("videoPrice"));
+		String videoPriceOld = String.valueOf(mapParam.get("videoPriceOld"));
+		try {
+			video = (VideoMain)MapUtil.mapToBean(mapParam, video.getClass());
+			int num = VideoMainMapper.updateByPrimaryKeySelective(video);
+			
+			if(num > 0 && !videoPrice.equals(videoPriceOld) && video.getIsfree() == 0){
+				price.setId(Integer.valueOf(videoPriceId));
+				price.setPrice(Double.valueOf(videoPrice));
+				int num1 = PriceMapper.updateByPrimaryKeySelective(price);
+				if(num1 <= 0){
+					return false;
+				}
+			} else if(num <= 0){
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	

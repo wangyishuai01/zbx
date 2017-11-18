@@ -5,9 +5,9 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="product_id" property="productId" jdbcType="INTEGER" />
-    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
     <result column="play_number" property="playNumber" jdbcType="INTEGER" />
-    <result column="sum_price" property="sumPrice" jdbcType="INTEGER" />
+    <result column="sum_price" property="sumPrice" jdbcType="DOUBLE" />
     <result column="again_pay_days" property="againPayDays" jdbcType="INTEGER" />
     <result column="makedate" property="makedate" jdbcType="TIMESTAMP" />
     <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
@@ -31,7 +31,7 @@
       again_pay_days, makedate, modifydate
       )
     values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
-      #{price,jdbcType=INTEGER}, #{playNumber,jdbcType=INTEGER}, #{sumPrice,jdbcType=INTEGER}, 
+      #{price,jdbcType=DOUBLE}, #{playNumber,jdbcType=INTEGER}, #{sumPrice,jdbcType=DOUBLE}, 
       #{againPayDays,jdbcType=INTEGER}, #{makedate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -77,13 +77,13 @@
         #{productId,jdbcType=INTEGER},
       </if>
       <if test="price != null" >
-        #{price,jdbcType=INTEGER},
+        #{price,jdbcType=DOUBLE},
       </if>
       <if test="playNumber != null" >
         #{playNumber,jdbcType=INTEGER},
       </if>
       <if test="sumPrice != null" >
-        #{sumPrice,jdbcType=INTEGER},
+        #{sumPrice,jdbcType=DOUBLE},
       </if>
       <if test="againPayDays != null" >
         #{againPayDays,jdbcType=INTEGER},
@@ -106,13 +106,13 @@
         product_id = #{productId,jdbcType=INTEGER},
       </if>
       <if test="price != null" >
-        price = #{price,jdbcType=INTEGER},
+        price = #{price,jdbcType=DOUBLE},
       </if>
       <if test="playNumber != null" >
         play_number = #{playNumber,jdbcType=INTEGER},
       </if>
       <if test="sumPrice != null" >
-        sum_price = #{sumPrice,jdbcType=INTEGER},
+        sum_price = #{sumPrice,jdbcType=DOUBLE},
       </if>
       <if test="againPayDays != null" >
         again_pay_days = #{againPayDays,jdbcType=INTEGER},
@@ -130,12 +130,86 @@
     update price
     set type = #{type,jdbcType=INTEGER},
       product_id = #{productId,jdbcType=INTEGER},
-      price = #{price,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
       play_number = #{playNumber,jdbcType=INTEGER},
-      sum_price = #{sumPrice,jdbcType=INTEGER},
+      sum_price = #{sumPrice,jdbcType=DOUBLE},
       again_pay_days = #{againPayDays,jdbcType=INTEGER},
       makedate = #{makedate,jdbcType=TIMESTAMP},
       modifydate = #{modifydate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectCountBySelectParam" resultType="int" parameterType="com.cn.zbx.pojo.Price" >
+    select 
+    	count(1)
+    from Price 
+    where 1=1
+    <if test="id != null" >
+      and id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="type != null" >
+      and type = #{type,jdbcType=INTEGER}
+    </if>
+    <if test="productId != null" >
+      and product_id = #{productId,jdbcType=INTEGER}
+    </if>
+    <if test="price != null" >
+      and price = #{price,jdbcType=DOUBLE}
+    </if>
+    <if test="playNumber != null" >
+      and play_number = #{playNumber,jdbcType=INTEGER}
+    </if>
+    <if test="sumPrice != null" >
+      and sum_price = #{sumPrice,jdbcType=DOUBLE}
+    </if>
+    <if test="againPayDays != null" >
+      and again_pay_days = #{againPayDays,jdbcType=INTEGER}
+    </if>
+    <if test="makedate != null" >
+      and makedate = #{makedate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="modifydate != null" >
+      and modifydate = #{modifydate,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+  
+  <select id="selectPriceBySelectParam" resultType="com.cn.zbx.pojo.Price" parameterType="com.cn.zbx.pojo.Price" >
+    select *
+    from Price 
+    where 1=1
+    <if test="id != null" >
+      and id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="type != null" >
+      and type = #{type,jdbcType=INTEGER}
+    </if>
+    <if test="productId != null" >
+      and product_id = #{productId,jdbcType=INTEGER}
+    </if>
+    <if test="price != null" >
+      and price = #{price,jdbcType=DOUBLE}
+    </if>
+    <if test="playNumber != null" >
+      and play_number = #{playNumber,jdbcType=INTEGER}
+    </if>
+    <if test="sumPrice != null" >
+      and sum_price = #{sumPrice,jdbcType=DOUBLE}
+    </if>
+    <if test="againPayDays != null" >
+      and again_pay_days = #{againPayDays,jdbcType=INTEGER}
+    </if>
+    <if test="makedate != null" >
+      and makedate = #{makedate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="modifydate != null" >
+      and modifydate = #{modifydate,jdbcType=TIMESTAMP}
+    </if>
+    order by makedate desc 
+    <if test="startLimit != null" >
+      <if test="pageSize != null" >
+     	 limit #{startLimit}, #{pageSize}
+      </if>
+    </if>
+  </select>
+  
 </mapper>

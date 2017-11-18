@@ -193,6 +193,9 @@
     	<include refid="Base_Column_List" />
     from article_main  
     where 1=1
+    <if test="id != null" >
+      and id = #{id,jdbcType=INTEGER}
+    </if>
     <if test="title != null" >
       and title = #{title,jdbcType=VARCHAR}
     </if>
@@ -235,6 +238,9 @@
     	count(1)
     from article_main
     where 1=1
+    <if test="id != null" >
+      and id = #{id,jdbcType=INTEGER}
+    </if>
     <if test="title != null" >
       and title = #{title,jdbcType=VARCHAR}
     </if>
@@ -266,4 +272,35 @@
       and content = #{content,jdbcType=LONGVARBINARY}
     </if>
   </select>
+  
+  <select id="selectClassifyByArticleId" resultType="java.util.Map" parameterType="Integer" >
+    select 
+    	a.id, 
+    	a.title, 
+    	c.cid, 
+    	c.cname, 
+    	c.pcid, 
+    	c.pcname 
+    from 
+    	article_main a, 
+    	(select 
+    		c1.id as cid, 
+    		c1.name as cname, 
+    		c2.id as pcid, 
+    		c2.name as pcname 
+    	from 
+    		tclassify c1, 
+    		tclassify c2 
+    	where 
+    		c1.pid=c2.id 
+    		and c1.level=2 
+    		and c2.level=1
+    	) c 
+    where
+    	c.cid=a.classid
+    	<if test="id != null" >
+	      and a.id = #{id,jdbcType=INTEGER}
+	    </if>
+  </select>
+  
 </mapper>

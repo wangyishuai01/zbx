@@ -3,6 +3,7 @@ package com.cn.zbx.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -92,6 +93,12 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 			resultList.add(oo);
 		}
 		return resultList;
+	}
+
+	@Override
+	public Map<String, Object> selectClassifyByArticleId(Integer id) {
+		// TODO Auto-generated method stub
+		return articleMainMapper.selectClassifyByArticleId(id);
 	}
 
 }

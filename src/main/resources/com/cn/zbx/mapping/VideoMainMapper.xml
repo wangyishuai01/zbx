@@ -185,37 +185,37 @@
     </if>
     where 1=1
     <if test="title != null" >
-      and v.title = #{title,jdbcType=VARCHAR},
+      and v.title = #{title,jdbcType=VARCHAR}
     </if>
     <if test="videopath != null" >
-      and v.videopath = #{videopath,jdbcType=VARCHAR},
+      and v.videopath = #{videopath,jdbcType=VARCHAR}
     </if>
     <if test="imgurl != null" >
-      and v.imgurl = #{imgurl,jdbcType=VARCHAR},
+      and v.imgurl = #{imgurl,jdbcType=VARCHAR}
     </if>
     <if test="articleid != null" >
-      and v.articleid = #{articleid,jdbcType=INTEGER},
+      and v.articleid = #{articleid,jdbcType=INTEGER}
     </if>
     <if test="suffix != null" >
-      and v.suffix = #{suffix,jdbcType=VARCHAR},
+      and v.suffix = #{suffix,jdbcType=VARCHAR}
     </if>
     <if test="size != null" >
-      and v.size = #{size,jdbcType=INTEGER},
+      and v.size = #{size,jdbcType=INTEGER}
     </if>
     <if test="playtime != null" >
-      and v.playtime = #{playtime,jdbcType=INTEGER},
+      and v.playtime = #{playtime,jdbcType=INTEGER}
     </if>
     <if test="isfree != null" >
-      and v.isfree = #{isfree,jdbcType=INTEGER},
+      and v.isfree = #{isfree,jdbcType=INTEGER}
     </if>
     <if test="nocomment != null" >
-      and v.nocomment = #{nocomment,jdbcType=INTEGER},
+      and v.nocomment = #{nocomment,jdbcType=INTEGER}
     </if>
     <if test="makedate != null" >
-      and v.makedate = #{makedate,jdbcType=TIMESTAMP},
+      and v.makedate = #{makedate,jdbcType=TIMESTAMP}
     </if>
     <if test="modifydate != null" >
-      and v.modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      and v.modifydate = #{modifydate,jdbcType=TIMESTAMP}
     </if>
   </select>
   
@@ -232,37 +232,37 @@
     </if>
     where 1=1
     <if test="title != null" >
-      and v.title = #{title,jdbcType=VARCHAR},
+      and v.title = #{title,jdbcType=VARCHAR}
     </if>
     <if test="videopath != null" >
-      and v.videopath = #{videopath,jdbcType=VARCHAR},
+      and v.videopath = #{videopath,jdbcType=VARCHAR}
     </if>
     <if test="imgurl != null" >
-      and v.imgurl = #{imgurl,jdbcType=VARCHAR},
+      and v.imgurl = #{imgurl,jdbcType=VARCHAR}
     </if>
     <if test="articleid != null" >
-      and v.articleid = #{articleid,jdbcType=INTEGER},
+      and v.articleid = #{articleid,jdbcType=INTEGER}
     </if>
     <if test="suffix != null" >
-      and v.suffix = #{suffix,jdbcType=VARCHAR},
+      and v.suffix = #{suffix,jdbcType=VARCHAR}
     </if>
     <if test="size != null" >
-      and v.size = #{size,jdbcType=INTEGER},
+      and v.size = #{size,jdbcType=INTEGER}
     </if>
     <if test="playtime != null" >
-      and v.playtime = #{playtime,jdbcType=INTEGER},
+      and v.playtime = #{playtime,jdbcType=INTEGER}
     </if>
     <if test="isfree != null" >
-      and v.isfree = #{isfree,jdbcType=INTEGER},
+      and v.isfree = #{isfree,jdbcType=INTEGER}
     </if>
     <if test="nocomment != null" >
-      and v.nocomment = #{nocomment,jdbcType=INTEGER},
+      and v.nocomment = #{nocomment,jdbcType=INTEGER}
     </if>
     <if test="makedate != null" >
-      and v.makedate = #{makedate,jdbcType=TIMESTAMP},
+      and v.makedate = #{makedate,jdbcType=TIMESTAMP}
     </if>
     <if test="modifydate != null" >
-      and v.modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      and v.modifydate = #{modifydate,jdbcType=TIMESTAMP}
     </if>
     order by v.makedate desc 
     <if test="startLimit != null" >
@@ -271,4 +271,96 @@
       </if>
     </if>
   </select>
+  
+  <select id="selectCountBySelectParam1" resultType="int" parameterType="com.cn.zbx.pojo.VideoMain" >
+    select 
+    	count(1)
+    from video_main v 
+    where 1=1
+    <if test="id != null" >
+      and v.id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="title != null" >
+      and v.title = #{title,jdbcType=VARCHAR}
+    </if>
+    <if test="videopath != null" >
+      and v.videopath = #{videopath,jdbcType=VARCHAR}
+    </if>
+    <if test="imgurl != null" >
+      and v.imgurl = #{imgurl,jdbcType=VARCHAR}
+    </if>
+    <if test="articleid != null" >
+      and v.articleid = #{articleid,jdbcType=INTEGER}
+    </if>
+    <if test="suffix != null" >
+      and v.suffix = #{suffix,jdbcType=VARCHAR}
+    </if>
+    <if test="size != null" >
+      and v.size = #{size,jdbcType=INTEGER}
+    </if>
+    <if test="playtime != null" >
+      and v.playtime = #{playtime,jdbcType=INTEGER}
+    </if>
+    <if test="isfree != null" >
+      and v.isfree = #{isfree,jdbcType=INTEGER}
+    </if>
+    <if test="nocomment != null" >
+      and v.nocomment = #{nocomment,jdbcType=INTEGER}
+    </if>
+    <if test="makedate != null" >
+      and v.makedate = #{makedate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="modifydate != null" >
+      and v.modifydate = #{modifydate,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+  
+  <select id="selectBySelectParam1" resultType="com.cn.zbx.pojo.VideoMain" parameterType="com.cn.zbx.pojo.VideoMain" >
+    select v.*
+    from video_main v 
+    where 1=1
+    <if test="id != null" >
+      and v.id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="title != null" >
+      and v.title = #{title,jdbcType=VARCHAR}
+    </if>
+    <if test="videopath != null" >
+      and v.videopath = #{videopath,jdbcType=VARCHAR}
+    </if>
+    <if test="imgurl != null" >
+      and v.imgurl = #{imgurl,jdbcType=VARCHAR}
+    </if>
+    <if test="articleid != null" >
+      and v.articleid = #{articleid,jdbcType=INTEGER}
+    </if>
+    <if test="suffix != null" >
+      and v.suffix = #{suffix,jdbcType=VARCHAR}
+    </if>
+    <if test="size != null" >
+      and v.size = #{size,jdbcType=INTEGER}
+    </if>
+    <if test="playtime != null" >
+      and v.playtime = #{playtime,jdbcType=INTEGER}
+    </if>
+    <if test="isfree != null" >
+      and v.isfree = #{isfree,jdbcType=INTEGER}
+    </if>
+    <if test="nocomment != null" >
+      and v.nocomment = #{nocomment,jdbcType=INTEGER}
+    </if>
+    <if test="makedate != null" >
+      and v.makedate = #{makedate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="modifydate != null" >
+      and v.modifydate = #{modifydate,jdbcType=TIMESTAMP}
+    </if>
+    order by v.makedate desc 
+    <if test="startLimit != null" >
+      <if test="pageSize != null" >
+     	 limit #{startLimit}, #{pageSize}
+      </if>
+    </if>
+  </select>
+  
 </mapper>

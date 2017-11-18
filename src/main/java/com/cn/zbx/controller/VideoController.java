@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.cn.zbx.pojo.VideoMain;
 import com.cn.zbx.service.IVideoMainService;
+import com.cn.zbx.util.MapUtil;
 import com.cn.zbx.vo.VideoVO;
 
 @Controller
@@ -97,6 +98,133 @@ public class VideoController {
 			resultMap.put("success", false);
 		} else {
 			resultMap.put("success", true);
+		}
+		return JSONObject.toJSONString(resultMap);
+	}
+	
+	/**
+	 * 编辑视屏信息功能 包括价格
+	 * @param request
+	 * @param response
+	 * @param video
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/editVideoInfoById", method = { RequestMethod.GET, RequestMethod.POST })
+	public String updateSelectById(HttpServletRequest request, HttpServletResponse response, 
+			VideoMain video, String videoPrice, String videoPriceOld, String videoPriceId){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		VideoMain videoParam = new VideoMain();
+		if(video.getId() != null && !"".equals(video.getId())){
+			videoParam.setId(video.getId());
+		}
+		if(video.getTitle() != null && !"".equals(video.getTitle())){
+			videoParam.setTitle(video.getTitle());
+		}
+		if(video.getVideopath() != null && !"".equals(video.getVideopath())){
+			videoParam.setVideopath(video.getVideopath());
+		}
+		if(video.getImgurl() != null && !"".equals(video.getImgurl())){
+			videoParam.setImgurl(video.getImgurl());
+		}
+		if(video.getArticleid() != null && !"".equals(video.getArticleid())){
+			videoParam.setArticleid(video.getArticleid());
+		}
+		if(video.getSuffix() != null && !"".equals(video.getSuffix())){
+			videoParam.setSuffix(video.getSuffix());
+		}
+		if(video.getIsfree() != null && !"".equals(video.getIsfree())){
+			videoParam.setIsfree(video.getIsfree());
+		}
+		if(video.getNocomment() != null && !"".equals(video.getNocomment())){
+			videoParam.setNocomment(video.getNocomment());
+		}
+		videoParam.setModifydate(new Date());
+		try {
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap = MapUtil.objectToMap(videoParam);
+			paramMap.put("videoPrice", videoPrice);
+			paramMap.put("videoPriceOld", videoPriceOld);
+			paramMap.put("videoPriceId", videoPriceId);
+			
+			boolean result = videoMainService.editVideoInfoByVideoId(paramMap);
+			if(result){
+				resultMap.put("success", true);
+			} else {
+				resultMap.put("success", false);
+			}
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			resultMap.put("msg", "数据转化错误！");
+			resultMap.put("success", false);
+		}
+		return JSONObject.toJSONString(resultMap);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/selectVideoByParam", method = { RequestMethod.GET, RequestMethod.POST })
+	public String selectVideoByParam(HttpServletRequest request, HttpServletResponse response, VideoMain video){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		VideoMain videoParam = new VideoMain();
+		if(video.getId() != null && !"".equals(video.getId())){
+			videoParam.setId(video.getId());
+		}
+		if(video.getTitle() != null && !"".equals(video.getTitle())){
+			videoParam.setTitle(video.getTitle());
+		}
+		if(video.getVideopath() != null && !"".equals(video.getVideopath())){
+			videoParam.setVideopath(video.getVideopath());
+		}
+		if(video.getImgurl() != null && !"".equals(video.getImgurl())){
+			videoParam.setImgurl(video.getImgurl());
+		}
+		if(video.getArticleid() != null && !"".equals(video.getArticleid())){
+			videoParam.setArticleid(video.getArticleid());
+		}
+		if(video.getSuffix() != null && !"".equals(video.getSuffix())){
+			videoParam.setSuffix(video.getSuffix());
+		}
+		if(video.getIsfree() != null && !"".equals(video.getIsfree())){
+			videoParam.setIsfree(video.getIsfree());
+		}
+		if(video.getNocomment() != null && !"".equals(video.getNocomment())){
+			videoParam.setNocomment(video.getNocomment());
+		}
+		if(video.getPageSize() != null && !"".equals(video.getPageSize())){
+			videoParam.setPageSize(video.getPageSize());
+		}
+		if(video.getPageCount() != null && !"".equals(video.getPageCount())){
+			videoParam.setPageCount(video.getPageCount());
+		}
+		
+		int number = videoMainService.selectCountBySelectParam(videoParam);
+		if(number > 0){
+			List<VideoMain> videoMainList = videoMainService.selectBySelectParam(videoParam);
+			resultMap.put("data", videoMainList);
+			resultMap.put("number", number);
+			resultMap.put("success", true);
+		} else {
+			resultMap.put("success", false);
+		}
+		return JSONObject.toJSONString(resultMap);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteVideoById", method = { RequestMethod.GET, RequestMethod.POST })
+	public String deleteVideoById(HttpServletRequest request, HttpServletResponse response, String videoId){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		if(videoId != null && !"".equals(videoId)){
+			int result = videoMainService.deleteByPrimaryKey(Integer.valueOf(videoId));
+			if(result <= 0){
+				resultMap.put("success", false);
+			} else {
+				resultMap.put("success", true);
+			}
+		} else {
+			resultMap.put("success", false);
 		}
 		return JSONObject.toJSONString(resultMap);
 	}

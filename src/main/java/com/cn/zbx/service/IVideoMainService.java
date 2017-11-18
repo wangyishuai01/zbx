@@ -2,6 +2,7 @@ package com.cn.zbx.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import com.cn.zbx.pojo.VideoMain;
 import com.cn.zbx.vo.VideoVO;
@@ -23,5 +24,11 @@ public interface IVideoMainService {
 	int selectCountBySelectParam(VideoVO record);
 	
 	int insertSelective(VideoMain record);
+	
+	List<VideoMain> selectBySelectParam(VideoMain record);
+	
+	int selectCountBySelectParam(VideoMain record);
+	
+	boolean editVideoInfoByVideoId(Map<String, Object> mapParam);
 	
 }

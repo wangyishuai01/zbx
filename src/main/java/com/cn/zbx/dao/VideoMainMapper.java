@@ -21,4 +21,8 @@ public interface VideoMainMapper {
     List<VideoVO> selectBySelectParam(VideoVO record);
     
     int selectCountBySelectParam(VideoVO record);
+    
+    List<VideoMain> selectBySelectParam1(VideoMain record);
+    
+    int selectCountBySelectParam1(VideoMain record);
 }

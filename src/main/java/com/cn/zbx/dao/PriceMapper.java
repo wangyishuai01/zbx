@@ -1,5 +1,7 @@
 package com.cn.zbx.dao;
 
+import java.util.List;
+
 import com.cn.zbx.pojo.Price;
 
 public interface PriceMapper {
@@ -14,4 +16,8 @@ public interface PriceMapper {
     int updateByPrimaryKeySelective(Price record);
 
     int updateByPrimaryKey(Price record);
+    
+    List<Price> selectPriceBySelectParam(Price record);
+    
+    int selectCountBySelectParam(Price record);
 }

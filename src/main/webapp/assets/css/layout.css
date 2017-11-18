@@ -48,7 +48,7 @@ select{padding:0 !important;}
 .form-horizontal .control-label{padding-top:7px;text-align:right;}
 hr.wide{width:100%;}
 
-.form-control{display:inline;min-width:160px;}
+.form-control{display:inline;min-width:10px;}
 .has-feedback .form-control{padding-right:12px;}
 
 /*弹窗样式*/

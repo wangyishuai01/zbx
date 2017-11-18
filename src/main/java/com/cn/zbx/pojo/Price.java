@@ -2,18 +2,23 @@ package com.cn.zbx.pojo;
 
 import java.util.Date;
 
-public class Price {
-    private Integer id;
+public class Price extends BasicPojo{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer id;
 
     private Integer type;
 
     private Integer productId;
 
-    private Integer price;
+    private Double price;
 
     private Integer playNumber;
 
-    private Integer sumPrice;
+    private Double sumPrice;
 
     private Integer againPayDays;
 
@@ -45,11 +50,11 @@ public class Price {
         this.productId = productId;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -61,11 +66,11 @@ public class Price {
         this.playNumber = playNumber;
     }
 
-    public Integer getSumPrice() {
+    public Double getSumPrice() {
         return sumPrice;
     }
 
-    public void setSumPrice(Integer sumPrice) {
+    public void setSumPrice(Double sumPrice) {
         this.sumPrice = sumPrice;
     }
 

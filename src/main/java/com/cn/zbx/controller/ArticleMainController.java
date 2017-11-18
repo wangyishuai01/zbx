@@ -173,6 +173,24 @@ public class ArticleMainController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
-	
+	@ResponseBody
+	@RequestMapping(value="/selectClassifyByArticleId", method = { RequestMethod.GET, RequestMethod.POST })
+	public String selectClassifyByArticleId(HttpServletRequest request, HttpServletResponse response){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		String articleId = request.getParameter("articleId");
+		if(articleId != null && !"".equals(articleId)){
+			Map<String, Object> map = articleMainService.selectClassifyByArticleId(Integer.valueOf(articleId));
+			if(map != null && map.size() > 0){
+				resultMap.put("data", map);
+				resultMap.put("success", true);
+			} else {
+				resultMap.put("success", false);
+			}
+		} else {
+			resultMap.put("success", false);
+		}
+		return JSONObject.toJSONString(resultMap);
+	}
 
 }

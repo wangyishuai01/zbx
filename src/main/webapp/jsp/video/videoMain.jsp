@@ -136,9 +136,10 @@ function init(){
 					} else {
 						str += "<th style='text-align: center;'>允许</th>";
 					}
-					str += "<th style='text-align: center;'><a href=''>查看</a> " 
-						+ "| <a href=''>编辑</a><br> "
-						+ "<a href=''>删除</a> "
+					str += "<th style='text-align: center;'>"
+						+ "<a href='javascript:openUrl(\"/jsp/video/showAndEditVideo.jsp?videoId="+res.id+"&action=show\")'>查看</a> " 
+						+ "| <a href='javascript:openUrl(\"/jsp/video/showAndEditVideo.jsp?videoId="+res.id+"&action=edit\")'>编辑</a><br> "
+						+ "<a href='javascript:deleteVideo("+res.id+")'>删除</a> "
 						+ "| <a href=''>统计</a></th>";
 					str += "</tr>";
 					$('.table:eq(0)').find('tbody').append(str);
@@ -212,25 +213,26 @@ function query(){
 	init();
 }
 
-function editCommentPower(videoId, power){
-	$.ajax({
-		url : rootPath+"/video/updateSelectById.do",
-		type : "post",
-		dataType : "json",
-		data : {
-			"id" : videoId, 
-			"nocomment" : power
-		},
-		success : function(result) {
-			result = JSON.parse(result);
-			if(result.success){
-				alert("修改成功！");
-				init();
-			} else {
-				alert("修改失败！");
+function deleteVideo(videoId){
+	if(confirm("确定删除该视屏吗？")){
+		$.ajax({
+			url : rootPath+"/video/deleteVideoById.do",
+			type : "post",
+			dataType : "json",
+			data : {
+				"videoId" : videoId
+			},
+			success : function(result) {
+				result = JSON.parse(result);
+				if(result.success){
+					alert("修改成功！");
+					init();
+				} else {
+					alert("修改失败！");
+				}
 			}
-		}
-	});
+		});
+	}
 }
 
 function first(){

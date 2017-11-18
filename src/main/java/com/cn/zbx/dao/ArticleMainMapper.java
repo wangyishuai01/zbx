@@ -1,6 +1,9 @@
 package com.cn.zbx.dao;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.cn.zbx.pojo.ArticleMain;
 import com.cn.zbx.vo.ArticleVO;
@@ -26,4 +29,6 @@ public interface ArticleMainMapper {
     List<ArticleVO> selectBySelectParam(ArticleMain record);
     
     Integer selectCountBySelectParam(ArticleMain record);
+    
+    Map<String, Object> selectClassifyByArticleId(@Param(value="id") Integer id);
 }

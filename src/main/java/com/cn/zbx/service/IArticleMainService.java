@@ -2,6 +2,7 @@ package com.cn.zbx.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import com.cn.zbx.pojo.ArticleMain;
 import com.cn.zbx.pojo.Tclassify;
@@ -29,4 +30,6 @@ public interface IArticleMainService {
 	int updateByPrimaryKeySelective(ArticleMain record);
 	
 	List<ArticleMain> selectArticleNoContentBySelectParam(ArticleMain record);
+	
+	Map<String, Object> selectClassifyByArticleId(Integer id);
 }
