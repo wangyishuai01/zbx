@@ -501,7 +501,7 @@ $(document).ready(function(){
 		$("input[name='isFree']").attr("disabled","disabled");
 		$("#editButton").hide();
 		$("#showButton").show();
-		$("h5[]").html("查看视频");
+		$("h5[class='widget-caption']").html("查看视频");
 	}
 	$("input[name='isFree']").click(function(){
 		if($(this).val()=="1"){
