@@ -28,7 +28,7 @@
     delete from customer
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.cn.zbx.pojo.Customer" >
+  <insert id="insert" parameterType="com.cn.zbx.pojo.Customer" keyProperty="id" useGeneratedKeys="true">
     insert into customer (id, name, password, 
       mobile, email, realname, 
       sex, age, birthday, makedate, 
@@ -38,7 +38,7 @@
       #{sex,jdbcType=CHAR}, #{age,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, #{makedate,jdbcType=TIMESTAMP}, 
       #{modifydate,jdbcType=TIMESTAMP}, #{isdisable,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.Customer" >
+  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.Customer" keyProperty="id" useGeneratedKeys="true">
     insert into customer
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

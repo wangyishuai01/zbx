@@ -29,7 +29,7 @@
     delete from video_main
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.cn.zbx.pojo.VideoMain" >
+  <insert id="insert" parameterType="com.cn.zbx.pojo.VideoMain" keyProperty="id" useGeneratedKeys="true">
     insert into video_main (id, title, videopath, 
       imgurl, articleid, suffix, 
       size, playtime, isfree, 
@@ -41,7 +41,7 @@
       #{nocomment,jdbcType=INTEGER}, #{makedate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.VideoMain" >
+  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.VideoMain" keyProperty="id" useGeneratedKeys="true">
     insert into video_main
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

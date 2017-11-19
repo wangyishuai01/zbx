@@ -34,7 +34,7 @@
     delete from article_main
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.cn.zbx.pojo.ArticleMain" >
+  <insert id="insert" parameterType="com.cn.zbx.pojo.ArticleMain" keyProperty="id" useGeneratedKeys="true">
     insert into article_main (id, title, imgurl, 
       classid, desc, isfree, 
       nocomment, makedate, modifydate, 
@@ -44,7 +44,7 @@
       #{nocomment,jdbcType=INTEGER}, #{makedate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}, 
       #{content,jdbcType=LONGVARBINARY})
   </insert>
-  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.ArticleMain" >
+  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.ArticleMain" keyProperty="id" useGeneratedKeys="true">
     insert into article_main
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

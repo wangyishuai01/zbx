@@ -31,13 +31,13 @@
     delete from buser_limit
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.cn.zbx.pojo.BUserLimit" >
+  <insert id="insert" parameterType="com.cn.zbx.pojo.BUserLimit" keyProperty="id" useGeneratedKeys="true">
     insert into buser_limit (id, buser_id, menu_id
       )
     values (#{id,jdbcType=INTEGER}, #{buserId,jdbcType=INTEGER}, #{menuId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.BUserLimit" >
+  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.BUserLimit" keyProperty="id" useGeneratedKeys="true">
     insert into buser_limit
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

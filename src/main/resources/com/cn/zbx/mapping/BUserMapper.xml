@@ -25,7 +25,7 @@
     delete from buser
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.cn.zbx.pojo.BUser" >
+  <insert id="insert" parameterType="com.cn.zbx.pojo.BUser" keyProperty="id" useGeneratedKeys="true">
     insert into buser (id, code, name, 
       password, mobile, email, 
       power, makedate, modifydate
@@ -35,7 +35,7 @@
       #{power,jdbcType=CHAR}, #{makedate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.BUser" >
+  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.BUser" keyProperty="id" useGeneratedKeys="true">
     insert into buser
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

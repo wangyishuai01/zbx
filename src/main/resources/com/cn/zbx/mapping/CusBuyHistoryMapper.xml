@@ -26,7 +26,7 @@
     delete from cus_buy_history
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.cn.zbx.pojo.CusBuyHistory" >
+  <insert id="insert" parameterType="com.cn.zbx.pojo.CusBuyHistory" keyProperty="id" useGeneratedKeys="true">
     insert into cus_buy_history (id, customer_id, customer_name, 
       buy_type, product_id, pay_type, 
       pay_money, makedate, modifydate
@@ -36,7 +36,7 @@
       #{payMoney,jdbcType=INTEGER}, #{makedate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.CusBuyHistory" >
+  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.CusBuyHistory" keyProperty="id" useGeneratedKeys="true">
     insert into cus_buy_history
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

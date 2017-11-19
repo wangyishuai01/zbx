@@ -22,14 +22,14 @@
 		delete from captcha
 		where sid = #{sid,jdbcType=INTEGER}
 	</delete>
-	<insert id="insert" parameterType="com.cn.zbx.pojo.Captcha">
+	<insert id="insert" parameterType="com.cn.zbx.pojo.Captcha" keyProperty="id" useGeneratedKeys="true">
 		insert into captcha (sid, random, big_img,
 		lit_img, start_x)
 		values (#{sid,jdbcType=INTEGER}, #{random,jdbcType=INTEGER},
 		#{bigImg,jdbcType=VARCHAR},
 		#{litImg,jdbcType=VARCHAR}, #{startX,jdbcType=INTEGER})
 	</insert>
-	<insert id="insertSelective" parameterType="com.cn.zbx.pojo.Captcha">
+	<insert id="insertSelective" parameterType="com.cn.zbx.pojo.Captcha" keyProperty="id" useGeneratedKeys="true">
 		insert into captcha
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="sid != null">

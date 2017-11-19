@@ -23,7 +23,7 @@
     delete from login_history
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.cn.zbx.pojo.LoginHistory" >
+  <insert id="insert" parameterType="com.cn.zbx.pojo.LoginHistory" keyProperty="id" useGeneratedKeys="true">
     insert into login_history (id, customer_id, customer_name, 
       login_ip, login_address, makedate, 
       modifydate)
@@ -31,7 +31,7 @@
       #{loginIp,jdbcType=VARCHAR}, #{loginAddress,jdbcType=VARCHAR}, #{makedate,jdbcType=TIMESTAMP}, 
       #{modifydate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.LoginHistory" >
+  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.LoginHistory" keyProperty="id" useGeneratedKeys="true">
     insert into login_history
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

@@ -24,7 +24,7 @@
     delete from comment
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.cn.zbx.pojo.Comment" >
+  <insert id="insert" parameterType="com.cn.zbx.pojo.Comment" keyProperty="id" useGeneratedKeys="true">
     insert into comment (id, title, comment, 
       commenttype, customer_id, makedate, 
       modifydate,commenttoid)
@@ -32,7 +32,7 @@
       #{commenttype,jdbcType=CHAR}, #{customerId,jdbcType=INTEGER}, #{makedate,jdbcType=TIMESTAMP}, 
       #{modifydate,jdbcType=TIMESTAMP}),#{commentToId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.Comment" >
+  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.Comment" keyProperty="id" useGeneratedKeys="true">
     insert into comment
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

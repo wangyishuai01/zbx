@@ -25,7 +25,7 @@
     delete from price
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.cn.zbx.pojo.Price" >
+  <insert id="insert" parameterType="com.cn.zbx.pojo.Price" keyProperty="id" useGeneratedKeys="true">
     insert into price (id, type, product_id, 
       price, play_number, sum_price, 
       again_pay_days, makedate, modifydate
@@ -35,7 +35,7 @@
       #{againPayDays,jdbcType=INTEGER}, #{makedate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.Price" >
+  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.Price" keyProperty="id" useGeneratedKeys="true">
     insert into price
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
