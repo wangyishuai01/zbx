@@ -73,4 +73,17 @@ public interface Constants {
 	 */
 	public static final Integer QRCODE_HEIGHT = 300;  
 	
+	
+	/******************************************视频地址配置信息**************************************************/
+	
+	/**
+	 * 视频上传地址
+	 */
+	public static final String VIDEO_UPLOAD_URL = "D://upload/video/";
+	
+	/**
+	 * 视频格式
+	 */
+	public static final String VIDEO_SUFFIX = ".MP4|.MV";
+	
 }

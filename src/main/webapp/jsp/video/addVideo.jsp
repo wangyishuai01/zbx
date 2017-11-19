@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>视频管理</title>
+<script type="text/javascript" src="${ctx }/js/jquery.form.js"></script>
 <style type="text/css">
 *{
 	margin: auto;
@@ -21,8 +22,10 @@
 	white-space: nowrap; 
 }
 </style>
+<link href="${ctx }/css/publicUpload.css" rel="stylesheet"/>
 </head>
 <body>
+<form action="${ctx }/upload/uploadVideo.do" class="upload" method="post" enctype="multipart/form-data">
 	<div class="main-container container-fluid">
 		<!-- Page Container -->
 		<div class="page-container">
@@ -57,7 +60,7 @@
 												<input type="text" id="videoPath" disabled="disabled" name="videoPath" class="form-control" 
 													style="width:68%;">
 												<input type="file" id="videoFile" accept="video/*" onchange="selectFileAfterInitInfo(this);" 
-													name="videoPath" style="width:10%;display: none">
+													name="videoFile" style="width:10%;display: none">
 												<button class="btn btn-default shiny" type="button" onclick="javascript:$('#videoFile').click();" style="margin-top:-5px;">
 													浏&nbsp;&nbsp;&nbsp;览</button>
 											</span>
@@ -72,6 +75,19 @@
 										<div class="col-md-6">
 											格&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;式：
 											<input type="text" id="videoSuffix" disabled="disabled" class="form-control" style="width:50%;">
+										</div>
+									</div>
+									<br>&nbsp;<br>
+									<div class="col-md-12">
+										<div class="col-md-1">
+											<button id="button" class="btn btn-default shiny" type="button">上传视频</button>
+										</div>
+										<div class="col-md-11">
+											<div class="progress">
+											    <div class="bar"></div>
+											    <div class="percent">0%</div>
+											</div>
+											<div class="status" id="status"></div>
 										</div>
 									</div>
 									<br>&nbsp;<br>
@@ -203,6 +219,7 @@
 		</div>
 		<!-- /Page Content -->
 	</div>
+</form>
 </body>
 <script type="text/javascript">
 var rootPath = "${pageContext.request.contextPath}";
@@ -381,6 +398,10 @@ function returnRelationArticleInfo(){
 }
 
 function saveEditCheck(){
+	if($("#videoName").val() == ""){
+		alert("视频名字不能为空！");
+		return false;
+	}
 	if($("#videoName").val().length > 50){
 		alert("视频名字长度不能大于50！");
 		return false;
@@ -391,14 +412,25 @@ function saveEditCheck(){
 			return false;
 		}
 	}
+	if($('.percent').text() != "100%"){
+		alert("请先上传视频！");
+		return false;
+	}
+	if($("#videoSecClass1").val() == "" || $("#videoSecClass1").val() == null){
+		alert("请选择视频关联的文章！");
+		return false;
+	}
 	return true;
 }
 
 function saveAddVideoInfo(){
 	if(saveEditCheck()){
 		var videoName = $("#videoName").val();
+		var videoSize = $("#videoSize").val();
+		var videoSuffix = $("#videoSuffix").val();
 		var isCanComment = $("#isCanComment").val();
 		var isFree = $("input[name='isFree']:checked").val();
+		var videoPath = $("#videoPath").val();
 		var videoPrice =  $("#videoPrice").val();
 		var relationArticleId = $("#relationArticleId").val();
 		$.ajax({
@@ -408,8 +440,11 @@ function saveAddVideoInfo(){
 			data : {
 				"title" : videoName,
 				"articleid" : relationArticleId,
+				"suffix" : videoSuffix,
+				"size" : videoSize,
 				"nocomment" : isCanComment,
 				"isfree" : isFree,
+				"videopath" : videoPath,
 				"videoPrice" : videoPrice
 			},
 			success : function(result) {
@@ -456,6 +491,76 @@ function tab(data) {
 	}
 }
 
+//ajaxSubmit 上传视频
+function uploadVideo(){
+	if($("#videoPath").val() == null || $("#videoPath").val() == ""){
+		alert("请选择视频文件！");
+		return false;
+	}
+	var bar = $('.bar');
+    var percent = $('.percent');
+    var status = $('#status');
+	$("form").ajaxSubmit({
+        type: 'post', // 提交方式 get/post
+        url: rootPath+"/upload/uploadVideo.do", // 需要提交的 url
+        data: {
+            'title': "",
+            'content': ""
+        },
+        beforeSerialize:function(){//表单数据序列化前执行的操作
+            //$("#txt2").val("java");//如：改变元素的值
+        },
+        beforeSubmit:function(){//表单提交前的操作
+            var filesize = $("#videoFile")[0].files[0].size/1024/1024;
+            /* if(filesize > 50){
+                alert("文件大小超过限制，最多50M");
+                return false;
+            } */
+            //if($("#txt1").val()==""){return false;}//如：验证表单数据是否为空
+        },
+        beforeSend: function() {
+            status.empty();
+            var percentVal = '0%';
+            bar.width(percentVal);
+            percent.html(percentVal);
+        },
+        uploadProgress: function(event, position, total, percentComplete) {//上传的过程
+            //position 已上传了多少
+            //total 总大小
+            //已上传的百分数
+            var percentVal = percentComplete + '%';
+            bar.width(percentVal);
+            percent.html(percentVal);
+        },
+        success: function(data) {//成功
+        	var result = JSON.parse(data);
+			if(result.success){
+				var percentVal = '100%';
+                bar.width(percentVal);
+                percent.html(percentVal);
+                alert("上传成功！");
+                $("#videoPath").val(result.path);
+        	} else {
+        		var percentVal = '0%';
+                bar.width("100%");
+                percent.html(percentVal);
+        		alert(result.errorMsg);
+        	}
+        },
+        error:function(err){//失败
+            alert("表单提交异常！"+err.msg);
+        },
+        complete: function(xhr) {//完成
+        	var result = JSON.parse(JSON.parse(xhr.responseText));
+        	if(result.success){
+        		status.html("<span>"+result.msg+"</span>");
+        	} else {
+        		status.html("<span style='color: red;'>"+result.errorMsg+"</span>");
+        	}
+        }
+	});
+}
+
 $(document).ready(function(){
 //	init(videoId);
 	$("#relationArticleName").dblclick(openEditRelationArticleDiv);
@@ -466,6 +571,7 @@ $(document).ready(function(){
 			$("#videoPriceLable").show();
 		}
 	});
+	$('#button').on('click', uploadVideo);
 });
 </script>
 </html>

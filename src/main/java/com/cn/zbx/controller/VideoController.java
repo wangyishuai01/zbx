@@ -242,63 +242,49 @@ public class VideoController {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		Date currentDate = new Date();
 		
-		Map<String, String> uploadResultMap = new HashMap<String, String>();
-		uploadResultMap.put("success", "true");
-		uploadResultMap.put("path", "/video/20171115/test.mp4");
-		
-		String success = uploadResultMap.get("success");
-		String videoPath = "";
-		boolean isUploadSuccess = false;
-		if("true".equals(success)){
-			videoPath = uploadResultMap.get("path");
-			isUploadSuccess = true;
-		} else {
-			resultMap.put("errorMsg", uploadResultMap.get("errorMsg"));
-			isUploadSuccess = false;
+		VideoMain videoParam = new VideoMain();
+		if(video.getId() != null && !"".equals(video.getId())){
+			videoParam.setId(video.getId());
 		}
-		
-		if(isUploadSuccess){
-			VideoMain videoParam = new VideoMain();
-			if(video.getId() != null && !"".equals(video.getId())){
-				videoParam.setId(video.getId());
-			}
-			if(video.getTitle() != null && !"".equals(video.getTitle())){
-				videoParam.setTitle(video.getTitle());
-			}
-			if(video.getImgurl() != null && !"".equals(video.getImgurl())){
-				videoParam.setImgurl(video.getImgurl());
-			}
-			if(video.getArticleid() != null && !"".equals(video.getArticleid())){
-				videoParam.setArticleid(video.getArticleid());
-			}
-			if(video.getSuffix() != null && !"".equals(video.getSuffix())){
-				videoParam.setSuffix(video.getSuffix());
-			}
-			if(video.getIsfree() != null && !"".equals(video.getIsfree())){
-				videoParam.setIsfree(video.getIsfree());
-			}
-			if(video.getNocomment() != null && !"".equals(video.getNocomment())){
-				videoParam.setNocomment(video.getNocomment());
-			}
-			videoParam.setVideopath(videoPath);
-			videoParam.setMakedate(currentDate);
-			videoParam.setModifydate(currentDate);
-			try {
-				Map<String, Object> paramMap = new HashMap<String, Object>();
-				paramMap = MapUtil.objectToMap(videoParam);
-				paramMap.put("videoPrice", videoPrice);
-				
-				boolean result = videoMainService.addVideoInfo(paramMap);
-				if(result){
-					resultMap.put("success", true);
-				} else {
-					resultMap.put("success", false);
-				}
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				resultMap.put("msg", "数据转化错误！");
+		if(video.getTitle() != null && !"".equals(video.getTitle())){
+			videoParam.setTitle(video.getTitle());
+		}
+		if(video.getImgurl() != null && !"".equals(video.getImgurl())){
+			videoParam.setImgurl(video.getImgurl());
+		}
+		if(video.getArticleid() != null && !"".equals(video.getArticleid())){
+			videoParam.setArticleid(video.getArticleid());
+		}
+		if(video.getSize() != null && !"".equals(video.getSize())){
+			videoParam.setSize(video.getSize());
+		}
+		if(video.getSuffix() != null && !"".equals(video.getSuffix())){
+			videoParam.setSuffix(video.getSuffix());
+		}
+		if(video.getIsfree() != null && !"".equals(video.getIsfree())){
+			videoParam.setIsfree(video.getIsfree());
+		}
+		if(video.getNocomment() != null && !"".equals(video.getNocomment())){
+			videoParam.setNocomment(video.getNocomment());
+		}
+		videoParam.setVideopath(video.getVideopath());
+		videoParam.setMakedate(currentDate);
+		videoParam.setModifydate(currentDate);
+		try {
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap = MapUtil.objectToMap(videoParam);
+			paramMap.put("videoPrice", videoPrice);
+			
+			boolean result = videoMainService.addVideoInfo(paramMap);
+			if(result){
+				resultMap.put("success", true);
+			} else {
 				resultMap.put("success", false);
 			}
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			resultMap.put("msg", "数据转化错误！");
+			resultMap.put("success", false);
 		}
 		return JSONObject.toJSONString(resultMap);
 	}
