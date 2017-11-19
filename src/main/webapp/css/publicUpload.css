@@ -1,0 +1,33 @@
+.progress {
+	position: relative;
+	width: 55%;
+	border: 1px solid #ddd;
+	padding: 1px;
+	border-radius: 3px;
+	margin-left:1%;
+	margin-bottom:0px;
+	float: left;
+	height: 32px;
+}
+
+.bar {
+	background-color: #B4F5B4;
+	width: 0%;
+	height: 32px;
+	border-radius: 3px;
+	float: left;
+}
+
+.percent {
+	position: absolute;
+	display: inline-block;
+	top: 3px;
+	left: 48%;
+}
+
+.status{
+	width:25%;
+	margin-left:1%;
+	float: left;
+	line-height: 32px;
+}
