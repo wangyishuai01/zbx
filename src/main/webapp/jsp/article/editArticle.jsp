@@ -281,6 +281,10 @@ function returnArticleInfo(){
 }
 
 function saveEditCheck(){
+	if($("#title").val() == ""){
+		alert("请填写文章标题！");
+		return false;
+	}
 	if($("#title").val().length > 50){
 		alert("文章标题长度不能大于50！");
 		return false;
@@ -338,50 +342,6 @@ function saveEdit(){
 			}
 		});
 	}
-}
-
-var pageCount = 1, pageSize = 5, pageMax = 100;
-function queryArticleInfo(){
-	var articleTitle = $("#articleTitle").val();
-	var classifyId = $("#videoSecClass").val();
-	var articleState = $("#articleState").val();
-	$.ajax({
-		url : rootPath+"/Article/selectArticleMainByParam.do",
-		type : "post",
-		dataType : "json",
-		data : {
-			"pageCount" : pageCount,
-			"pageSize" : pageSize,
-			"title" : articleTitle,
-			"classid" : classifyId,
-			"state" : articleState
-		},
-		success : function(result) {
-			$("tr[class='article_tr']").remove();
-			result = JSON.parse(result);
-			if(result.success){
-				pageMax = Math.floor(result.number%pageSize == 0 ? result.number/pageSize : result.number/pageSize+1);
-				result = result.data;
-				for(var i=0; i<result.length; i++){
-					var res = result[i];
-					var str = "<tr id='article_tr"+res.id+"' class='article_tr'>"
-							+ "<th style='text-align: center;'><input type='radio' value='"+res.id+"' name='article_tr' classId='"+res.classid+"'></th>"
-							+ "<th style='text-align: center;'>"+((pageCount-1)*pageSize+(i+1))+"</th>"
-							+ "<th style='max-width: 300px' class='line-limit-length'>"+res.title+"</th>"
-							+ "<th style='max-width: 342px' class='line-limit-length'>"+((res.excerpt==undefined||res.excerpt=='')?"暂无":res.excerpt)+"</th>";
-					if(res.state == "1"){
-						str += "<th style='text-align: center;'>启用</th>";
-					} else {
-						str += "<th style='text-align: center;color: red;'>禁用</th>";
-					}
-					str += "</tr>";
-					$('.table:eq(0)').find('tbody').append(str);
-				}
-			} else {
-				alert("查询数据为空！");
-			}
-		}
-	});
 }
 
 function initFirstClasstify(){
