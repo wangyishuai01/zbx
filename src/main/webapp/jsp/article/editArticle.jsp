@@ -239,30 +239,6 @@ function queryArticleClassifyInfo(articleId){
 		}
 	});
 }
-    
-function submit() {
-	var content = UE.getEditor('editor').getContent();
-	$.ajax({
-		url : rootPath+"/Article/articleUpdate.do",
-		type : "post",
-		dataType : "json",
-		data : {
-			"id" : $("#articleid").val(), 
-			"title" : $("#title").val(), 
-			"state" : $("#state").val(), 
-			"nocomment" : $("#nocomment").val(), 
-			"content" : content 
-		},
-		success : function(result) {
-			result = JSON.parse(result);
-			if(result.success){
-				init();
-				alert("编辑成功");
-			}
-		}
-	}); 
-	//ue.setContent('');
-}
 
 function openEditArticleDiv(){
 	ue.setContent($("#content").val());
