@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50139
 File Encoding         : 65001
 
-Date: 2017-10-28 22:36:32
+Date: 2017-11-20 15:26:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,23 +31,16 @@ CREATE TABLE `tclassify` (
   `makedate` datetime DEFAULT NULL,
   `modifydate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tclassify
 -- ----------------------------
-INSERT INTO `tclassify` VALUES ('3', '002', 'web3', '0', '3', '1', null, '1', '2017-10-03 21:53:11', '2017-10-03 21:53:13');
-INSERT INTO `tclassify` VALUES ('2', '002', 'web2', '0', '2', '1', null, '1', '2017-10-03 21:53:11', '2017-10-03 21:53:13');
-INSERT INTO `tclassify` VALUES ('4', '002', 'web4', '0', '4', '1', null, '1', '2017-10-03 21:53:11', '2017-10-03 21:53:13');
-INSERT INTO `tclassify` VALUES ('5', '002', 'web5', '0', '5', '1', null, '1', '2017-10-03 21:53:11', '2017-10-03 21:53:13');
-INSERT INTO `tclassify` VALUES ('6', '002', 'web6', '0', '6', '1', null, '1', '2017-10-03 21:53:11', '2017-10-03 21:53:13');
-INSERT INTO `tclassify` VALUES ('7', '002', 'web7', '0', '7', '1', null, '1', '2017-10-03 21:53:11', '2017-10-03 21:53:13');
-INSERT INTO `tclassify` VALUES ('8', '002', 'web8', '0', '8', '1', null, '1', '2017-10-03 21:53:11', '2017-10-03 21:53:13');
-INSERT INTO `tclassify` VALUES ('9', '002', 'web9', '0', '9', '1', null, '1', '2017-10-03 21:53:11', '2017-10-03 21:53:13');
-INSERT INTO `tclassify` VALUES ('1', '002', 'web1', '0', '1', '1', null, '1', '2017-10-03 21:53:11', '2017-10-03 21:53:13');
-INSERT INTO `tclassify` VALUES ('10', '001', 'wqerw', '0', '1', '1', null, '1', '2017-10-25 23:52:27', '2017-10-25 23:52:30');
-INSERT INTO `tclassify` VALUES ('11', '001', 'eqweqeq1', '0', '1', '1', null, '1', '2017-10-26 00:03:56', '2017-10-26 00:03:59');
-INSERT INTO `tclassify` VALUES ('12', '001', '未全额区委区·区区区区', '0', '1', '1', null, '0', '2017-10-26 00:02:58', '2017-10-26 00:02:58');
-INSERT INTO `tclassify` VALUES ('13', '001', '认为让沃尔沃', '0', '1', '1', null, '1', '2017-10-28 01:58:38', '2017-10-28 01:58:38');
-INSERT INTO `tclassify` VALUES ('14', '001', '色纺纱地方', '0', '1', '1', null, '0', '2017-10-28 02:07:05', '2017-10-28 02:07:05');
-INSERT INTO `tclassify` VALUES ('15', '001', '是非得失', '0', '1', '1', null, '1', '2017-10-28 02:09:11', '2017-10-28 02:09:11');
+INSERT INTO `tclassify` VALUES ('1', '001', 'java', '0', '1', '1', null, '1', '2017-11-20 15:15:58', '2017-11-20 15:15:58');
+INSERT INTO `tclassify` VALUES ('2', '001', 'java 初级', '1', '1', '2', null, '1', '2017-11-20 15:17:49', '2017-11-20 15:17:49');
+INSERT INTO `tclassify` VALUES ('3', '001', 'java 中级', '1', '1', '1', null, '1', '2017-11-20 15:23:11', '2017-11-20 15:23:43');
+INSERT INTO `tclassify` VALUES ('4', '001', 'java 高级', '1', '1', '2', null, '1', '2017-11-20 15:23:31', '2017-11-20 15:23:31');
+INSERT INTO `tclassify` VALUES ('5', '001', 'web', '0', '1', '1', null, '1', '2017-11-20 15:24:12', '2017-11-20 15:24:12');
+INSERT INTO `tclassify` VALUES ('6', '001', 'web 初级', '5', '1', '2', null, '1', '2017-11-20 15:24:28', '2017-11-20 15:24:28');
+INSERT INTO `tclassify` VALUES ('7', '001', 'web 中级', '5', '1', '2', null, '1', '2017-11-20 15:24:42', '2017-11-20 15:24:42');
+INSERT INTO `tclassify` VALUES ('8', '001', 'web 高级', '5', '1', '2', null, '1', '2017-11-20 15:24:58', '2017-11-20 15:24:58');
