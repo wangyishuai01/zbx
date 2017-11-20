@@ -22,15 +22,6 @@
 	opacity: 0.6;
 }
 </style>
-<%
-	String articleId = request.getParameter("articleId");
-	//String action = request.getParameter("action"); 
-	System.out.println("articleId============="+articleId);
-	//System.out.println("action============="+action);
-%>
-<script type="text/javascript">
-	var articleId = "<%=articleId %>";
-</script>
 </head>
 <body>
 	<div class="main-container container-fluid">
@@ -42,7 +33,7 @@
 					<div class="col-xs-12 col-md-12">
 						<div class="widget">
 						<div class="widget-header ">
-								<h5 class="widget-caption">编辑文章</h5>
+								<h5 class="widget-caption">新增文章</h5>
 								<div class="widget-buttons">
 									<a href="#" data-toggle="maximize"></a> <a href="#"
 										data-toggle="collapse" onclick="tab('pro');"> <i
@@ -64,12 +55,10 @@
 										<div class="col-md-6">
 											文章类别：
 											<select id="articleFirClass" class="form-control" style="width:50%;"></select>
-											<input type="hidden" id="articleFirClassOld" value="">
 										</div>
 										<div class="col-md-6">
 											文章类型：
-											<select id="articleSecClass" class="form-control" style="width:50%;"></select>
-											<input type="hidden" id="articleSecClassOld" value="">
+											<select id="articleSecClass" class="form-control" style="width:50%;"><option value=''>--请选择--</option></select>
 										</div>
 									</div>
 									<br>&nbsp;<br>
@@ -77,14 +66,14 @@
 										<div class="col-md-6">
 											状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：
 											<select id="state" class="form-control" style="width:50%;">
-												<option value="1">启用</option>
+												<option value="1" selected="selected">启用</option>
 												<option value="0">禁用</option>
 											</select>
 										</div>
 										<div class="col-md-6">
 											评论权限：
 											<select id="nocomment" class="form-control" style="width:50%;">
-												<option value="0">禁止评论</option>
+												<option value="0" selected="selected">禁止评论</option>
 												<option value="1">允许评论</option>
 											</select>
 										</div>
@@ -110,8 +99,6 @@
 													单价：<input type="text" id="articlePrice" class="form-control" style="width: 50%;"
 																onkeyup="value=value.replace(/[^0-9\.]/g,'');" onpaste="return false;"
 										           				placeholder="输入数字">元
-													<input type="hidden" id="articlePriceOld" value="">
-													<input type="hidden" id="articlePriceId" value="">
 												</label>
 											</span>
 										</div>
@@ -126,7 +113,7 @@
 									<div class="col-md-12" id="editButton">
 										<div style="float: right;margin-right: 18%;">
 											<button class="btn btn-default shiny" type="button"
-												onclick="saveEdit();">保存</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												onclick="saveAdd();">保存</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<button data-dismiss="modal" class="btn btn-default shiny"
 												onclick='returnArticleMain();' type="button">取消</button>
 										</div>
@@ -180,68 +167,8 @@ var rootPath = "${pageContext.request.contextPath}";
 function returnArticleMain(){
 	openUrl("/jsp/article/articleMain.jsp");
 }
-
-//初始化
-function init(articleId) {
-	$("#articleid").val(articleId);
-	$.ajax({
-		url : rootPath+"/Article/selectById.do",
-		type : "post",
-		dataType : "json",
-		data : {
-			"articleId" : articleId 
-		},
-		success : function(result) {
-			result = JSON.parse(result);
-			if(result.success){
-				var data = result.data;
-				$("#title").val(data.title);
-				$("#state").val(data.state);
-				$("#nocomment").val(data.nocomment);
-				$("#excerpt").val(data.excerpt);
-				if(data.isfree == 1){
-					$("input[name='isFree']:eq(0)").attr("checked", "checked");
-				} else {
-					$("input[name='isFree']:eq(1)").attr("checked", "checked");
-					queryPriceInfo(data.id);
-					$("#articlePriceLable").show();
-				}
-			    if(data.contentStr!=null){
-			    	var str = data.contentStr;
-			    	$("#content").val(str);
-			    }
-			    
-			}
-		}
-	}); 
-}
-
-function queryArticleClassifyInfo(articleId){
-	$.ajax({
-		url : rootPath+"/Article/selectClassifyByArticleId.do",
-		type : "post",
-		dataType : "json",
-		data : {
-			"articleId" : articleId 
-		},
-		success : function(result) {
-			result = JSON.parse(result);
-			if(result.success){
-				var res = result.data;
-				$("#articleFirClassOld").val(res.pcid);
-				$("#articleSecClassOld").val(res.cid);
-			} else {
-				alert("查询文章类型失败！");
-			}
-			initFirstClasstify();
-			initSecondClasstify();
-			$("#articleFirClass").change(initSecondClasstify);
-		}
-	});
-}
-
+  
 function openEditArticleDiv(){
-	ue.setContent($("#content").val());
 	$("#editArticleDiv").show();
 }  
 
@@ -256,7 +183,7 @@ function returnArticleInfo(){
 	ue.setContent('');
 }
 
-function saveEditCheck(){
+function saveAddCheck(){
 	if($("#title").val() == ""){
 		alert("请填写文章标题！");
 		return false;
@@ -278,20 +205,18 @@ function saveEditCheck(){
 	return true;
 }
 
-function saveEdit(){
-	if(saveEditCheck()){
+function saveAdd(){
+	if(saveAddCheck()){
 		var title = $("#title").val();
 		var isCanComment = $("#nocomment").val();
 		var isFree = $("input[name='isFree']:checked").val();
 		var state = $("#state").val();
 		var articlePrice =  $("#articlePrice").val();
-		var articlePriceOld =  $("#articlePriceOld").val(); 
 		var classId = $("#articleSecClass").val();
-		var articlePriceId = $("#articlePriceId").val();
 		var excerpt = $("#excerpt").val();
 		var content = $("#content").val();
 		$.ajax({
-			url : rootPath+"/Article/editArticleInfoById.do",
+			url : rootPath+"/Article/addArticleInfo.do",
 			type : "post",
 			dataType : "json",
 			data : {
@@ -303,17 +228,15 @@ function saveEdit(){
 				"state" : state,
 				"excerpt" : excerpt,
 				"content" : content, 
-				"articlePriceId" : articlePriceId,
-				"articlePrice" : articlePrice,
-				"articlePriceOld" : articlePriceOld
+				"articlePrice" : articlePrice
 			},
 			success : function(result) {
 				result = JSON.parse(result);
 				if(result.success){
-					alert("修改成功！");
+					alert("添加成功！");
 					returnArticleMain();
 				} else {
-					alert("修改失败！");
+					alert("添加失败！");
 				}
 			}
 		});
@@ -381,35 +304,13 @@ function initSecondClasstify(){
 	}
 }
 
-function queryPriceInfo(articleId){
-	$.ajax({
-		url : rootPath+"/price/selectPriceByParam.do",
-		type : "post",
-		dataType : "json",
-		data : {
-			"productId" : articleId,
-			"type" : "1"
-		},
-		success : function(result) {
-			result = JSON.parse(result);
-			if(result.success){
-				var res = result.data[0];
-				$("#articlePriceId").val(res.id);
-				$("#articlePrice").val(res.price);
-				$("#articlePriceOld").val(res.price);
-			}
-		}
-	});
-}
-
 $(document).ready(function(){
-	queryArticleClassifyInfo(articleId);
-	init(articleId);
+	initFirstClasstify();
+	$("#articleFirClass").change(initSecondClasstify);
 	$("input[name='isFree']").click(function(){
 		if($(this).val()=="1"){
 			$("#articlePriceLable").hide();
 		} else {
-			queryPriceInfo(articleId);
 			$("#articlePriceLable").show();
 		}
 	});
