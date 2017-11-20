@@ -84,6 +84,6 @@ public interface Constants {
 	/**
 	 * 视频格式
 	 */
-	public static final String VIDEO_SUFFIX = ".MP4|.MV";
+	public static final String VIDEO_SUFFIX = ".AVI|.WMA|.RMVB|.RM|.FLASH|.MP4|.MID|.3GP";
 	
 }
