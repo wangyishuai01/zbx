@@ -259,4 +259,67 @@ public class ArticleMainController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 新增文章信息功能 包括价格
+	 * @param request
+	 * @param response
+	 * @param article
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/addArticleInfo", method = { RequestMethod.GET, RequestMethod.POST })
+	public String addArticleInfo(HttpServletRequest request, HttpServletResponse response, 
+			ArticleMain article, String articlePrice){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Date currentDate = new Date();
+		
+		ArticleMain articleParam = new ArticleMain();
+		if(article.getId() != null && !"".equals(article.getId())){
+			articleParam.setId(article.getId());
+		}
+		if(article.getTitle() != null && !"".equals(article.getTitle())){
+			articleParam.setTitle(article.getTitle());
+		}
+		if(article.getImgurl() != null && !"".equals(article.getImgurl())){
+			articleParam.setImgurl(article.getImgurl());
+		}
+		if(article.getClassid() != null && !"".equals(article.getClassid())){
+			articleParam.setClassid(article.getClassid());
+		}
+		if(article.getExcerpt() != null && !"".equals(article.getExcerpt())){
+			articleParam.setExcerpt(article.getExcerpt());
+		}
+		if(article.getIsfree() != null && !"".equals(article.getIsfree())){
+			articleParam.setIsfree(article.getIsfree());
+		}
+		if(article.getNocomment() != null && !"".equals(article.getNocomment())){
+			articleParam.setNocomment(article.getNocomment());
+		}
+		if(article.getState() != null && !"".equals(article.getState())){
+			articleParam.setState(article.getState());
+		}
+		if(article.getContent() != null && !"".equals(article.getContent())){
+			articleParam.setContent(article.getContent());
+		}
+		articleParam.setMakedate(currentDate);
+		articleParam.setModifydate(currentDate);
+		try {
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap = MapUtil.objectToMap(articleParam);
+			paramMap.put("articlePrice", articlePrice);
+			
+			boolean result = articleMainService.addArticleInfo(paramMap);
+			if(result){
+				resultMap.put("success", true);
+			} else {
+				resultMap.put("success", false);
+			}
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			resultMap.put("msg", "数据转化错误！");
+			resultMap.put("success", false);
+		}
+		return JSONObject.toJSONString(resultMap);
+	}
+	
 }

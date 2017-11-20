@@ -41,7 +41,7 @@
 							<div class="widget-body" id="pro">
 								<div class="table-toolbar">
 									<div class="clearfix">
-										<a onclick="" class="btn btn-primary"> 
+										<a onclick="openUrl('/jsp/article/addArticle.jsp')" class="btn btn-primary"> 
 											<i class="fa fa-plus"></i> 添加文章
 										</a>
 									</div>
