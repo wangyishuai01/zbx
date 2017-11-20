@@ -387,9 +387,9 @@ function addTClassify(){
 		},
 		success : function(result) {
 			result = JSON.parse(result);
+			$("#AddPid").html("<option selected='selected' value='0'>一级分类</option>");
 			if(result.success){
 				var data1 = result.pdata;
-				$("#AddPid").html("<option selected='selected' value='0'>一级分类</option>");
 				var option = "";
 				for(var i=0; i<data1.length; i++){
 					var res = data1[i];
