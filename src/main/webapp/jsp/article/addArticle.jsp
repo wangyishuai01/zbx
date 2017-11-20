@@ -220,7 +220,6 @@ function saveAdd(){
 			type : "post",
 			dataType : "json",
 			data : {
-				"id" : articleId, 
 				"title" : title,
 				"classid" : classId,
 				"nocomment" : isCanComment,
