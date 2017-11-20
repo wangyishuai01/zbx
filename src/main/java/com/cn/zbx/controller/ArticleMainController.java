@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cn.zbx.pojo.ArticleMain;
-import com.cn.zbx.pojo.VideoMain;
 import com.cn.zbx.service.IArticleMainService;
 import com.cn.zbx.service.ICommentService;
 import com.cn.zbx.util.MapUtil;
