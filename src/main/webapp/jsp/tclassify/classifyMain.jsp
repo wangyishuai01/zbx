@@ -49,7 +49,7 @@
 								<div class="table-toolbar">
 									<span>分类名称：</span>
 									<input maxlength="20" type="text" id="className" class="form-control" style="width:250px;">
-									<a class="btn btn-default shiny" onclick="init();">查询</a>
+									<a class="btn btn-default shiny" onclick="query();">查询</a>
 								</div>
 								<table class="table table-bordered table-striped table-condensed table-hover flip-content" >
 									<thead class="flip-content bordered-darkorange">
@@ -428,6 +428,11 @@ function saveAdd(){
 }
 function closeAddDiv(){
 	$("#addDiv").hide();
+}
+
+function query(){
+	pageCount = 1;
+	init();
 }
 
 function first(){

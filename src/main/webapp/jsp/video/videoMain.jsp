@@ -210,6 +210,7 @@ function query(){
 		alert("请选择视频类型！");
 		return false;
 	}
+	pageCount = 1
 	init();
 }
 

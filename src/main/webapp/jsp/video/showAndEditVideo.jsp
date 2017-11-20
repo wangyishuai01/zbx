@@ -348,6 +348,7 @@ function query(){
 		alert("请选择文章类型！");
 		return false;
 	}
+	pageCount = 1;
 	queryArticleInfo();
 }
 
