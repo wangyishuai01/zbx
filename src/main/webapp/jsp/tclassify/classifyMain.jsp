@@ -190,8 +190,6 @@
 													</div>
 												</div>
 											</div>
-											<input type="hidden" id="AddclassId" value="">
-											<input type="hidden" id="Addpid" value="">
 										</div>
 									</div>
 								</div>
@@ -378,6 +376,9 @@ function updateIsDisplay(classid, isDisplay){
 	});
 }
 function addTClassify(){
+	$("#Addname").val("");
+	$("#AddPid").html("");
+	$("#AddisDisplay input[type='radio']:eq(0)").attr("checked","checked");
 	$.ajax({
 		url : rootPath+"/tclassify/selectClassifyByParam.do",
 		type : "post",
