@@ -402,7 +402,7 @@ function addTClassify(){
 	$("#addDiv").show();
 }
 function saveAdd(){
-	var isdisplay = $("#AddisDisplay input[type='radio']:checked").val();alert(isdisplay);
+	var isdisplay = $("#AddisDisplay input[type='radio']:checked").val();
 	var pid = $("#AddPid").val();
 	$.ajax({
 		url : rootPath+"/tclassify/addtClassify.do",
