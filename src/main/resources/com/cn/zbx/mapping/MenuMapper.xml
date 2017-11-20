@@ -7,14 +7,14 @@
     <result column="pid" property="pid" jdbcType="INTEGER" />
     <result column="order" property="order" jdbcType="INTEGER" />
     <result column="level" property="level" jdbcType="INTEGER" />
-    <result column="desc" property="desc" jdbcType="VARCHAR" />
+    <result column="excerpt" property="excerpt" jdbcType="VARCHAR" />
     <result column="path" property="path" jdbcType="VARCHAR" />
     <result column="isdisplay" property="isdisplay" jdbcType="INTEGER" />
     <result column="makedate" property="makedate" jdbcType="TIMESTAMP" />
     <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, pid, order, level, desc, path, isdisplay, makedate, modifydate
+    id, name, pid, order, level, excerpt, path, isdisplay, makedate, modifydate
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -28,11 +28,11 @@
   </delete>
   <insert id="insert" parameterType="com.cn.zbx.pojo.Menu" keyProperty="id" useGeneratedKeys="true">
     insert into menu (id, name, pid, 
-      order, level, desc, 
+      order, level, excerpt, 
       path, isdisplay, makedate, 
       modifydate)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, 
-      #{order,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, #{desc,jdbcType=VARCHAR}, 
+      #{order,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, #{excerpt,jdbcType=VARCHAR}, 
       #{path,jdbcType=VARCHAR}, #{isdisplay,jdbcType=INTEGER}, #{makedate,jdbcType=TIMESTAMP}, 
       #{modifydate,jdbcType=TIMESTAMP})
   </insert>
@@ -54,8 +54,8 @@
       <if test="level != null" >
         level,
       </if>
-      <if test="desc != null" >
-        desc,
+      <if test="excerpt != null" >
+        excerpt,
       </if>
       <if test="path != null" >
         path,
@@ -86,8 +86,8 @@
       <if test="level != null" >
         #{level,jdbcType=INTEGER},
       </if>
-      <if test="desc != null" >
-        #{desc,jdbcType=VARCHAR},
+      <if test="excerpt != null" >
+        #{excerpt,jdbcType=VARCHAR},
       </if>
       <if test="path != null" >
         #{path,jdbcType=VARCHAR},
@@ -118,8 +118,8 @@
       <if test="level != null" >
         level = #{level,jdbcType=INTEGER},
       </if>
-      <if test="desc != null" >
-        desc = #{desc,jdbcType=VARCHAR},
+      <if test="excerpt != null" >
+        excerpt = #{excerpt,jdbcType=VARCHAR},
       </if>
       <if test="path != null" >
         path = #{path,jdbcType=VARCHAR},
@@ -142,7 +142,7 @@
       pid = #{pid,jdbcType=INTEGER},
       order = #{order,jdbcType=INTEGER},
       level = #{level,jdbcType=INTEGER},
-      desc = #{desc,jdbcType=VARCHAR},
+      excerpt = #{excerpt,jdbcType=VARCHAR},
       path = #{path,jdbcType=VARCHAR},
       isdisplay = #{isdisplay,jdbcType=INTEGER},
       makedate = #{makedate,jdbcType=TIMESTAMP},

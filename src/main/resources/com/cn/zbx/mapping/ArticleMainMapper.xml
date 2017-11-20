@@ -36,11 +36,11 @@
   </delete>
   <insert id="insert" parameterType="com.cn.zbx.pojo.ArticleMain" keyProperty="id" useGeneratedKeys="true">
     insert into article_main (id, title, imgurl, 
-      classid, desc, isfree, 
+      classid, excerpt, isfree, 
       nocomment, makedate, modifydate, 
       content)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR}, 
-      #{classid,jdbcType=INTEGER}, #{desc,jdbcType=VARCHAR}, #{isfree,jdbcType=INTEGER}, 
+      #{classid,jdbcType=INTEGER}, #{excerpt,jdbcType=VARCHAR}, #{isfree,jdbcType=INTEGER}, 
       #{nocomment,jdbcType=INTEGER}, #{makedate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}, 
       #{content,jdbcType=LONGVARBINARY})
   </insert>
@@ -59,8 +59,8 @@
       <if test="classid != null" >
         classid,
       </if>
-      <if test="desc != null" >
-        desc,
+      <if test="excerpt != null" >
+        excerpt,
       </if>
       <if test="isfree != null" >
         isfree,
@@ -91,8 +91,8 @@
       <if test="classid != null" >
         #{classid,jdbcType=INTEGER},
       </if>
-      <if test="desc != null" >
-        #{desc,jdbcType=VARCHAR},
+      <if test="excerpt != null" >
+        #{excerpt,jdbcType=VARCHAR},
       </if>
       <if test="isfree != null" >
         #{isfree,jdbcType=INTEGER},
@@ -152,7 +152,7 @@
     set title = #{title,jdbcType=VARCHAR},
       imgurl = #{imgurl,jdbcType=VARCHAR},
       classid = #{classid,jdbcType=INTEGER},
-      desc = #{desc,jdbcType=VARCHAR},
+      excerpt = #{excerpt,jdbcType=VARCHAR},
       isfree = #{isfree,jdbcType=INTEGER},
       nocomment = #{nocomment,jdbcType=INTEGER},
       makedate = #{makedate,jdbcType=TIMESTAMP},
@@ -165,7 +165,7 @@
     set title = #{title,jdbcType=VARCHAR},
       imgurl = #{imgurl,jdbcType=VARCHAR},
       classid = #{classid,jdbcType=INTEGER},
-      desc = #{desc,jdbcType=VARCHAR},
+      excerpt = #{excerpt,jdbcType=VARCHAR},
       isfree = #{isfree,jdbcType=INTEGER},
       nocomment = #{nocomment,jdbcType=INTEGER},
       makedate = #{makedate,jdbcType=TIMESTAMP},

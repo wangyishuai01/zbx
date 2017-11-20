@@ -20,7 +20,7 @@ public class Tclassify extends BasicPojo{
 
     private Integer level;
 
-    private String desc;
+    private String excerpt;
 
     private Integer isdisplay;
 
@@ -77,12 +77,12 @@ public class Tclassify extends BasicPojo{
         this.level = level;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getExcerpt() {
+        return excerpt;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setExcerpt(String excerpt) {
+        this.excerpt = excerpt == null ? null : excerpt.trim();
     }
 
     public Integer getIsdisplay() {

@@ -14,7 +14,7 @@ public class Menu{
 
     private Integer level;
 
-    private String desc;
+    private String excerpt;
 
     private String path;
 
@@ -64,12 +64,12 @@ public class Menu{
         this.level = level;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getExcerpt() {
+        return excerpt;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setExcerpt(String excerpt) {
+        this.excerpt = excerpt == null ? null : excerpt.trim();
     }
 
     public String getPath() {
