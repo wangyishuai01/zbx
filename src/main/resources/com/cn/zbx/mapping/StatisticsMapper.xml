@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zbx.dao.StatisticsMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.zbx.pojo.Statistics" >
+    <id column="statistics_id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="commenttoid" property="commentToId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="isbuy" property="isBuy" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    statistics_id, user_id, commenttoid, type, create_date,isbuy
+  </sql>
+  <select id="selectBySelectParam" resultMap="BaseResultMap" parameterType="com.cn.zbx.pojo.Statistics" >
+    select 
+    <include refid="Base_Column_List" />
+    from statistics
+    where 1=1
+    <if test="id != null" >
+    statistics_id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="userId != null" >
+      and user_id = #{userId,jdbcType=INTEGER}
+    </if>
+    <if test="commentToId != null" >
+      and commenttoid = #{commentToId,jdbcType=INTEGER}
+    </if>
+    <if test="type != null" >
+      and type = #{type,jdbcType=CHAR}
+    </if>
+    <if test="createDate != null" >
+      and create_date = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="isBuy != null" >
+      and isbuy = #{isBuy,jdbcType=INTEGER}
+    </if>
+  </select>
+  <insert id="insert" parameterType="com.cn.zbx.pojo.Statistics" keyProperty="id" useGeneratedKeys="true">
+    insert into statistics (statistics_id, user_id, 
+    	commenttoid, type, create_date,isbuy)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{commentToId,jdbcType=INTEGER}, 
+      #{type,jdbcType=CHAR}, #{createDate,jdbcType=TIMESTAMP}, #{isBuy,jdbcType=INTEGER}
+      )
+  </insert>
+  <select id="selectCountBySelectParam" resultType="int" parameterType="com.cn.zbx.pojo.Statistics" >
+    select 
+    	count(1)
+    from statistics
+    where 1=1
+    <if test="id != null" >
+      and statistics_id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="userId != null" >
+      and user_id = #{userId,jdbcType=INTEGER}
+    </if>
+    <if test="commentToId != null" >
+      and commenttoid = #{commentToId,jdbcType=INTEGER}
+    </if>
+    <if test="type != null" >
+      and type = #{type,jdbcType=CHAR}
+    </if>
+    <if test="createDate != null" >
+      and create_date = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="isBuy != null" >
+      and isbuy = #{isBuy,jdbcType=INTEGER}
+    </if>
+   
+  </select>
+  
+  
+  
+  
+</mapper>
