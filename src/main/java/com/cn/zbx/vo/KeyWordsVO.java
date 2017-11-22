@@ -1,12 +1,8 @@
-package com.cn.zbx.pojo;
+package com.cn.zbx.vo;
 
 import java.util.Date;
 
-public class KeyWords extends BasicPojo{
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class KeyWordsVO {
 
 	private Integer id;
 
@@ -19,6 +15,14 @@ public class KeyWords extends BasicPojo{
     private Date makedate;
 
     private Date modifydate;
+    /**
+     * 文章数
+     */
+    private Integer articleCount;
+    /**
+     * 视频数
+     */
+    private Integer videoCount;
 
     public Integer getId() {
         return id;
@@ -67,4 +71,20 @@ public class KeyWords extends BasicPojo{
     public void setModifydate(Date modifydate) {
         this.modifydate = modifydate;
     }
+
+	public Integer getArticleCount() {
+		return articleCount;
+	}
+
+	public void setArticleCount(Integer articleCount) {
+		this.articleCount = articleCount;
+	}
+
+	public Integer getVideoCount() {
+		return videoCount;
+	}
+
+	public void setVideoCount(Integer videoCount) {
+		this.videoCount = videoCount;
+	}
 }

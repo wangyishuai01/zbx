@@ -103,4 +103,62 @@
       modifydate = #{modifydate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectCountBySelectParam" resultType="int" parameterType="com.cn.zbx.pojo.KeyWords" >
+    select 
+		count(1)
+	from keywords 
+    where 1=1
+    <if test="id != null" >
+      and id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="name != null" >
+      name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="excerpt != null" >
+      excerpt = #{excerpt,jdbcType=VARCHAR}
+    </if>
+    <if test="state != null" >
+      state = #{state,jdbcType=INTEGER}
+    </if>
+    <if test="makedate != null" >
+      makedate = #{makedate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="modifydate != null" >
+      modifydate = #{modifydate,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+  
+  <select id="selectBySelectParam" resultType="com.cn.zbx.vo.KeyWordsVO" parameterType="com.cn.zbx.pojo.KeyWords" >
+    select 
+		kw.*,
+		(select count(1) from keyrelation kr where kr.keywordsid=kw.id and kr.relationtype='1') as articleCount,
+		(select count(1) from keyrelation kr where kr.keywordsid=kw.id and kr.relationtype='2') as videoCount
+	from keywords kw 
+    where 1=1
+    <if test="id != null" >
+      and id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="name != null" >
+      name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="excerpt != null" >
+      excerpt = #{excerpt,jdbcType=VARCHAR}
+    </if>
+    <if test="state != null" >
+      state = #{state,jdbcType=INTEGER}
+    </if>
+    <if test="makedate != null" >
+      makedate = #{makedate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="modifydate != null" >
+      modifydate = #{modifydate,jdbcType=TIMESTAMP}
+    </if>
+    order by kw.id asc 
+    <if test="startLimit != null" >
+      <if test="pageSize != null" >
+     	 limit #{startLimit}, #{pageSize}
+      </if>
+    </if>
+  </select>
 </mapper>
