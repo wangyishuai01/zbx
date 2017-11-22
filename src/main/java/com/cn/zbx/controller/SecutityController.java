@@ -29,6 +29,7 @@ import com.cn.zbx.service.IBUserLimitService;
 import com.cn.zbx.service.IBUserService;
 import com.cn.zbx.util.CookiesUtil;
 import com.cn.zbx.util.JsonUtil;
+import com.cn.zbx.util.MD5Util;
 
 /**
  * @Class Name SecutityController
@@ -54,6 +55,8 @@ public class SecutityController {
 			throws SQLException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		//MD5加密
+		password = MD5Util.MD5Encode(password);
 		try {
 			BUser u = new BUser();
 			u = bUserService.queryUserByName(username);// 根据用户名查询用户是否存在
