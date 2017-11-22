@@ -205,7 +205,7 @@
       and id = #{id,jdbcType=INTEGER}
     </if>
     <if test="title != null" >
-      and title = #{title,jdbcType=VARCHAR}
+      and title like '%${title}%'
     </if>
     <if test="imgurl != null" >
       and imgurl = #{imgurl,jdbcType=VARCHAR}
@@ -250,7 +250,7 @@
       and id = #{id,jdbcType=INTEGER}
     </if>
     <if test="title != null" >
-      and title = #{title,jdbcType=VARCHAR}
+      and title like '%${title}%'
     </if>
     <if test="imgurl != null" >
       and imgurl = #{imgurl,jdbcType=VARCHAR}
