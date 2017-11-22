@@ -162,7 +162,7 @@
       and code = #{code,jdbcType=VARCHAR}
     </if>
     <if test="name != null" >
-      and name = #{name,jdbcType=VARCHAR}
+      and name like '%${name}%'
     </if>
     <if test="pid != null" >
       and pid = #{pid,jdbcType=INTEGER}
@@ -199,7 +199,7 @@
       and code = #{code,jdbcType=VARCHAR}
     </if>
     <if test="name != null" >
-      and name = #{name,jdbcType=VARCHAR}
+      and name like '%${name}%'
     </if>
     <if test="pid != null" >
       and pid = #{pid,jdbcType=INTEGER}

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.cn.zbx.pojo.Customer;
 import com.cn.zbx.service.ICustomerService;
+import com.cn.zbx.util.MD5Util;
 import com.cn.zbx.vo.CustomerVO;
 
 @Controller
@@ -88,7 +89,7 @@ public class CustomerController {
 		if(CustomerId != null && !"".equals(CustomerId)){
 			Customer CustomerParam = new Customer();
 			CustomerParam.setId(Integer.valueOf(CustomerId));;
-			CustomerParam.setPassword(password);
+			CustomerParam.setPassword(MD5Util.MD5Encode(password));
 			CustomerParam.setModifydate(new Date());
 			int result = customerService.updateByPrimaryKeySelective(CustomerParam);
 			if(result <= 0){
