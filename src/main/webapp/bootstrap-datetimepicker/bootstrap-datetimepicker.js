@@ -236,6 +236,11 @@
     }
 
     this.todayBtn = (options.todayBtn || this.element.data('date-today-btn') || false);
+    // add by xiaomin
+    this.clearBtn = true;
+    if(options.clearBtn===false){
+      this.clearBtn = false;
+    }
     this.todayHighlight = (options.todayHighlight || this.element.data('date-today-highlight') || false);
 
     this.weekStart = ((options.weekStart || this.element.data('date-weekstart') || dates[this.language].weekStart || 0) % 7);
@@ -532,7 +537,6 @@
 
       top = top - containerOffset.top;
       left = left - containerOffset.left;
-
       this.picker.css({
         top:    top,
         left:   left,
@@ -621,6 +625,8 @@
       this.picker.find('tfoot th.today')
         .text(dates[this.language].today)
         .toggle(this.todayBtn !== false);
+      this.picker.find('tfoot th.clear').text(dates[this.language].clear).toggle(this.clearBtn!==false); // add by xiaomin
+
       this.updateNavArrows();
       this.fillMonths();
       /*var prevMonth = UTCDate(year, month, 0,0,0,0,0);
@@ -935,6 +941,25 @@
                 this.viewMode = this.startViewMode;
                 this.showMode(0);
                 this._setDate(date);
+                this.fill();
+                if (this.autoclose) {
+                  this.hide();
+                }
+                break;
+              // add by xiaomin
+              case 'clear':
+                var date = new Date();
+                date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), 0);
+
+                // Respect startDate and endDate.
+                if (date < this.startDate) date = this.startDate;
+                else if (date > this.endDate) date = this.endDate;
+
+                this.viewMode = this.startViewMode;
+                this.showMode(0);
+                this._setDate(date);
+                  this.element.val("");
+                //this._setDate(date);
                 this.fill();
                 if (this.autoclose) {
                   this.hide();
@@ -1377,7 +1402,8 @@
       monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       meridiem:    ['am', 'pm'],
       suffix:      ['st', 'nd', 'rd', 'th'],
-      today:       'Today'
+      today:       'Today',
+      clear:       'Clear' // add by xiaomin
     }
   };
 
@@ -1718,7 +1744,7 @@
                 '</tr>' +
       '</thead>',
     contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>',
-    footTemplate: '<tfoot><tr><th colspan="7" class="today"></th></tr></tfoot>'
+    footTemplate: '<tfoot><tr><th colspan="7" class="today"></th></tr><tr><th colspan="7" class="clear"></th></tr></tfoot>' // modify by xiaomin
   };
   DPGlobal.template = '<div class="datetimepicker">' +
     '<div class="datetimepicker-minutes">' +

@@ -19,7 +19,6 @@ public class Statistics extends BasicPojo{
 
     private Date createDate;
     
-    private Integer isBuy;
 
 	public Integer getId() {
 		return id;
@@ -59,14 +58,6 @@ public class Statistics extends BasicPojo{
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
-	}
-
-	public Integer getIsBuy() {
-		return isBuy;
-	}
-
-	public void setIsBuy(Integer isBuy) {
-		this.isBuy = isBuy;
 	}
 
     

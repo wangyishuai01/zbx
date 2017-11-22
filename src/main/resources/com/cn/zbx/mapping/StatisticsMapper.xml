@@ -7,10 +7,9 @@
     <result column="commenttoid" property="commentToId" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="CHAR" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-    <result column="isbuy" property="isBuy" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    statistics_id, user_id, commenttoid, type, create_date,isbuy
+    statistics_id, user_id, commenttoid, type, create_date
   </sql>
   <select id="selectBySelectParam" resultMap="BaseResultMap" parameterType="com.cn.zbx.pojo.Statistics" >
     select 
@@ -32,15 +31,12 @@
     <if test="createDate != null" >
       and create_date = #{createDate,jdbcType=TIMESTAMP}
     </if>
-    <if test="isBuy != null" >
-      and isbuy = #{isBuy,jdbcType=INTEGER}
-    </if>
   </select>
   <insert id="insert" parameterType="com.cn.zbx.pojo.Statistics" keyProperty="id" useGeneratedKeys="true">
     insert into statistics (statistics_id, user_id, 
-    	commenttoid, type, create_date,isbuy)
+    	commenttoid, type, create_date)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{commentToId,jdbcType=INTEGER}, 
-      #{type,jdbcType=CHAR}, #{createDate,jdbcType=TIMESTAMP}, #{isBuy,jdbcType=INTEGER}
+      #{type,jdbcType=CHAR}, #{createDate,jdbcType=TIMESTAMP}
       )
   </insert>
   <select id="selectCountBySelectParam" resultType="int" parameterType="com.cn.zbx.pojo.Statistics" >
@@ -62,9 +58,6 @@
     </if>
     <if test="createDate != null" >
       and create_date = #{createDate,jdbcType=TIMESTAMP}
-    </if>
-    <if test="isBuy != null" >
-      and isbuy = #{isBuy,jdbcType=INTEGER}
     </if>
    
   </select>
