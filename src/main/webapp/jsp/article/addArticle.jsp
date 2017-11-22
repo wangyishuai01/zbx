@@ -93,7 +93,7 @@
 										<div class="col-md-6">
 											<span class="input-icon icon-right"> 
 												是否免费：
-												<input type="radio" name="isFree" value="1">是&nbsp;&nbsp;
+												<input type="radio" name="isFree" checked="checked" value="1">是&nbsp;&nbsp;
 												<input type="radio" name="isFree" value="0">否&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 												<label id="articlePriceLable" style="display: none">
 													单价：<input type="text" id="articlePrice" class="form-control" style="width: 50%;"
