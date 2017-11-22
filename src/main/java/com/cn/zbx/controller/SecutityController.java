@@ -9,7 +9,10 @@ package com.cn.zbx.controller;
 
 import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,8 +71,16 @@ public class SecutityController {
 				}
 				List<Menu> menuList = bUserLimitService.queryUserMenuByUser(u);
 				if (menuList != null && menuList.size() != 0) {
+					List<Map<String,String>> LoneList = new ArrayList<Map<String,String>>();
+					for(Menu menu : menuList){
+						Map<String,String> map = new HashMap<String,String>();
+						map.put("id", String.valueOf(menu.getId()));
+						map.put("name", menu.getName());
+						map.put("path", menu.getPath());
+						LoneList.add(map);
+					}
 					CookiesUtil.setCookies(response, "username", username, 60*30);
-					CookiesUtil.setCookies(response, "LOne", URLEncoder.encode(JsonUtil.listToJson(menuList), "UTF-8"), 60*120);
+					CookiesUtil.setCookies(response, "LOne", URLEncoder.encode(JsonUtil.listToJson(LoneList), "UTF-8"), 60*120);
 					return "redirect:/index.jsp";
 				} else {
 					request.setAttribute("error", "该用户无权限！");
