@@ -15,10 +15,10 @@
 	text-align: left;
 	padding: 0;
 	position: absolute;
-	left: 224px;
+	left: 124px;
 	top: 0;
 	z-index: 2;
-	width: 1120px;
+	width: 1220px;
 	height: 45px;
 }
 
@@ -71,6 +71,25 @@
 </script>
 <script type="text/javascript">
 	var LoneList = $.parseJSON(decodeURIComponent(getCookieValue("LOne")));
+	var preNodeId = "0";
+	function btnmouseover(){
+		$(this).css("background-color","#5599FF");
+	}
+	function btnmouseout(){
+		$(this).css("background-color","#2970e4");
+	}
+	function btnclick(id){
+		var obj = $("#navigatColor_"+id);
+		obj.css("background-color","#5599FF");
+		obj.unbind("mouseover mouseout");
+		var preObj = $("#navigatColor_"+preNodeId);
+		preObj.css("background-color","#2970e4");
+		preObj.bind({
+    		"mouseover" : btnmouseover,
+		    "mouseout" : btnmouseout
+		});
+		preNodeId = id;
+	}
 	$(function(){
 		var Aoption = "";
 		for(var i=0; i<LoneList.length; i++){
@@ -79,16 +98,14 @@
 			"id='navigatColor_" + LoneList[i].id + "'>" + LoneList[i].name + "</a>";
 		}
 		$("#LOne").append(Aoption);
-	    
-		$(".btn").mouseover(function(){
-			$(this).css("background-color","#5599FF");
-	    });
-		$(".btn").mouseout(function(){
-			$(this).css("background-color","#2970e4");
-	    });
-		$(".btn").click(function(){
-	        alert('click function is running !');
-	    });
+		
+		$("#LOne .btn").bind({
+			"mouseover" : btnmouseover,
+		    "mouseout" : btnmouseout
+		});
+		
+		$("#navigatColor_0").css("background-color","#5599FF");
+		$("#navigatColor_0").unbind("mouseover mouseout");
 	});
 </script>
 <script type="text/javascript">   
@@ -173,7 +190,7 @@
 					</a>
 					<a class='btn' style="height: 45px; width: 100px; color: white; font-size: 20px; 
 					background-color: #2970e4; border-color: #2970e4; border-radius: 0px;" 
-					href="" id='navigatColor_'>首   页</a>
+					href="" id='navigatColor_0'>首   页</a>
 				</div>
 				<!-- /Navbar Barnd -->
 
