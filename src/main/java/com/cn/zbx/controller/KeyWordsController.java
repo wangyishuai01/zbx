@@ -1,6 +1,5 @@
 package com.cn.zbx.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,12 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cn.zbx.pojo.KeyWords;
-import com.cn.zbx.pojo.Tclassify;
-import com.cn.zbx.service.IArticleMainService;
 import com.cn.zbx.service.IKeyWordsService;
-import com.cn.zbx.service.ITClassifyService;
 import com.cn.zbx.vo.KeyWordsVO;
-import com.cn.zbx.vo.TClassifyVO;
 
 @Controller
 @RequestMapping(value="/keyWords")
@@ -114,6 +109,9 @@ public class KeyWordsController {
 		if(keyWords.getName() != null && !"".equals(keyWords.getName())){
 			keyWordsParam.setName(keyWords.getName());
 		}
+		if(keyWords.getExcerpt() != null && !"".equals(keyWords.getExcerpt())){
+			keyWordsParam.setExcerpt(keyWords.getExcerpt());
+		}
 		if(keyWords.getState() != null && !"".equals(keyWords.getState())){
 			keyWordsParam.setState(keyWords.getState());
 		}
@@ -140,6 +138,9 @@ public class KeyWordsController {
 		}
 		if(keyWords.getName() != null && !"".equals(keyWords.getName())){
 			keyWordsParam.setName(keyWords.getName());
+		}
+		if(keyWords.getExcerpt() != null && !"".equals(keyWords.getExcerpt())){
+			keyWordsParam.setExcerpt(keyWords.getExcerpt());
 		}
 		if(keyWords.getState() != null && !"".equals(keyWords.getState())){
 			keyWordsParam.setState(keyWords.getState());

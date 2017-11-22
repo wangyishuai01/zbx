@@ -113,19 +113,19 @@
       and id = #{id,jdbcType=INTEGER}
     </if>
     <if test="name != null" >
-      name = #{name,jdbcType=VARCHAR}
+      and name like '%${name}%'
     </if>
     <if test="excerpt != null" >
-      excerpt = #{excerpt,jdbcType=VARCHAR}
+      and excerpt = #{excerpt,jdbcType=VARCHAR}
     </if>
     <if test="state != null" >
-      state = #{state,jdbcType=INTEGER}
+      and state = #{state,jdbcType=INTEGER}
     </if>
     <if test="makedate != null" >
-      makedate = #{makedate,jdbcType=TIMESTAMP}
+      and makedate = #{makedate,jdbcType=TIMESTAMP}
     </if>
     <if test="modifydate != null" >
-      modifydate = #{modifydate,jdbcType=TIMESTAMP}
+      and modifydate = #{modifydate,jdbcType=TIMESTAMP}
     </if>
   </select>
   
@@ -140,19 +140,19 @@
       and id = #{id,jdbcType=INTEGER}
     </if>
     <if test="name != null" >
-      name = #{name,jdbcType=VARCHAR}
+      and name like '%${name}%'
     </if>
     <if test="excerpt != null" >
-      excerpt = #{excerpt,jdbcType=VARCHAR}
+      and excerpt = #{excerpt,jdbcType=VARCHAR}
     </if>
     <if test="state != null" >
-      state = #{state,jdbcType=INTEGER}
+      and state = #{state,jdbcType=INTEGER}
     </if>
     <if test="makedate != null" >
-      makedate = #{makedate,jdbcType=TIMESTAMP}
+      and makedate = #{makedate,jdbcType=TIMESTAMP}
     </if>
     <if test="modifydate != null" >
-      modifydate = #{modifydate,jdbcType=TIMESTAMP}
+      and modifydate = #{modifydate,jdbcType=TIMESTAMP}
     </if>
     order by kw.id asc 
     <if test="startLimit != null" >

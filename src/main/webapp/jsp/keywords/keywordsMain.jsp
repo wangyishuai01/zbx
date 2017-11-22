@@ -149,44 +149,46 @@
 				</div>
 				<!-- add -->
 				<div class="modal modal-darkorange" id="addDiv">
-					<div class="modal-dialog" style="margin: 60px auto;width:700px;">
+					<div class="modal-dialog" style="margin: 100px auto;width:500px;">
 						<div class="modal-content">
 							<div class="modal-header">
 								<button aria-hidden="true" data-dismiss="modal" class="close"
 									type="button" onclick="closeAddDiv();">×</button>
-								<h4 class="modal-title">添加分类信息</h4>
+								<h4 class="modal-title">添加关键词</h4>
 							</div>
 							<div class="modal-body">
 								<div class="bootbox-body">
 									<div class="row" style="padding: 10px;">
 										<div class="col-lg-12 col-sm-12 col-xs-12">
 											<div class="col-md-12">
-												<div class="col-lg-6">分类名称：</div>
-												<div class="col-lg-6">
-													<span class="input-icon icon-right"> <input
-														type="text"
-														id="Addname" name="Addname" class="form-control" style="width:100%;">
+												<div class="col-lg-4">关 键 词 名 称 ：</div>
+												<div class="col-lg-8">
+													<span class="input-icon icon-right"> 
+														<input type="text" id="Addname" name="Addname" class="form-control" value="" style="width:100%;">
 													</span>
 												</div>
 											</div>
 											<br>&nbsp;<br>
 											<div class="col-md-12">
-												<div class="col-lg-6">分类上级关键词：</div>
-												<div class="col-lg-6">
-													<select class="form-control" id="AddPid"></select> 
+												<div class="col-lg-4">关 键 词 描 述 ：</div>
+												<div class="col-lg-8">
+													<span class="input-icon icon-right"> 
+														<textarea  id="Addexcerpt" name="Addexcerpt" class="form-control" 
+															rows="3" value="" style="width:100%;"></textarea>
+													</span>
 												</div>
 											</div>
 											<br>&nbsp;<br>
 											<div class="col-md-12">
-												<div class="col-lg-6" >是否显示：</div>
-												<div class="col-lg-6">  
-													<div id="AddisDisplay">
+												<div class="col-lg-4" >状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：</div>
+												<div class="col-lg-8">  
+													<div id="Addstate">
 														<label> <input  type="radio"
-															id="AddisDisplay1" name="AddisDisplay" value="1" checked="checked"> <span
-															class="text">显示</span>
+															id="Addstate1" name="Addstate" value="1" checked="checked"> <span
+															class="text">启用</span>
 														</label> <label> <input  type="radio"
-															id="AddisDisplay0" name="AddisDisplay" value="0"> <span
-															class="text">不显示</span>
+															id="Addstate0" name="Addstate" value="0"> <span
+															class="text">禁用</span>
 														</label>
 													</div>
 												</div>
@@ -373,43 +375,24 @@ function updateIsDisplay(classid, isDisplay){
 }
 function addTClassify(){
 	$("#Addname").val("");
-	$("#AddPid").html("");
-	$("#AddisDisplay input[type='radio']:eq(0)").attr("checked","checked");
-	$.ajax({
-		url : rootPath+"/tclassify/selectClassifyByParam.do",
-		type : "post",
-		dataType : "json",
-		data : {
-			"id" : "0" 
-		},
-		success : function(result) {
-			result = JSON.parse(result);
-			$("#AddPid").html("<option selected='selected' value='0'>一级分类</option>");
-			if(result.success){
-				var data1 = result.pdata;
-				var option = "";
-				for(var i=0; i<data1.length; i++){
-					var res = data1[i];
-					option = "<option value='"+res.id+"'>"+res.name+"</option>";
-					$("#AddPid").append(option);
-				}
-			}
-		}
-	});
+	$("#Addexcerpt").html("");
+	$("#Addstate input[type='radio']:eq(0)").attr("checked","checked");
 	$("#addDiv").show();
 }
 function saveAdd(){
-	var isdisplay = $("#AddisDisplay input[type='radio']:checked").val();
-	var pid = $("#AddPid").val();
+	if($("#Addname").val() == ""){
+		alert("关键词名字不能为空！");
+		return false;
+	}
+	var state = $("#Addstate input[type='radio']:checked").val();
 	$.ajax({
-		url : rootPath+"/tclassify/addtClassify.do",
+		url : rootPath+"/keyWords/addKeyWords.do",
 		type : "post",
 		dataType : "json",
 		data : {
 			"name" : $("#Addname").val(),
-			"pid" : pid,
-			"isdisplay" : isdisplay,
-			"level" : pid == "0" ? "1" : "2"
+			"excerpt" : $("#Addexcerpt").val(),
+			"state" : state
 		},
 		success : function(result) {
 			result = JSON.parse(result);
