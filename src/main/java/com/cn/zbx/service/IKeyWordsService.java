@@ -24,4 +24,6 @@ public interface IKeyWordsService {
 	
 	int insertSelective(KeyWords record);
 	
+	KeyWords selectByPrimaryKey(Integer id);
+	
 }

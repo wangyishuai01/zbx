@@ -285,7 +285,7 @@ public class TClassifyController {
 					tclassifyParam.setPid(classify.getPid());
 					List<Tclassify> tclassifyList = tClassifyService.selectBySelectParam(tclassifyParam);
 					for(Tclassify c : tclassifyList){
-						if(c.getId() != classify.getId() && c.getName().equals(classify.getName())){
+						if(c.getId() != classify.getId() && c.getName().equals(tclassify.getName())){
 							b = false;
 							break;
 						}

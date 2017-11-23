@@ -93,45 +93,46 @@
 							<div class="modal-header">
 								<button aria-hidden="true" data-dismiss="modal" class="close"
 									type="button" onclick="closeEditDiv();">×</button>
-								<h4 class="modal-title">编辑分类信息</h4>
+								<h4 class="modal-title">编辑关键词</h4>
 							</div>
 							<div class="modal-body">
 								<div class="bootbox-body">
 									<div class="row" style="padding: 10px;">
 										<div class="col-lg-12 col-sm-12 col-xs-12">
 											<div class="col-md-12">
-												<div class="col-lg-6">分类名称：</div>
-												<div class="col-lg-6">
-													<span class="input-icon icon-right"> <input
-														type="text"
-														id="name" name="name" class="form-control" style="width:100%;">
+												<div class="col-lg-4">关 键 词 名 称 ：</div>
+												<div class="col-lg-8">
+													<span class="input-icon icon-right"> 
+														<input type="text" id="editname" name="editname" class="form-control" value="" style="width:100%;">
+														<input type="hidden" id="keyWordsId" name="keyWordsId" class="form-control" value="" >
 													</span>
 												</div>
 											</div>
 											<br>&nbsp;<br>
 											<div class="col-md-12">
-												<div class="col-lg-6">分类上级关键词：</div>
-												<div class="col-lg-6">
-													<select class="form-control" id="Pid"></select> 
+												<div class="col-lg-4">关 键 词 描 述 ：</div>
+												<div class="col-lg-8">
+													<span class="input-icon icon-right"> 
+														<textarea  id="editexcerpt" name="editexcerpt" class="form-control" 
+															rows="3" cols="10" value="" style="width:100%;resize:none;"></textarea>
+													</span>
 												</div>
 											</div>
 											<br>&nbsp;<br>
 											<div class="col-md-12">
-												<div class="col-lg-6" >是否显示：</div>
-												<div class="col-lg-6">
-													<div id="isDisplay">
+												<div class="col-lg-4" >状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：</div>
+												<div class="col-lg-8">  
+													<div id="editstate">
 														<label> <input  type="radio"
-															id="isDisplay1" name="isDisplay" value="1" checked="checked"> <span
-															class="text">显示</span>
+															id="editstate1" name="editstate" value="1" checked="checked"> <span
+															class="text">启用</span>
 														</label> <label> <input  type="radio"
-															id="isDisplay0" name="isDisplay" value="0"> <span
-															class="text">不显示</span>
+															id="editstate0" name="editstate" value="0"> <span
+															class="text">禁用</span>
 														</label>
 													</div>
 												</div>
 											</div>
-											<input type="hidden" id="classId" value="">
-											<input type="hidden" id="pid" value="">
 										</div>
 									</div>
 								</div>
@@ -254,14 +255,14 @@ function init(){
 		}
 	});
 }
-function editKeyWords(id){
-	$("#keyWordsId").val(id);
+function editKeyWords(keyWordsId){
+	$("#keyWordsId").val(keyWordsId);
 	$.ajax({
-		url : rootPath+"/tclassify/selectClassifyByParam.do",
+		url : rootPath+"/keyWords/selectKeyWordsByParam.do",
 		type : "post",
 		dataType : "json",
 		data : {
-			"id" : classid 
+			"id" : keyWordsId 
 		},
 		success : function(result) {
 			result = JSON.parse(result);
@@ -269,36 +270,16 @@ function editKeyWords(id){
 				var data = result.data;
 				for(var i=0; i<data.length; i++){
 					var res = data[i];
-					$("#name").val(res.name);
-					$("#pid").val(res.pid);
-					var isDisplayStr = "";
-					if(res.isdisplay == "1"){
-						isDisplayStr = "<label><input type='radio' id='isDisplay1' name='isDisplay' value='1' checked='checked'><span class='text'>显示</span></label>"
-									 + "&nbsp;&nbsp;<label><input  type='radio' id='isDisplay0' name='isDisplay' value='0'><span class='text'>不显示</span></label>";
+					$("#editname").val(res.name);
+					var stateStr = "";
+					if(res.state == "1"){
+						stateStr = "<label><input type='radio' id='editstate1' name='editstate' value='1' checked='checked'><span class='text'>启用</span></label>"
+									 + "&nbsp;&nbsp;<label><input  type='radio' id='editstate0' name='editstate' value='0'><span class='text'>禁用</span></label>";
 					} else {
-						isDisplayStr = "<label><input type='radio' id='isDisplay1' name='isDisplay' value='1'><span class='text'>显示</span></label>"
-							 + "&nbsp;&nbsp;<label><input checked='checked' type='radio' id='isDisplay0' name='isDisplay' value='0'><span class='text'>不显示</span></label>";
+						stateStr = "<label><input type='radio' id='editstate1' name='editstate' value='1'><span class='text'>启用</span></label>"
+							 + "&nbsp;&nbsp;<label><input checked='checked' type='radio' id='editstate0' name='editstate' value='0'><span class='text'>禁用</span></label>";
 					}
-					$("#isDisplay").html(isDisplayStr);
-				}
-				var data1 = result.pdata;
-				var pid = $("#pid").val();
-				if(pid == "0"){
-					$("#Pid").html("<option selected='selected' value='0'>一级分类</option>");
-				} else {
-					$("#Pid").html("<option value='0'>一级分类</option>");
-				}
-				var option = "";
-				for(var i=0; i<data1.length; i++){
-					var res = data1[i];
-					if(classid != res.id){
-						if(pid == res.id){
-							option = "<option selected='selected' value='"+res.id+"'>"+res.name+"</option>";
-						} else {
-							option = "<option value='"+res.id+"'>"+res.name+"</option>";
-						}
-						$("#Pid").append(option);
-					}
+					$("#editstate").html(stateStr);
 				}
 			}
 		}
@@ -306,16 +287,16 @@ function editKeyWords(id){
 	$("#editDiv").show();
 }
 function saveEdit(){
-	var isdisplay = $("#isDisplay input[checked='checked']").val();
+	var editstate = $("#editstate input[type='radio']:checked").val();
 	$.ajax({
-		url : rootPath+"/tclassify/updateSelectById.do",
+		url : rootPath+"/keyWords/updateSelectById.do",
 		type : "post",
 		dataType : "json",
 		data : {
-			"id" : $("#classId").val(),
-			"name" : $("#name").val(),
-			"pid" : $("#Pid").val(),
-			"isdisplay" : isdisplay
+			"id" : $("#keyWordsId").val(),
+			"name" : $("#editname").val(),
+			"excerpt" : $("#editexcerpt").val(),
+			"state" : editstate
 		},
 		success : function(result) {
 			result = JSON.parse(result);
@@ -323,7 +304,7 @@ function saveEdit(){
 				alert("修改成功！");
 				init();
 			} else {
-				alert("修改失败！");
+				alert("修改失败，原因："+result.errorMsg);
 			}
 			$("#editDiv").hide();
 		}
@@ -332,14 +313,14 @@ function saveEdit(){
 function closeEditDiv(){
 	$("#editDiv").hide();
 }
-function deleteClassify(classid){
-	if(confirm("你确信要删除此评论吗？")){
+function deleteKeyWords(keyWordsId){
+	if(confirm("你确信要删除此关键词吗？")){
 		$.ajax({
-			url : rootPath+"/tclassify/deleteById.do",
+			url : rootPath+"/keyWords/deleteById.do",
 			type : "post",
 			dataType : "json",
 			data : {
-				"tclassifyId" : classid 
+				"keyWordsId" : keyWordsId 
 			},
 			success : function(result) {
 				result = JSON.parse(result);
@@ -347,31 +328,11 @@ function deleteClassify(classid){
 					alert("删除成功！");
 					init();
 				} else {
-					alert("删除失败！");
+					alert("删除失败，原因："+result.errorMsg);
 				}
 			}
 		});
 	}
-}
-function updateIsDisplay(classid, isDisplay){
-	$.ajax({
-		url : rootPath+"/tclassify/updateIsDisplayById.do",
-		type : "post",
-		dataType : "json",
-		data : {
-			"tclassifyId" : classid,
-			"isDisplay" : isDisplay
-		},
-		success : function(result) {
-			result = JSON.parse(result);
-			if(result.success){
-				alert("修改成功！");
-				init();
-			} else {
-				alert("修改失败！");
-			}
-		}
-	});
 }
 function addTClassify(){
 	$("#Addname").val("");
@@ -400,7 +361,7 @@ function saveAdd(){
 				alert("添加成功！");
 				init();
 			} else {
-				alert("添加失败！");
+				alert("添加失败，原因："+result.errorMsg);
 			}
 			$("#addDiv").hide();
 		}

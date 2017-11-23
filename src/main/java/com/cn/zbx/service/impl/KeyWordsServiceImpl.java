@@ -51,5 +51,11 @@ public class KeyWordsServiceImpl implements IKeyWordsService {
 		// TODO Auto-generated method stub
 		return keyWordsMapper.insertSelective(record);
 	}
+
+	@Override
+	public KeyWords selectByPrimaryKey(Integer id) {
+		// TODO Auto-generated method stub
+		return keyWordsMapper.selectByPrimaryKey(id);
+	}
 	
 }
