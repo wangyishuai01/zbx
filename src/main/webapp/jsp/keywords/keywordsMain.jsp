@@ -174,7 +174,7 @@
 												<div class="col-lg-8">
 													<span class="input-icon icon-right"> 
 														<textarea  id="Addexcerpt" name="Addexcerpt" class="form-control" 
-															rows="3" value="" style="width:100%;"></textarea>
+															rows="3" cols="10" value="" style="width:100%;resize:none;"></textarea>
 													</span>
 												</div>
 											</div>

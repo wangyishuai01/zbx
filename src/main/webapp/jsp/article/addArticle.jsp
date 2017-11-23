@@ -82,7 +82,7 @@
 									<div class="col-md-12">
 										<div class="col-md-12">
 											<label style="line-height:90px;margin-top:-70px;">文章摘要：</label>
-											<textarea id="excerpt" name="excerpt" class="form-control" style="width:76%;height:90px;"
+											<textarea id="excerpt" name="excerpt" class="form-control" style="width:76%;height:90px;resize:none;" 
 													maxlength="200" onchange="this.value=this.value.substring(0, 200)" 
 													onkeydown="this.value=this.value.substring(0, 200)" 
 													onkeyup="this.value=this.value.substring(0, 200)"></textarea>
