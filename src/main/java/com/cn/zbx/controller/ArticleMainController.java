@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cn.zbx.pojo.ArticleMain;
+import com.cn.zbx.pojo.VideoMain;
 import com.cn.zbx.service.IArticleMainService;
 import com.cn.zbx.service.ICommentService;
+import com.cn.zbx.service.IVideoMainService;
 import com.cn.zbx.util.MapUtil;
 import com.cn.zbx.vo.ArticleVO;
 
@@ -31,6 +33,16 @@ public class ArticleMainController {
 	@Autowired
 	ICommentService commentService;
 	
+	@Autowired
+	IVideoMainService videoMainService;
+	
+	/**
+	 * 根据条件查询文章信息（文章主页面初始化方法）
+	 * @param request
+	 * @param response
+	 * @param ArticleMain article
+	 * @return List<ArticleVO>
+	 */
 	@ResponseBody
 	@RequestMapping(value="/ArticleList", method = { RequestMethod.GET, RequestMethod.POST })
 	public String initClassifyMain(HttpServletRequest request, HttpServletResponse response, ArticleMain article){
@@ -77,27 +89,46 @@ public class ArticleMainController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 根据id删除文章信息（该文章下有关联的视频不能被删除）
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/deleteById", method = { RequestMethod.GET, RequestMethod.POST })
 	public String deleteById(HttpServletRequest request, HttpServletResponse response){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		String articleId = request.getParameter("articleId");
 		if(articleId == null || "".equals(articleId)){
+			resultMap.put("errorMsg", "数据传输错误！");
+			resultMap.put("success", false);
+			return JSONObject.toJSONString(resultMap);
+		}
+		VideoMain videoParam = new VideoMain();
+		videoParam.setArticleid(Integer.valueOf(articleId));
+		int number = videoMainService.selectCountBySelectParam(videoParam);
+		if(number > 0){
+			resultMap.put("errorMsg", "该文章下有关联的视频，不能被删除！");
 			resultMap.put("success", false);
 			return JSONObject.toJSONString(resultMap);
 		}
 		int result = articleMainService.deleteByPrimaryKey(Integer.valueOf(articleId));
 		if(result <= 0){
+			resultMap.put("errorMsg", "数据提交错误！");
 			resultMap.put("success", false);
 		} else {
-			/*
-			 * 是否需要删除评论！！！
-			 */
 			resultMap.put("success", true);
 		}
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 根据文章id查询文章信息
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/selectById", method = { RequestMethod.GET, RequestMethod.POST })
 	public String selectByPrimaryKey(HttpServletRequest request, HttpServletResponse response){
@@ -120,6 +151,13 @@ public class ArticleMainController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 更新文章信息
+	 * @param request
+	 * @param response
+	 * @param article
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/articleUpdate", method = { RequestMethod.GET, RequestMethod.POST })
 	public String update(HttpServletRequest request, HttpServletResponse response,ArticleMain article){
@@ -132,6 +170,13 @@ public class ArticleMainController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 根据条件查询文章信息（分页）
+	 * @param request
+	 * @param response
+	 * @param ArticleMain article 
+	 * @return List<ArticleMain>
+	 */
 	@ResponseBody
 	@RequestMapping(value="/selectArticleMainByParam", method = { RequestMethod.GET, RequestMethod.POST })
 	public String selectArticleMainByParam(HttpServletRequest request, HttpServletResponse response, ArticleMain article){
@@ -175,6 +220,12 @@ public class ArticleMainController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 根据文章id查询所属二级分类和一级分类
+	 * @param request
+	 * @param response
+	 * @return {id:1,title:"文章标题",cid:1,cname:"二级分类名",pcid:1,pcname:"一级分类名"}
+	 */
 	@ResponseBody
 	@RequestMapping(value="/selectClassifyByArticleId", method = { RequestMethod.GET, RequestMethod.POST })
 	public String selectClassifyByArticleId(HttpServletRequest request, HttpServletResponse response){
