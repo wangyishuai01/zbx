@@ -349,7 +349,7 @@ function deleteClassify(classid){
 					alert("删除成功！");
 					init();
 				} else {
-					alert("删除失败！");
+					alert("删除失败，原因："+result.errorMsg);
 				}
 			}
 		});

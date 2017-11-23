@@ -16,11 +16,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cn.zbx.pojo.ArticleMain;
 import com.cn.zbx.pojo.Tclassify;
 import com.cn.zbx.service.IArticleMainService;
 import com.cn.zbx.service.ITClassifyService;
 import com.cn.zbx.vo.TClassifyVO;
 
+/**
+ * 分类 Controller
+ * @author zdl
+ *
+ */
 @Controller
 @RequestMapping(value="/tclassify")
 public class TClassifyController {
@@ -31,6 +37,12 @@ public class TClassifyController {
 	@Autowired
 	IArticleMainService articleMainService;
 	
+	/**
+	 * 分类主页初始化方法
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/initClassifyMain", method = { RequestMethod.GET, RequestMethod.POST })
 	public String initClassifyMain(HttpServletRequest request, HttpServletResponse response){
@@ -81,6 +93,13 @@ public class TClassifyController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 根据条件查询分类和对应的一级分类
+	 * @param request
+	 * @param response
+	 * @param tclassify
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/selectClassifyByParam", method = { RequestMethod.GET, RequestMethod.POST })
 	public String selectClassifyByParam(HttpServletRequest request, HttpServletResponse response, Tclassify tclassify){
@@ -117,24 +136,62 @@ public class TClassifyController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 删除分类（该分类下有关联的文章不能被删除；如果是一级分类，分类下有二级分类不能被删除）
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/deleteById", method = { RequestMethod.GET, RequestMethod.POST })
 	public String deleteById(HttpServletRequest request, HttpServletResponse response){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
 		String tclassifyId = request.getParameter("tclassifyId");
-		if(tclassifyId == null || "".equals(tclassifyId)){
-			resultMap.put("success", false);
-		}
-		int result = tClassifyService.deleteByPrimaryKey(Integer.valueOf(tclassifyId));
-		if(result <= 0){
-			resultMap.put("success", false);
+		if(tclassifyId != null && !"".equals(tclassifyId)){
+			boolean b = true;
+			Tclassify classify = tClassifyService.selectByPrimaryKey(Integer.valueOf(tclassifyId));
+			if(classify.getLevel().intValue() == 1){
+				Tclassify tclassifyParam = new Tclassify();
+				tclassifyParam.setPid(classify.getId());
+				int number = tClassifyService.selectCountBySelectParam(tclassifyParam);
+				if(number > 0){
+					b = false;
+					resultMap.put("errorMsg", "该一级分类下有二级分类，不能删除！");
+					resultMap.put("success", false);
+				}
+			} else {
+				ArticleMain articleParam = new ArticleMain();
+				articleParam.setClassid(Integer.valueOf(tclassifyId));
+				Integer number = articleMainService.selectCountBySelectParam(articleParam);
+				if(number > 0){
+					b = false;
+					resultMap.put("errorMsg", "该分类下有关联的文章，不能删除！");
+					resultMap.put("success", false);
+				}
+			}
+			if(b) {
+				int result = tClassifyService.deleteByPrimaryKey(Integer.valueOf(tclassifyId));
+				if(result <= 0){
+					resultMap.put("errorMsg", "数据提交错误！");
+					resultMap.put("success", false);
+				} else {
+					resultMap.put("success", true);
+				}
+			}
 		} else {
-			resultMap.put("success", true);
+			resultMap.put("errorMsg", "数据传输错误！");
+			resultMap.put("success", false);
 		}
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 更新分类的显示状态 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/updateIsDisplayById", method = { RequestMethod.GET, RequestMethod.POST })
 	public String updateIsDisplayById(HttpServletRequest request, HttpServletResponse response){
@@ -177,6 +234,7 @@ public class TClassifyController {
 				|| tclassifyLevel == null || "".equals(tclassifyLevel)
 				|| tclassifyPid == null || "".equals(tclassifyPid)
 				|| tclassifyisdisplay == null || "".equals(tclassifyisdisplay)){
+			resultMap.put("errorMsg", "数据传输错误！");
 			resultMap.put("success", false);
 		} else {
 			Tclassify tclassifyParam = new Tclassify();
@@ -206,7 +264,7 @@ public class TClassifyController {
 	}
 	
 	/**
-	 * 修改分类（同级下不能添加相同名字的分类）
+	 * 修改分类（同级下不能有相同名字的分类）
 	 * @param request
 	 * @param response
 	 * @param tclassify
@@ -244,23 +302,33 @@ public class TClassifyController {
 					tclassifyParam.setModifydate(new Date());
 					int result = tClassifyService.updateByPrimaryKeySelective(tclassifyParam);
 					if(result <= 0){
-						resultMap.put("errorMsg", "插入数据失败！");
+						resultMap.put("errorMsg", "数据提交失败！");
 						resultMap.put("success", false);
 					} else {
 						resultMap.put("success", true);
 					}
 				} else {
-					resultMap.put("errorMsg", "同级下不能添加相同名字的分类！");
+					resultMap.put("errorMsg", "同级下不能有相同名字的分类！");
 					resultMap.put("success", false);
 				} 
 			} else {
 				resultMap.put("errorMsg", "分类查询失败！");
 				resultMap.put("success", false);
 			}
+		} else {
+			resultMap.put("errorMsg", "数据传输错误！");
+			resultMap.put("success", false);
 		}
 		return JSONObject.toJSONString(resultMap);
 	}
 
+	/**
+	 * 根据条件查询分类（不分页）
+	 * @param request
+	 * @param response
+	 * @param tclassify
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/selectClassifyByParamV2", method = { RequestMethod.GET, RequestMethod.POST })
 	public String selectClassifyByParamV2(HttpServletRequest request, HttpServletResponse response, Tclassify tclassify){
