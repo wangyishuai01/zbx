@@ -13,6 +13,8 @@ import com.cn.zbx.pojo.Tclassify;
 
 public interface ITClassifyService {
 
+	Tclassify selectByPrimaryKey(Integer id);
+	
 	List<Tclassify> selectBySelectParam(Tclassify record);
 
 	int deleteByPrimaryKey(Integer id);

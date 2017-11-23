@@ -157,6 +157,13 @@ public class TClassifyController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 添加分类（同级下不能添加相同名字的分类）
+	 * @param request
+	 * @param response
+	 * @param tclassify
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/addtClassify", method = { RequestMethod.GET, RequestMethod.POST })
 	public String addtClassify(HttpServletRequest request, HttpServletResponse response, Tclassify tclassify){
@@ -174,23 +181,37 @@ public class TClassifyController {
 		} else {
 			Tclassify tclassifyParam = new Tclassify();
 			tclassifyParam.setName(tclassifyName);
-			tclassifyParam.setLevel(tclassifyLevel);
-			tclassifyParam.setCode("001");
 			tclassifyParam.setPid(tclassifyPid);
-			tclassifyParam.setIsdisplay(tclassifyisdisplay);
-			tclassifyParam.setTorder(1);
-			tclassifyParam.setMakedate(currentDate);
-			tclassifyParam.setModifydate(currentDate);
-			int result = tClassifyService.insertSelective(tclassifyParam);
-			if(result <= 0){
-				resultMap.put("success", false);
+			int num = tClassifyService.selectCountBySelectParam(tclassifyParam);
+			if(num == 0){
+				tclassifyParam.setLevel(tclassifyLevel);
+				tclassifyParam.setCode("001");
+				tclassifyParam.setIsdisplay(tclassifyisdisplay);
+				tclassifyParam.setTorder(1);
+				tclassifyParam.setMakedate(currentDate);
+				tclassifyParam.setModifydate(currentDate);
+				int result = tClassifyService.insertSelective(tclassifyParam);
+				if(result <= 0){
+					resultMap.put("errorMsg", "插入数据失败！");
+					resultMap.put("success", false);
+				} else {
+					resultMap.put("success", true);
+				}
 			} else {
-				resultMap.put("success", true);
-			}
+				resultMap.put("errorMsg", "同级下不能添加相同名字的分类！");
+				resultMap.put("success", false);
+			} 
 		}
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 修改分类（同级下不能添加相同名字的分类）
+	 * @param request
+	 * @param response
+	 * @param tclassify
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/updateSelectById", method = { RequestMethod.GET, RequestMethod.POST })
 	public String updateSelectById(HttpServletRequest request, HttpServletResponse response, Tclassify tclassify){
@@ -198,23 +219,44 @@ public class TClassifyController {
 		
 		Tclassify tclassifyParam = new Tclassify();
 		if(tclassify.getId() != null && !"".equals(tclassify.getId())){
-			tclassifyParam.setId(tclassify.getId());
-		}
-		if(tclassify.getName() != null && !"".equals(tclassify.getName())){
-			tclassifyParam.setName(tclassify.getName());
-		}
-		if(tclassify.getPid() != null && !"".equals(tclassify.getPid())){
-			tclassifyParam.setPid(tclassify.getPid());
-		}
-		if(tclassify.getIsdisplay() != null && !"".equals(tclassify.getIsdisplay())){
-			tclassifyParam.setIsdisplay(tclassify.getIsdisplay());
-		}
-		tclassifyParam.setModifydate(new Date());
-		int result = tClassifyService.updateByPrimaryKeySelective(tclassifyParam);
-		if(result <= 0){
-			resultMap.put("success", false);
-		} else {
-			resultMap.put("success", true);
+			Tclassify classify = tClassifyService.selectByPrimaryKey(tclassify.getId());
+			if(classify != null){
+				boolean b = true;
+				if(tclassify.getName() != null && !"".equals(tclassify.getName())){
+					tclassifyParam.setName(tclassify.getName());
+					tclassifyParam.setPid(classify.getPid());
+					List<Tclassify> tclassifyList = tClassifyService.selectBySelectParam(tclassifyParam);
+					for(Tclassify c : tclassifyList){
+						if(c.getId() != classify.getId() && c.getName().equals(classify.getName())){
+							b = false;
+							break;
+						}
+					}
+				}
+				if(b){
+					tclassifyParam.setId(tclassify.getId());
+					if(tclassify.getPid() != null && !"".equals(tclassify.getPid())){
+						tclassifyParam.setPid(tclassify.getPid());
+					}
+					if(tclassify.getIsdisplay() != null && !"".equals(tclassify.getIsdisplay())){
+						tclassifyParam.setIsdisplay(tclassify.getIsdisplay());
+					}
+					tclassifyParam.setModifydate(new Date());
+					int result = tClassifyService.updateByPrimaryKeySelective(tclassifyParam);
+					if(result <= 0){
+						resultMap.put("errorMsg", "插入数据失败！");
+						resultMap.put("success", false);
+					} else {
+						resultMap.put("success", true);
+					}
+				} else {
+					resultMap.put("errorMsg", "同级下不能添加相同名字的分类！");
+					resultMap.put("success", false);
+				} 
+			} else {
+				resultMap.put("errorMsg", "分类查询失败！");
+				resultMap.put("success", false);
+			}
 		}
 		return JSONObject.toJSONString(resultMap);
 	}

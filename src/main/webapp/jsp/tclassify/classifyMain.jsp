@@ -87,7 +87,7 @@
 				</div>
 				<!-- edit -->
 				<div class="modal modal-darkorange" id="editDiv">
-					<div class="modal-dialog" style="margin: 60px auto;width:700px;">
+					<div class="modal-dialog" style="margin: 120px auto;width:700px;">
 						<div class="modal-content">
 							<div class="modal-header">
 								<button aria-hidden="true" data-dismiss="modal" class="close"
@@ -148,7 +148,7 @@
 				</div>
 				<!-- add -->
 				<div class="modal modal-darkorange" id="addDiv">
-					<div class="modal-dialog" style="margin: 60px auto;width:700px;">
+					<div class="modal-dialog" style="margin: 120px auto;width:700px;">
 						<div class="modal-content">
 							<div class="modal-header">
 								<button aria-hidden="true" data-dismiss="modal" class="close"
@@ -325,7 +325,7 @@ function saveEdit(){
 				alert("修改成功！");
 				init();
 			} else {
-				alert("修改失败！");
+				alert("修改失败，原因："+result.errorMsg);
 			}
 			$("#editDiv").hide();
 		}
@@ -421,7 +421,7 @@ function saveAdd(){
 				alert("添加成功！");
 				init();
 			} else {
-				alert("添加失败！");
+				alert("添加失败，原因："+result.errorMsg);
 			}
 			$("#addDiv").hide();
 		}
