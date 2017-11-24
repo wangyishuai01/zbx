@@ -110,15 +110,17 @@ function init(){
 	pageSize = $("#pageSelect").val();
 	var articleTitle = $("#articleTitle").val();
 	var classifyId = $("#articleSecClass").val();
+	var keyWords = $("#articleKey").val()
 	$.ajax({
-		url : rootPath+"/Article/ArticleList.do",
+		url : rootPath+"/Article/initArticleMain.do",
 		type : "post",
 		dataType : "json",
 		data : {
 			"pageCount" : pageCount,
 			"pageSize" : pageSize,
 			"title" : articleTitle,
-			"classid" : classifyId
+			"classid" : classifyId,
+			"keyWords" : keyWords
 		},
 		success : function(result) {
 			$("tr[class='comment_tr']").remove();

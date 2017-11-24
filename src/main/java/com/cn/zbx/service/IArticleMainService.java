@@ -40,4 +40,8 @@ public interface IArticleMainService {
 	Integer selectCountBySelectParamNoRelationVideo(ArticleMain record);
 	
 	List<ArticleMain> selectArticleNoContentBySelectParamNoRelationVideo(ArticleMain record);
+	
+	List<ArticleVO> selectBySelectParamV2(ArticleVO record);
+
+	Integer selectCountBySelectParamV2(ArticleVO record);
 }

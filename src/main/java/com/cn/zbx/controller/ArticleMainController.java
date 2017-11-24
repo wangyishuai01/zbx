@@ -45,7 +45,7 @@ public class ArticleMainController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/ArticleList", method = { RequestMethod.GET, RequestMethod.POST })
-	public String initClassifyMain(HttpServletRequest request, HttpServletResponse response, ArticleMain article){
+	public String initArticleMain(HttpServletRequest request, HttpServletResponse response, ArticleMain article){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 
 		ArticleMain articleParam = new ArticleMain();
@@ -76,6 +76,62 @@ public class ArticleMainController {
 		Integer number = articleMainService.selectCountBySelectParam(articleParam);
 		if(number != null && number > 0){
 			List<ArticleVO> resultList = articleMainService.selectBySelectParam(articleParam);
+			for(ArticleVO article1:resultList){
+				int count = commentService.selectByArticleId(article1.getId());
+				article1.setCommentCount(count);
+			}
+			resultMap.put("data", resultList);
+			resultMap.put("number", number);
+			resultMap.put("success", true);
+		} else {
+			resultMap.put("success", false);
+		}
+		return JSONObject.toJSONString(resultMap);
+	}
+	
+	/**
+	 * 根据条件查询文章信息（文章主页面初始化方法）添加关键词查询
+	 * @param request
+	 * @param response
+	 * @param ArticleMain article
+	 * @return List<ArticleVO>
+	 */
+	@ResponseBody
+	@RequestMapping(value="/initArticleMain", method = { RequestMethod.GET, RequestMethod.POST })
+	public String initArticleMainV2(HttpServletRequest request, HttpServletResponse response, ArticleMain article, String keyWords){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+
+		ArticleVO articleParam = new ArticleVO();
+		if(article.getId() != null && !"".equals(article.getId())){
+			articleParam.setId(article.getId());
+		}
+		if(article.getTitle() != null && !"".equals(article.getTitle())){
+			articleParam.setTitle(article.getTitle());
+		}
+		if(article.getClassid() != null && !"".equals(article.getClassid())){
+			articleParam.setClassid(article.getClassid());
+		}
+		if(article.getIsfree() != null && !"".equals(article.getIsfree())){
+			articleParam.setIsfree(article.getIsfree());
+		}
+		if(article.getNocomment() != null && !"".equals(article.getNocomment())){
+			articleParam.setNocomment(article.getNocomment());
+		}
+		if(article.getState() != null && !"".equals(article.getState())){
+			articleParam.setState(article.getState());
+		}
+		if(article.getPageCount() != null && !"".equals(article.getPageCount())){
+			articleParam.setPageCount(article.getPageCount());
+		}
+		if(article.getPageSize() != null && !"".equals(article.getPageSize())){
+			articleParam.setPageSize(article.getPageSize());
+		}
+		if(keyWords != null && !"".equals(keyWords)){
+			articleParam.setKeyWords(keyWords.split(","));
+		}
+		Integer number = articleMainService.selectCountBySelectParamV2(articleParam);
+		if(number != null && number > 0){
+			List<ArticleVO> resultList = articleMainService.selectBySelectParamV2(articleParam);
 			for(ArticleVO article1:resultList){
 				int count = commentService.selectByArticleId(article1.getId());
 				article1.setCommentCount(count);

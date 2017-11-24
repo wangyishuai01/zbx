@@ -233,4 +233,22 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 		return resultList;
 	}
 
+	/**
+	 * 查询文章信息，添加关键词查询
+	 */
+	@Override
+	public List<ArticleVO> selectBySelectParamV2(ArticleVO record) {
+		// TODO Auto-generated method stub
+		return articleMainMapper.selectBySelectParamV2(record);
+	}
+
+	/**
+	 * 查询文章数，添加关键词查询
+	 */
+	@Override
+	public Integer selectCountBySelectParamV2(ArticleVO record) {
+		// TODO Auto-generated method stub
+		return articleMainMapper.selectCountBySelectParamV2(record);
+	}
+
 }

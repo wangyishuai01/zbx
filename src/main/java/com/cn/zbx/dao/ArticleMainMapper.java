@@ -35,4 +35,8 @@ public interface ArticleMainMapper {
     List<ArticleVO> selectBySelectParamNoRelationVideo(ArticleMain record);
     
     Integer selectCountBySelectParamNoRelationVideo(ArticleMain record);
+    
+    List<ArticleVO> selectBySelectParamV2(ArticleVO record);
+    
+    Integer selectCountBySelectParamV2(ArticleVO record);
 }

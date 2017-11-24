@@ -281,6 +281,115 @@
     </if>
   </select>
   
+  <select id="selectBySelectParamV2" resultType="com.cn.zbx.vo.ArticleVO" parameterType="com.cn.zbx.vo.ArticleVO" >
+    select 
+    	<include refid="Base_Column_List" />
+    from article_main  a
+    where 1=1
+    <if test="keyWords != null" >
+      and exists(select 1 from keyrelation kr 
+      			 where kr.productid=a.id 
+      			 and kr.relationtype='1' 
+      			 and kr.keywordsid in(select kw.id from keywords kw 
+      			 					  where kw.name in
+      			 					  <foreach collection="keyWords" index="index" item="item" open="(" separator="," close=")">
+						              		#{item}
+         							  </foreach>
+      			 					  )
+      			 )
+    </if>
+    <if test="id != null" >
+      and id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="title != null" >
+      and title like '%${title}%'
+    </if>
+    <if test="imgurl != null" >
+      and imgurl = #{imgurl,jdbcType=VARCHAR}
+    </if>
+    <if test="classid != null" >
+      and classid = #{classid,jdbcType=INTEGER}
+    </if>
+    <if test="excerpt != null" >
+      and excerpt = #{excerpt,jdbcType=VARCHAR}
+    </if>
+    <if test="isfree != null" >
+      and isfree = #{isfree,jdbcType=INTEGER}
+    </if>
+    <if test="nocomment != null" >
+      and nocomment = #{nocomment,jdbcType=INTEGER}
+    </if>
+    <if test="makedate != null" >
+      and makedate = #{makedate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="state != null" >
+      and state = #{state,jdbcType=INTEGER}
+    </if>
+    <if test="modifydate != null" >
+      and modifydate = #{modifydate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="content != null" >
+      and content = #{content,jdbcType=LONGVARBINARY}
+    </if>
+    <if test="startLimit != null" >
+      <if test="pageSize != null" >
+     	 limit #{startLimit}, #{pageSize}
+      </if>
+    </if>
+  </select>
+  
+   <select id="selectCountBySelectParamV2" resultType="Integer" parameterType="com.cn.zbx.vo.ArticleVO" >
+    select 
+    	count(1)
+    from article_main a
+    where 1=1
+    <if test="keyWords != null" >
+      and exists(select 1 from keyrelation kr 
+      			 where kr.productid=a.id 
+      			 and kr.relationtype='1' 
+      			 and kr.keywordsid in(select kw.id from keywords kw 
+      			 					  where kw.name in
+      			 					  <foreach collection="keyWords" index="index" item="item" open="(" separator="," close=")">
+						              		#{item}
+         							  </foreach>
+      			 					  )
+      			 )
+    </if>
+    <if test="id != null" >
+      and id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="title != null" >
+      and title like '%${title}%'
+    </if>
+    <if test="imgurl != null" >
+      and imgurl = #{imgurl,jdbcType=VARCHAR}
+    </if>
+    <if test="classid != null" >
+      and classid = #{classid,jdbcType=INTEGER}
+    </if>
+    <if test="excerpt != null" >
+      and excerpt = #{excerpt,jdbcType=VARCHAR}
+    </if>
+    <if test="isfree != null" >
+      and isfree = #{isfree,jdbcType=INTEGER}
+    </if>
+    <if test="nocomment != null" >
+      and nocomment = #{nocomment,jdbcType=INTEGER}
+    </if>
+    <if test="makedate != null" >
+      and makedate = #{makedate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="state != null" >
+      and state = #{state,jdbcType=INTEGER}
+    </if>
+    <if test="modifydate != null" >
+      and modifydate = #{modifydate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="content != null" >
+      and content = #{content,jdbcType=LONGVARBINARY}
+    </if>
+  </select>
+  
   <select id="selectClassifyByArticleId" resultType="java.util.Map" parameterType="Integer" >
     select 
     	a.id, 
