@@ -31,4 +31,8 @@ public interface ArticleMainMapper {
     Integer selectCountBySelectParam(ArticleMain record);
     
     Map<String, Object> selectClassifyByArticleId(@Param(value="id") Integer id);
+    
+    List<ArticleVO> selectBySelectParamNoRelationVideo(ArticleMain record);
+    
+    Integer selectCountBySelectParamNoRelationVideo(ArticleMain record);
 }

@@ -197,4 +197,40 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 		return true;
 	}
 
+	/**
+	 * 查询文章数，没有关联视频的文章，返回信息没有文章内容
+	 */
+	@Override
+	public Integer selectCountBySelectParamNoRelationVideo(ArticleMain record) {
+		// TODO Auto-generated method stub
+		return articleMainMapper.selectCountBySelectParamNoRelationVideo(record);
+	}
+
+	/**
+	 * 查询文章信息，没有关联视频的文章，返回信息没有文章内容
+	 */
+	@Override
+	public List<ArticleMain> selectArticleNoContentBySelectParamNoRelationVideo(
+			ArticleMain record) {
+		// TODO Auto-generated method stub
+		List<ArticleMain> resultList = new ArrayList<ArticleMain>();
+		List<ArticleVO> articleVOList = articleMainMapper.selectBySelectParamNoRelationVideo(record);
+		ArticleMain oo;
+		for(ArticleVO o : articleVOList){
+			oo = new ArticleMain();
+			oo.setId(o.getId());
+			oo.setTitle(o.getTitle());
+			oo.setImgurl(o.getImgurl());
+			oo.setClassid(o.getClassid());
+			oo.setExcerpt(o.getExcerpt());
+			oo.setIsfree(o.getIsfree());
+			oo.setNocomment(o.getNocomment());
+			oo.setState(o.getState());
+			oo.setMakedate(o.getMakedate());
+			oo.setModifydate(o.getModifydate());
+			resultList.add(oo);
+		}
+		return resultList;
+	}
+
 }

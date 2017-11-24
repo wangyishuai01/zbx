@@ -311,4 +311,89 @@
 	    </if>
   </select>
   
+  <select id="selectBySelectParamNoRelationVideo" resultType="com.cn.zbx.vo.ArticleVO" parameterType="com.cn.zbx.pojo.ArticleMain" >
+    select 
+    	<include refid="Base_Column_List" />
+    from article_main  a
+    where not exists(select 1 from video_main v where v.articleid = a.id)
+    <if test="id != null" >
+      and id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="title != null" >
+      and title like '%${title}%'
+    </if>
+    <if test="imgurl != null" >
+      and imgurl = #{imgurl,jdbcType=VARCHAR}
+    </if>
+    <if test="classid != null" >
+      and classid = #{classid,jdbcType=INTEGER}
+    </if>
+    <if test="excerpt != null" >
+      and excerpt = #{excerpt,jdbcType=VARCHAR}
+    </if>
+    <if test="isfree != null" >
+      and isfree = #{isfree,jdbcType=INTEGER}
+    </if>
+    <if test="nocomment != null" >
+      and nocomment = #{nocomment,jdbcType=INTEGER}
+    </if>
+    <if test="makedate != null" >
+      and makedate = #{makedate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="state != null" >
+      and state = #{state,jdbcType=INTEGER}
+    </if>
+    <if test="modifydate != null" >
+      and modifydate = #{modifydate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="content != null" >
+      and content = #{content,jdbcType=LONGVARBINARY}
+    </if>
+    <if test="startLimit != null" >
+      <if test="pageSize != null" >
+     	 limit #{startLimit}, #{pageSize}
+      </if>
+    </if>
+  </select>
+  
+   <select id="selectCountBySelectParamNoRelationVideo" resultType="Integer" parameterType="com.cn.zbx.pojo.ArticleMain" >
+    select 
+    	count(1)
+    from article_main a
+    where not exists(select 1 from video_main v where v.articleid = a.id)
+    <if test="id != null" >
+      and id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="title != null" >
+      and title like '%${title}%'
+    </if>
+    <if test="imgurl != null" >
+      and imgurl = #{imgurl,jdbcType=VARCHAR}
+    </if>
+    <if test="classid != null" >
+      and classid = #{classid,jdbcType=INTEGER}
+    </if>
+    <if test="excerpt != null" >
+      and excerpt = #{excerpt,jdbcType=VARCHAR}
+    </if>
+    <if test="isfree != null" >
+      and isfree = #{isfree,jdbcType=INTEGER}
+    </if>
+    <if test="nocomment != null" >
+      and nocomment = #{nocomment,jdbcType=INTEGER}
+    </if>
+    <if test="makedate != null" >
+      and makedate = #{makedate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="state != null" >
+      and state = #{state,jdbcType=INTEGER}
+    </if>
+    <if test="modifydate != null" >
+      and modifydate = #{modifydate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="content != null" >
+      and content = #{content,jdbcType=LONGVARBINARY}
+    </if>
+  </select>
+  
 </mapper>

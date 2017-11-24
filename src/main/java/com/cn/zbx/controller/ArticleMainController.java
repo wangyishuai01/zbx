@@ -380,4 +380,53 @@ public class ArticleMainController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 根据条件查询文章信息（分页）（没有关联视频的文章）
+	 * @param request
+	 * @param response
+	 * @param ArticleMain article 
+	 * @return List<ArticleMain>
+	 */
+	@ResponseBody
+	@RequestMapping(value="/selectArticleMainByParamNoRelationVideo", method = { RequestMethod.GET, RequestMethod.POST })
+	public String selectArticleMainByParamNoRelationVideo(HttpServletRequest request, HttpServletResponse response, ArticleMain article){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		ArticleMain articleParam = new ArticleMain();
+		if(article.getId() != null && !"".equals(article.getId())){
+			articleParam.setId(article.getId());
+		}
+		if(article.getTitle() != null && !"".equals(article.getTitle())){
+			articleParam.setTitle(article.getTitle());
+		}
+		if(article.getClassid() != null && !"".equals(article.getClassid())){
+			articleParam.setClassid(article.getClassid());
+		}
+		if(article.getIsfree() != null && !"".equals(article.getIsfree())){
+			articleParam.setIsfree(article.getIsfree());
+		}
+		if(article.getNocomment() != null && !"".equals(article.getNocomment())){
+			articleParam.setNocomment(article.getNocomment());
+		}
+		if(article.getState() != null && !"".equals(article.getState())){
+			articleParam.setState(article.getState());
+		}
+		if(article.getPageCount() != null && !"".equals(article.getPageCount())){
+			articleParam.setPageCount(article.getPageCount());
+		}
+		if(article.getPageSize() != null && !"".equals(article.getPageSize())){
+			articleParam.setPageSize(article.getPageSize());
+		}
+		
+		Integer number = articleMainService.selectCountBySelectParamNoRelationVideo(articleParam);
+		if(number!=null && number > 0){
+			List<ArticleMain> resultList = articleMainService.selectArticleNoContentBySelectParamNoRelationVideo(articleParam);
+			resultMap.put("data", resultList);
+			resultMap.put("number", number);
+			resultMap.put("success", true);
+		} else {
+			resultMap.put("success", false);
+		}
+		return JSONObject.toJSONString(resultMap);
+	}
 }
