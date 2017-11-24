@@ -358,12 +358,20 @@ public class ArticleMainController {
 			paramMap = MapUtil.objectToMap(articleParam);
 			paramMap.put("articlePrice", articlePrice);
 			
-			boolean result = articleMainService.addArticleInfo(paramMap);
-			if(result){
-				resultMap.put("success", true);
-			} else {
+			boolean result;
+			try {
+				result = articleMainService.addArticleInfo(paramMap);
+				if(result){
+					resultMap.put("success", true);
+				} else {
+					resultMap.put("success", false);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 				resultMap.put("success", false);
 			}
+			
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			resultMap.put("msg", "数据转化错误！");

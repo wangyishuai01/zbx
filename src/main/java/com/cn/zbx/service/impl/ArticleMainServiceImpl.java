@@ -8,13 +8,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cn.zbx.dao.ArticleMainMapper;
 import com.cn.zbx.dao.PriceMapper;
 import com.cn.zbx.pojo.ArticleMain;
 import com.cn.zbx.pojo.Price;
 import com.cn.zbx.pojo.Tclassify;
-import com.cn.zbx.pojo.VideoMain;
 import com.cn.zbx.service.IArticleMainService;
 import com.cn.zbx.util.MapUtil;
 import com.cn.zbx.util.StringUtils;
@@ -114,6 +115,7 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 	 * 编辑文章信息功能 包括价格
 	 */
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public boolean editArticleInfoByVideoId(Map<String, Object> mapParam) {
 		// TODO Auto-generated method stub
 		Date currentDate = new Date();
@@ -162,37 +164,34 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 
 	/**
 	 * 新增文章信息 包括价格
+	 * @throws Exception 
 	 */
 	@Override
-	public boolean addArticleInfo(Map<String, Object> mapParam) {
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public boolean addArticleInfo(Map<String, Object> mapParam) throws Exception {
 		// TODO Auto-generated method stub
 		Date currentDate = new Date();
 		ArticleMain article = new ArticleMain();
 		Price price = new Price();
 		String articlePrice = String.valueOf(mapParam.get("articlePrice"));
-		try {
-			article = (ArticleMain)MapUtil.mapToBean(mapParam, article.getClass());
-			int num = articleMainMapper.insertSelective(article);
-			
-			if(num > 0 && article.getIsfree() == 0){
-				price.setType(1);
-				price.setProductId(article.getId());
-				price.setPrice(Double.valueOf(articlePrice));
-				price.setPlayNumber(0);
-				price.setSumPrice(0.00);
-				price.setAgainPayDays(10);
-				price.setMakedate(currentDate);
-				price.setModifydate(currentDate);
-				int num1 = PriceMapper.insertSelective(price);
-				if(num1 <= 0){
-					return false;
-				}
-			} else if(num <= 0){
-				return false;
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		article = (ArticleMain)MapUtil.mapToBean(mapParam, article.getClass());
+		int num = articleMainMapper.insertSelective(article);
+		
+		if(num > 0 && article.getIsfree() == 0){
+			price.setType(1);
+			price.setProductId(article.getId());
+			price.setPrice(Double.valueOf(articlePrice));
+			price.setPlayNumber(0);
+			price.setSumPrice(0.00);
+			price.setAgainPayDays(10);
+//			price.setMakedate(currentDate);
+//			price.setModifydate(currentDate);
+			throw new RuntimeException("hehe"); 
+//			int num1 = PriceMapper.insertSelective(price);
+//			if(num1 <= 0){
+//				return false;
+//			}
+		} else if(num <= 0){
 			return false;
 		}
 		return true;
