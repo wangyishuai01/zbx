@@ -4,6 +4,8 @@ import com.cn.zbx.pojo.KeyRelation;
 
 public interface KeyRelationMapper {
     int deleteByPrimaryKey(Integer id);
+    
+    int deleteBySelective(KeyRelation record);
 
     int insert(KeyRelation record);
 

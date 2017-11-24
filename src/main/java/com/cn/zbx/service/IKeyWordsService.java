@@ -2,6 +2,7 @@ package com.cn.zbx.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import com.cn.zbx.pojo.KeyWords;
 import com.cn.zbx.vo.KeyWordsVO;
@@ -25,5 +26,7 @@ public interface IKeyWordsService {
 	int insertSelective(KeyWords record);
 	
 	KeyWords selectByPrimaryKey(Integer id);
+	
+	List<KeyWords> selectByProductId(Map<String, Object> mapParam);
 	
 }

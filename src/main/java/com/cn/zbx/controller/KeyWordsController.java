@@ -149,7 +149,7 @@ public class KeyWordsController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/addKeyWords", method = { RequestMethod.GET, RequestMethod.POST })
-	public String addtClassify(HttpServletRequest request, HttpServletResponse response, KeyWords keyWords){
+	public String addKeyWords(HttpServletRequest request, HttpServletResponse response, KeyWords keyWords){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		Date currentDate = new Date();
 		

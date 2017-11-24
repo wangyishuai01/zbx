@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cn.zbx.pojo.ArticleMain;
+import com.cn.zbx.pojo.KeyWords;
 import com.cn.zbx.pojo.VideoMain;
 import com.cn.zbx.service.IArticleMainService;
 import com.cn.zbx.service.ICommentService;
+import com.cn.zbx.service.IKeyWordsService;
 import com.cn.zbx.service.IVideoMainService;
 import com.cn.zbx.util.MapUtil;
 import com.cn.zbx.vo.ArticleVO;
@@ -35,6 +37,9 @@ public class ArticleMainController {
 	
 	@Autowired
 	IVideoMainService videoMainService;
+	
+	@Autowired
+	IKeyWordsService keyWordsService;
 	
 	/**
 	 * 根据条件查询文章信息（文章主页面初始化方法）
@@ -198,12 +203,24 @@ public class ArticleMainController {
 		if(articleMain.getContent()!=null){
 			String str = new String(articleMain.getContent());
 			articleMain.setContentStr(str);
-			System.out.println("************8"+str);
+		}
+		Map<String, Object> mapParam = new HashMap<String, Object>();
+		mapParam.put("relationType", 1);
+		mapParam.put("productId", articleId);
+		List<KeyWords> keyWords = keyWordsService.selectByProductId(mapParam);
+		String keyWordsStr = "";
+		for(KeyWords k : keyWords){
+			keyWordsStr += k.getName() + ",";
+		}
+		resultMap.put("data", articleMain);
+		if("".equals(keyWordsStr)){
+			resultMap.put("keyWordsStr", keyWordsStr);
+		} else {
+			resultMap.put("keyWordsStr", keyWordsStr.substring(0, keyWordsStr.length()-1));
 		}
 		
-			resultMap.put("data", articleMain);
-			resultMap.put("success", true);
-		
+		resultMap.put("success", true);
+	
 		return JSONObject.toJSONString(resultMap);
 	}
 	
@@ -312,7 +329,7 @@ public class ArticleMainController {
 	@ResponseBody
 	@RequestMapping(value="/editArticleInfoById", method = { RequestMethod.GET, RequestMethod.POST })
 	public String editArticleInfoById(HttpServletRequest request, HttpServletResponse response, 
-			ArticleMain article, String articlePrice, String articlePriceOld, String articlePriceId){
+			ArticleMain article, String articlePrice, String articlePriceOld, String articlePriceId, String keyWords){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
 		ArticleMain articleParam = new ArticleMain();
@@ -343,6 +360,10 @@ public class ArticleMainController {
 		if(article.getContent() != null && !"".equals(article.getContent())){
 			articleParam.setContent(article.getContent());
 		}
+		String[] keyWordsParam = null;
+		if(keyWords != null && !"".equals(keyWords)){
+			keyWordsParam = keyWords.split(",");
+		}
 		articleParam.setModifydate(new Date());
 		try {
 			Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -350,8 +371,9 @@ public class ArticleMainController {
 			paramMap.put("articlePrice", articlePrice);
 			paramMap.put("articlePriceOld", articlePriceOld);
 			paramMap.put("articlePriceId", articlePriceId);
+			paramMap.put("keyWords", keyWordsParam);
 			
-			boolean result = articleMainService.editArticleInfoByVideoId(paramMap);
+			boolean result = articleMainService.editArticleInfoByArticleId(paramMap);
 			if(result){
 				resultMap.put("success", true);
 			} else {
@@ -375,7 +397,7 @@ public class ArticleMainController {
 	@ResponseBody
 	@RequestMapping(value="/addArticleInfo", method = { RequestMethod.GET, RequestMethod.POST })
 	public String addArticleInfo(HttpServletRequest request, HttpServletResponse response, 
-			ArticleMain article, String articlePrice){
+			ArticleMain article, String articlePrice, String keyWords){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		Date currentDate = new Date();
 		
@@ -407,12 +429,17 @@ public class ArticleMainController {
 		if(article.getContent() != null && !"".equals(article.getContent())){
 			articleParam.setContent(article.getContent());
 		}
+		String[] keyWordsParam = null;
+		if(keyWords != null && !"".equals(keyWords)){
+			keyWordsParam = keyWords.split(",");
+		}
 		articleParam.setMakedate(currentDate);
 		articleParam.setModifydate(currentDate);
 		try {
 			Map<String, Object> paramMap = new HashMap<String, Object>();
 			paramMap = MapUtil.objectToMap(articleParam);
 			paramMap.put("articlePrice", articlePrice);
+			paramMap.put("keyWords", keyWordsParam);
 			
 			boolean result;
 			try {

@@ -90,6 +90,17 @@
 									</div>
 									<br>&nbsp;<br>
 									<div class="col-md-12">
+										<div class="col-md-12">
+											<span class="input-icon icon-right"> 
+												文章标签：
+												<input type="text" id="keyWords" placeholder="（添加Tag，你的内容能被更多人看到）" name="keyWords" 
+														class="form-control" style="width:50%;">
+												（最多添加5个标签，多个标签之间用“，”隔开）
+											</span>
+										</div>
+									</div>
+									<br>&nbsp;<br>
+									<div class="col-md-12">
 										<div class="col-md-6">
 											<span class="input-icon icon-right"> 
 												是否免费：
@@ -171,11 +182,9 @@ function returnArticleMain(){
 function openEditArticleDiv(){
 	$("#editArticleDiv").show();
 }  
-
 function closeEditArticleDiv(){
 	$("#editArticleDiv").hide();
 }
-
 function returnArticleInfo(){
 	var content = UE.getEditor('editor').getContent();
 	$("#content").val(content);
@@ -194,6 +203,18 @@ function saveAddCheck(){
 	}
 	if($("#articleSecClass").val() == "" || $("#articleSecClass").val() == null){
 		alert("请选择文章类型！");
+		return false;
+	}
+	var keyWordsStr = $("#keyWords").val();
+	var index = keyWordsStr.indexOf("，");
+	if(index < 0){
+		var keyWords = keyWordsStr.split(",");
+		if(keyWords.length > 5){
+			alert("最多添加5个标签！");
+			return false;
+		}
+	} else {
+		alert("标签中的逗号请用英文逗号！");
 		return false;
 	}
 	if($("input[name='isFree']:checked").val() == "0"){
@@ -215,6 +236,7 @@ function saveAdd(){
 		var classId = $("#articleSecClass").val();
 		var excerpt = $("#excerpt").val();
 		var content = $("#content").val();
+		var keyWords = $("#keyWords").val();
 		$.ajax({
 			url : rootPath+"/Article/addArticleInfo.do",
 			type : "post",
@@ -227,7 +249,8 @@ function saveAdd(){
 				"state" : state,
 				"excerpt" : excerpt,
 				"content" : content, 
-				"articlePrice" : articlePrice
+				"articlePrice" : articlePrice,
+				"keyWords" : keyWords
 			},
 			success : function(result) {
 				result = JSON.parse(result);

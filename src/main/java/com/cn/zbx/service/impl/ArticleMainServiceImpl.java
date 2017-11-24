@@ -12,14 +12,19 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cn.zbx.dao.ArticleMainMapper;
+import com.cn.zbx.dao.KeyRelationMapper;
+import com.cn.zbx.dao.KeyWordsMapper;
 import com.cn.zbx.dao.PriceMapper;
 import com.cn.zbx.pojo.ArticleMain;
+import com.cn.zbx.pojo.KeyRelation;
+import com.cn.zbx.pojo.KeyWords;
 import com.cn.zbx.pojo.Price;
 import com.cn.zbx.pojo.Tclassify;
 import com.cn.zbx.service.IArticleMainService;
 import com.cn.zbx.util.MapUtil;
 import com.cn.zbx.util.StringUtils;
 import com.cn.zbx.vo.ArticleVO;
+import com.cn.zbx.vo.KeyWordsVO;
 import com.cn.zbx.vo.TClassifyVO;
 
 /**
@@ -35,6 +40,12 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 	
 	@Autowired
 	PriceMapper PriceMapper;
+	
+	@Autowired
+	KeyWordsMapper keyWordsMapper;
+	
+	@Autowired
+	KeyRelationMapper keyRelationMapper;
 
 	@Override
 	public List<TClassifyVO> selectCountByClassIds(List<Tclassify> list) {
@@ -112,11 +123,11 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 	}
 
 	/**
-	 * 编辑文章信息功能 包括价格
+	 * 编辑文章信息功能 包括价格 和 关键词
 	 */
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	public boolean editArticleInfoByVideoId(Map<String, Object> mapParam) {
+	public boolean editArticleInfoByArticleId(Map<String, Object> mapParam) {
 		// TODO Auto-generated method stub
 		Date currentDate = new Date();
 		ArticleMain article = new ArticleMain();
@@ -126,9 +137,9 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 		String articlePriceOld = String.valueOf(mapParam.get("articlePriceOld"));
 		try {
 			article = (ArticleMain)MapUtil.mapToBean(mapParam, article.getClass());
-			int num = articleMainMapper.updateByPrimaryKeySelective(article);
+			articleMainMapper.updateByPrimaryKeySelective(article);
 			
-			if(num > 0 && !articlePrice.equals(articlePriceOld) && article.getIsfree() == 0){
+			if(!articlePrice.equals(articlePriceOld) && article.getIsfree() == 0){
 				if(!StringUtils.isNotEmpty(articlePriceId)){
 					price.setType(1);
 					price.setProductId(article.getId());
@@ -138,21 +149,50 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 					price.setAgainPayDays(10);
 					price.setMakedate(currentDate);
 					price.setModifydate(currentDate);
-					int num1 = PriceMapper.insertSelective(price);
-					if(num1 <= 0){
-						return false;
-					}
+					PriceMapper.insertSelective(price);
+					
 				} else {
 					price.setId(Integer.valueOf(articlePriceId));
 					price.setPrice(Double.valueOf(articlePrice));
 					price.setModifydate(currentDate);
-					int num1 = PriceMapper.updateByPrimaryKeySelective(price);
-					if(num1 <= 0){
-						return false;
-					}
+					PriceMapper.updateByPrimaryKeySelective(price);
+					
 				}
-			} else if(num <= 0){
-				return false;
+			}
+			if(mapParam.get("keyWords") != null){
+				String[] keyWords = (String[])mapParam.get("keyWords");
+				KeyWords keyWordsParam = null;
+				KeyRelation KeyRelationParam = new KeyRelation();
+				KeyRelationParam.setRelationtype(1);
+				KeyRelationParam.setProductid(article.getId());
+				//修改关键词之前先删除之前所有的关键词
+				keyRelationMapper.deleteBySelective(KeyRelationParam);
+				for(int i=0; i<keyWords.length; i++){
+					int keyWordsId = 0;
+					keyWordsParam = new KeyWords();
+					KeyRelationParam = new KeyRelation();
+					keyWordsParam.setName(keyWords[i]);
+					List<KeyWordsVO> keyWordsList = keyWordsMapper.selectBySelectParam(keyWordsParam);
+					if(keyWordsList != null && keyWordsList.size() != 0){
+						keyWordsId = keyWordsList.get(0).getId();
+					} else {
+						keyWordsParam.setState(1);
+						keyWordsParam.setMakedate(currentDate);
+						keyWordsParam.setModifydate(currentDate);
+						keyWordsMapper.insertSelective(keyWordsParam);
+						keyWordsId = keyWordsParam.getId();
+					}
+					KeyRelationParam.setKeywordsid(keyWordsId);
+					KeyRelationParam.setRelationtype(1);
+					KeyRelationParam.setProductid(article.getId());
+					//添加新的关键词
+					keyRelationMapper.insert(KeyRelationParam);
+				}
+			} else {//修改关键词时如果不输入则删除之前所有的关键词
+				KeyRelation KeyRelationParam = new KeyRelation();
+				KeyRelationParam.setRelationtype(1);
+				KeyRelationParam.setProductid(article.getId());
+				keyRelationMapper.deleteBySelective(KeyRelationParam);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -163,7 +203,7 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 	}
 
 	/**
-	 * 新增文章信息 包括价格
+	 * 新增文章信息 包括价格 和 关键词
 	 * @throws Exception 
 	 */
 	@Override
@@ -184,15 +224,40 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 			price.setPlayNumber(0);
 			price.setSumPrice(0.00);
 			price.setAgainPayDays(10);
-//			price.setMakedate(currentDate);
-//			price.setModifydate(currentDate);
-			throw new RuntimeException("hehe"); 
-//			int num1 = PriceMapper.insertSelective(price);
-//			if(num1 <= 0){
-//				return false;
-//			}
+			price.setMakedate(currentDate);
+			price.setModifydate(currentDate);
+//			throw new RuntimeException("hehe"); 
+			int num1 = PriceMapper.insertSelective(price);
+			if(num1 <= 0){
+				return false;
+			}
 		} else if(num <= 0){
 			return false;
+		}
+		if(mapParam.get("keyWords") != null){
+			String[] keyWords = (String[])mapParam.get("keyWords");
+			KeyWords keyWordsParam = null;
+			KeyRelation KeyRelationParam = null;
+			for(int i=0; i<keyWords.length; i++){
+				int keyWordsId = 0;
+				keyWordsParam = new KeyWords();
+				KeyRelationParam = new KeyRelation();
+				keyWordsParam.setName(keyWords[i]);
+				List<KeyWordsVO> keyWordsList = keyWordsMapper.selectBySelectParam(keyWordsParam);
+				if(keyWordsList != null && keyWordsList.size() != 0){
+					keyWordsId = keyWordsList.get(0).getId();
+				} else {
+					keyWordsParam.setState(1);
+					keyWordsParam.setMakedate(currentDate);
+					keyWordsParam.setModifydate(currentDate);
+					keyWordsMapper.insertSelective(keyWordsParam);
+					keyWordsId = keyWordsParam.getId();
+				}
+				KeyRelationParam.setKeywordsid(keyWordsId);
+				KeyRelationParam.setRelationtype(1);
+				KeyRelationParam.setProductid(article.getId());
+				keyRelationMapper.insert(KeyRelationParam);
+			}
 		}
 		return true;
 	}
