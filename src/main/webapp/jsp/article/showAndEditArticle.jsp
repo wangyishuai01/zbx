@@ -24,12 +24,13 @@
 </style>
 <%
 	String articleId = request.getParameter("articleId");
-	//String action = request.getParameter("action"); 
+	String action = request.getParameter("action"); 
 	System.out.println("articleId============="+articleId);
-	//System.out.println("action============="+action);
+	System.out.println("action============="+action);
 %>
 <script type="text/javascript">
 	var articleId = "<%=articleId %>";
+	var action = "<%=action %>";
 </script>
 </head>
 <body>
@@ -115,10 +116,16 @@
 												</label>
 											</span>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-6" id="editArticleContentDiv">
 											<span class="input-icon icon-right"> 
 												<a onclick="openEditArticleDiv()">编辑文章内容</a>
 												<input type="hidden" id="content" value="">
+											</span>
+										</div>
+										<div class="col-md-6" id="showArticleContentDiv" style="display: none;">
+											<span class="input-icon icon-right"> 
+												<!-- <a onclick="openShowArticleDiv()">查看文章内容</a>
+												<input type="hidden" id="content" value=""> -->
 											</span>
 										</div>
 									</div>
@@ -131,6 +138,12 @@
 												onclick='returnArticleMain();' type="button">取消</button>
 										</div>
 									</div>
+									<div class="col-md-12" id="showButton" style="display: none;">
+										<div style="float: right;margin-right: 18%;">
+											<button data-dismiss="modal" class="btn btn-default shiny"
+												onclick='returnArticleMain();' type="button">取消</button>
+										</div>
+									</div>
 									<br>&nbsp;<br>
 								</div>
 							</div>
@@ -139,6 +152,35 @@
 				</div>
 				<!-- editArticle -->
 				<div class="modal modal-darkorange" id="editArticleDiv">
+					<div class="modal-dialog" style="margin:0px auto;width:100%;height:100%;">
+						<div class="modal-content" style="height:100%;">
+							<div class="modal-header">
+								<button aria-hidden="true" data-dismiss="modal" class="close"
+									type="button" onclick="closeEditArticleDiv();">×</button>
+								<h4 class="modal-title">编辑文章</h4>
+							</div>
+							<div class="modal-body" style="height:84%;">
+								<div class="bootbox-body" style="height:100%;">
+									<div class="row" style="padding: 10px;height:100%;" >
+										<div style="width: 100%;height: 100%;overflow: auto">
+											<script id="editor" type="text/plain" style="width:100%;margin-left:0px;height:75%;"></script>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-default" type="button"
+									onclick="returnArticleInfo();">确定</button>
+								<button data-dismiss="modal" class="btn btn-default"
+									onclick="closeEditArticleDiv();" type="button">返回</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<!-- showArticle -->
+				<div class="modal modal-darkorange" id="showArticleDiv">
 					<div class="modal-dialog" style="margin:0px auto;width:100%;height:100%;">
 						<div class="modal-content" style="height:100%;">
 							<div class="modal-header">
@@ -320,6 +362,15 @@ function saveEdit(){
 	}
 }
 
+function openShowArticleDiv(){
+	alert($("#content").val());
+	$("#showArticleDiv").show();
+}  
+
+function closeShowArticleDiv(){
+	$("#showArticleDiv").hide();
+}
+
 function initFirstClasstify(){
 	var articleFirClassOld = $("#articleFirClassOld").val();
 	$.ajax({
@@ -405,16 +456,32 @@ function queryPriceInfo(articleId){
 $(document).ready(function(){
 	queryArticleClassifyInfo(articleId);
 	init(articleId);
-	$("input[name='isFree']").click(function(){
-		if($(this).val()=="1"){
-			$("#articlePriceLable").hide();
-		} else {
-			queryPriceInfo(articleId);
-			$("#articlePriceLable").show();
-		}
-	});
-	//创建编辑器
-	ue = UE.getEditor('editor');
+	if(action == "show"){
+		$("#title").attr("disabled","disabled");
+		$("#state").attr("disabled","disabled");
+		$("#nocomment").attr("disabled","disabled");
+		$("#articleFirClass").attr("disabled","disabled");
+		$("#articlePrice").attr("disabled","disabled");
+		$("#articleSecClass").attr("disabled","disabled");
+		$("#excerpt").attr("disabled","disabled");
+		$("input[name='isFree']").attr("disabled","disabled");
+		$("#editButton").hide();
+		$("#showButton").show();
+		$("h5[class='widget-caption']").html("查看文章");
+		$("#editArticleContentDiv").hide();
+		$("#showArticleContentDiv").show();
+	} else {
+		$("input[name='isFree']").click(function(){
+			if($(this).val()=="1"){
+				$("#articlePriceLable").hide();
+			} else {
+				queryPriceInfo(articleId);
+				$("#articlePriceLable").show();
+			}
+		});
+		//创建编辑器
+		ue = UE.getEditor('editor');
+	}
 });
 </script>
 </html>
