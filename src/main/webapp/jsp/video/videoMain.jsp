@@ -61,7 +61,7 @@
 									<thead class="flip-content bordered-darkorange">
 										<tr role="row">
 											<th width="5%" style="text-align: center;">序号</th>
-											<th width="30%">视频标题</th>
+											<th width="30%">视频名称</th>
 											<th width="35%">文章标题</th>
 											<th width="5%" style="text-align: center;">购买次数</th>
 											<th width="5%" style="text-align: center;">评论次数</th>
