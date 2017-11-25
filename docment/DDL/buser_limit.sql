@@ -36,3 +36,4 @@ INSERT INTO `buser_limit` VALUES ('4', '1', '4');
 INSERT INTO `buser_limit` VALUES ('5', '1', '5');
 INSERT INTO `buser_limit` VALUES ('6', '1', '6');
 INSERT INTO `buser_limit` VALUES ('7', '1', '7');
+INSERT INTO `buser_limit` VALUES ('8', '1', '8');

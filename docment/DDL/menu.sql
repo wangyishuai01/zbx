@@ -43,3 +43,4 @@ INSERT INTO `menu` VALUES ('4', '类别管理', '0', '1', '1', null, '/jsp/tclas
 INSERT INTO `menu` VALUES ('5', '评论管理', '0', '1', '1', null, '/jsp/comment/commentMain.jsp', '1', '2017-10-02 15:44:15', '2017-10-02 15:44:19');
 INSERT INTO `menu` VALUES ('6', '统计管理', '0', '1', '1', null, '/jsp/statistics/statistics.jsp', '1', '2017-11-25 18:41:50', '2017-11-25 18:41:53');
 INSERT INTO `menu` VALUES ('7', '关键词管理', '0', '1', '1', null, '/jsp/keywords/keywordsMain.jsp', '1', '2017-11-25 18:42:41', '2017-11-25 18:42:43');
+INSERT INTO `menu` VALUES ('8', '系统管理', '0', '1', '1', null, '/jsp/system/systemManager.jsp', '1', '2017-11-25 18:42:41', '2017-11-25 18:42:43');
