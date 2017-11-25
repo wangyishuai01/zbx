@@ -1,0 +1,209 @@
+<!Doctype html>
+<html>
+<head>
+<meta charset=utf-8>
+<meta name=referrer content=always>
+<meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+<meta name=viewport
+	content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title></title>
+<link rel=stylesheet type=text/css href="../../css/showArticleContent.css">
+<script src="../../js/jquery-1.9.1.js"></script>
+<meta itemprop=dateUpdate content="2017-11-25 09:37:43">
+</head>
+<body>
+	<div id=detail-page>
+		<div class=line-shadow></div>
+		<div id=content-container class="content-container clearfix"
+			data-showlog="tid:126;cst:1;logInfo:landing;"
+			data-extralog="rid:;pos:;extra:;isBaijiahao:0;login:0;" data-ratio=1
+			data-rid=page>
+			<div class=item-wrap>
+				<div id=header_wrap class=header_wrap>
+					<div class=header_content>
+						<div class=header_logo>
+							<a href="" id=result_logo
+								data-clklog="tid:139;cst:2;logInfo:head_logo;"
+								data-extralog="rid:;pos:;extra:;isBaiJiaHao:0;login:0;"
+								data-rid=head_0> <img
+								src="../../images/indexImg_02.png"
+								alt="到智博炫首页" title="到智博炫首页">
+							</a>
+						</div>
+						<div class=header_menu data-rid=header_menu>
+							<a href="" class=index
+								data-clklog="tid:142;cst:2;logInfo:head_menu"
+								data-extralog="rid:;pos:;extra:;isBaiJiaHao:0;login:0;type:backindex"
+								data-rid=head_1>到智博炫首页</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id=left-container class=left-container>
+				<div class=item-wrap>
+					<div class=article id=article data-islow-browser="0">
+						<div class=article-title>
+							<h2></h2>
+						</div>
+						<div class=article-source>
+							<span class=source>新浪军事</span> <span class=date>11-25</span> <span
+								class=time>09:37</span>
+						</div>
+						<div class=article-content>
+							
+						</div>
+						<div class=read-src data-showlog="tid:132;cst:1;logInfo:readsrc;"
+							data-extralog="rid:;pos:;extra:;isBaijiahao:0;login:0;"
+							data-rid=readsrc>
+							<a href=""
+								target=_blank data-clklog="tid:137;cst:2;logInfo:readsrc;"
+								data-extralog="rid:;pos:;extra:;isBaijiahao:0;login:0;">查看原文
+								>></a>
+						</div>
+						<div class=notice>
+							<p>产品建议及投诉请联系：1061650793@qq.com</p>
+						</div>
+						<!-- <audio height=0 width=0 id=musicAudio data-play-index>
+							<source></source>
+						</audio> -->
+					</div>
+				</div>
+			</div>
+			<div id=right-container class=right-container>
+				<div class=item-wrap>
+					<div class=related-news>
+						<div class="news-content top">
+							<h2>相关文章</h2>
+							<ul>
+								
+							</ul>
+						</div>
+					</div>
+					<div id=relateAd ad-id=relate-js class=wangmeng-ad
+						data-showlog="tid:369;cst:1;logInfo:adsjs;"
+						data-clklog="tid:370;cst:2;logInfo:adsjs;"
+						data-extralog="rid:;pos:5;extra:;baijiahao:0;login:0;"></div>
+				</div>
+			</div>
+		</div>
+		<div id=bottom-container class="bottom-container ">
+			<div class=copy-right>
+				<div class=baidu-info>
+					<a class=sethome href=//www.baidu.com/cache/sethelp/index.html
+						target=_blank><span>设为首页</span></a> <span class=copyright-text><span>&#169;&nbsp;Baidu&nbsp;</span>
+						<a href="" target=_blank>使用百度前必读</a>&nbsp;
+						<a href="" target=_blank>意见反馈</a>&nbsp;<span>京ICP证030173号&nbsp;</span>
+					</span>
+				</div>
+				<div class=recordcode>
+					<a href="" target=_blank><i></i>京公网安备11000002000001号</a>
+				</div>
+			</div>
+			<div class=back-to-top
+				data-showlog="tid:133;cst:1;logInfo:back_to_top;"
+				data-clklog="tid:138;cst:2;logInfo:back_to_top;"
+				data-extralog="rid:;pos:;extra:;isBaiJiaHao:0;login:0;"
+				data-rid=back_to_top>
+				<div class=icon-text>
+					<span>返回顶部</span>
+				</div>
+				<div class=icon-arrow>
+					<span></span>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+var url=window.location .href;
+var index = url.indexOf('?');
+var paramStr = url.substring(index + 1);
+var paramList = paramStr.split("&");
+function getParamByName(paramName){
+	for(var i=0; i<paramList.length; i++){
+		var param = paramList[i].split("=");
+		if(param[0] == paramName){
+			return param[1];
+		}
+	}
+	return null;
+}
+function init(articleId) {
+	$.ajax({
+		url : "../../Article/selectById.do",
+		type : "post",
+		dataType : "json",
+		data : {
+			"articleId" : articleId 
+		},
+		success : function(result) {
+			result = JSON.parse(result)
+			if(result.success){
+				var data = result.data;
+				$(".article-title h2").html(data.title);
+			    if(data.contentStr!=null){
+			    	var str = data.contentStr;
+			    	$(".article-content").html(str);
+			    }
+			}
+		}
+	}); 
+}
+function queryRelationArticle(classifyId) {
+	if(classifyId != null && classifyId != ""){
+		$.ajax({
+			url : "../../Article/selectArticleMainByParam.do",
+			type : "post",
+			dataType : "json",
+			data : {
+				"classid" : classifyId 
+			},
+			success : function(result) {
+				result = JSON.parse(result)
+				if(result.success){
+					var data1 = result.data;
+					var ulObj = $(".news-content ul");
+					for(var i=0; i<data1.length; i++){
+						var res = data1[i];
+						var liStr = "<li data-showlog='tid:136;cst:1;logInfo:related_news;' data-extralog='rid:;pos:0;extra:;isBaiJiaHao:0;login:0;' data-rid='related_news_0'>"
+									+ "<div class='item-content clearfix'>"
+										+ "<div class=news-pic>"
+											+ "<a class=upgrade data-clklog='tid:148;cst:2;logInfo:related_news;'"
+													+ "data-extralog=\"rid:;pos:0;extra:;isBaiJiaHao:0;login:0;type:'img'\""
+													+ "href='https://mbd.baidu.com/newspage/data/landingsuper?context=%7B%22nid%22%3A%22news_9124934203734799406%22%7D&n_type=0&p_from=4'"
+													+ "target=_blank>" 
+												+ "<img src='https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2556915322,1599558560&fm=173&s=A0C807F94015BDCC3E9910090300F042&w=218&h=146&img.JPEG'>"
+											+ "</a>"
+										+ "</div>"
+										+ "<div class=news-info>"
+											+ "<div class=news-title>"
+												+ "<h3>"
+													+ "<a class='upgrade' data-clklog='tid:148;cst:2;logInfo:related_news;'"
+															+ "data-extralog=\"rid:;pos:0;extra:;isBaiJiaHao:0;login:0;type:'title'\""
+															+ "href='/jsp/article/showArticleContent.html?articleId=" + res.id + "&classifyId=" + res.classid + "'"
+															+ "target=_blank>" + res.title + "</a>"
+												+ "</h3>"
+											+ "</div>"
+											+ "<div class=news-desc>"
+												+ "<span class=info-num>运动谈聊用品</span><span class=info-date>11-25</span>"
+											+ "</div>"
+										+ "</div>"
+									+ "</div>"
+								+ "</li>";
+						ulObj.append(liStr);
+					}
+				} else {
+					$(".news-content ul").html("没有相关文章");
+				}
+			}
+		});
+	} else {
+		alert("没有关联的文章信息！");
+	}
+}
+$(document).ready(function(){
+	init(getParamByName("articleId"));
+	queryRelationArticle(getParamByName("classifyId"));
+});
+</script>
+</body>
+</html>
