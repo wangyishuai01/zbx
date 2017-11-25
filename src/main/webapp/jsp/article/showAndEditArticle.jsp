@@ -128,13 +128,13 @@
 											</span>
 										</div>
 										<div class="col-md-6" id="editArticleContentDiv">
-											<span class="input-icon icon-right"> 
+											<span class="input-icon icon-right" onmouseover="this.style.cursor='pointer'"> 
 												<a onclick="openEditArticleDiv()">编辑文章内容</a>
 												<input type="hidden" id="content" value="">
 											</span>
 										</div>
 										<div class="col-md-6" id="showArticleContentDiv" style="display: none;">
-											<span class="input-icon icon-right"> 
+											<span class="input-icon icon-right" onmouseover="this.style.cursor='pointer'"> 
 												<!-- <a onclick="openShowArticleDiv()">查看文章内容</a>
 												<input type="hidden" id="content" value=""> -->
 											</span>
