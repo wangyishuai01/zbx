@@ -46,7 +46,7 @@
 									<thead class="flip-content bordered-darkorange">
 										<tr role="row">
 											<th width="5%" style="text-align: center;">序号</th>
-											<th width="20%" style="text-align: center;">标题</th>
+											<th width="20%" style="text-align: center;">文章标题/视频名称</th>
 											<th width="25%" style="text-align: center;">内容</th>
 											<th width="15%" style="text-align: center;">发布人</th>
 											<th width="20%" style="text-align: center;">时间</th>

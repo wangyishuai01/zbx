@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cn.zbx.dao.PriceMapper;
@@ -128,7 +129,7 @@ public class VideoMainServiceImpl implements IVideoMainService {
 	 * 新增视频信息 包括价格
 	 */
 	@Override
-	@Transactional
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public boolean addVideoInfo(Map<String, Object> mapParam) {
 		// TODO Auto-generated method stub
 		Date currentDate = new Date();

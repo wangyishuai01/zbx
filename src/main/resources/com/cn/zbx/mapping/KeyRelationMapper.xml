@@ -20,6 +20,23 @@
     delete from keyrelation
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteBySelective" parameterType="java.lang.Integer" >
+    delete from keyrelation
+    <where>
+      <if test="id != null" >
+        and id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="keywordsid != null" >
+        and keywordsid = #{keywordsid,jdbcType=INTEGER}
+      </if>
+      <if test="relationtype != null" >
+        and relationtype = #{relationtype,jdbcType=INTEGER}
+      </if>
+      <if test="productid != null" >
+        and productid = #{productid,jdbcType=INTEGER}
+      </if>
+    </where>
+  </delete>
   <insert id="insert" parameterType="com.cn.zbx.pojo.KeyRelation" >
     insert into keyrelation (id, keywordsid, relationtype, 
       productid)

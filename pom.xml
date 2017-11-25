@@ -70,6 +70,12 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 		</dependency>
+		
+        <dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20160212</version>
+		</dependency>
 
 		<!-- spring核心包 -->
 		<dependency>
@@ -135,9 +141,6 @@
 		<!-- 导入Mysql数据库链接jar包 -->
 		<dependency><groupId>mysql</groupId><artifactId>mysql-connector-java</artifactId><version>5.1.30</version></dependency>
 		
-	    <!-- 添加oracle jdbc driver -->  
-	    <dependency><groupId>com.oracle</groupId><artifactId>ojdbc14</artifactId><version>10.2.0.4.0</version></dependency>
-	    
 		<!-- 导入dbcp的jar包，用来在applicationContext.xml中配置数据库 -->
 		<dependency><groupId>commons-dbcp</groupId><artifactId>commons-dbcp</artifactId><version>1.2.2</version></dependency>
 		

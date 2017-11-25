@@ -50,5 +50,11 @@ public class TClassifyServiceImpl implements ITClassifyService {
 		// TODO Auto-generated method stub
 		return tClassifyMapper.insertSelective(record);
 	}
+
+	@Override
+	public Tclassify selectByPrimaryKey(Integer id) {
+		// TODO Auto-generated method stub
+		return tClassifyMapper.selectByPrimaryKey(id);
+	}
 	
 }

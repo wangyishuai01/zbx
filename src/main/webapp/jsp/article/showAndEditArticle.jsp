@@ -24,12 +24,13 @@
 </style>
 <%
 	String articleId = request.getParameter("articleId");
-	//String action = request.getParameter("action"); 
+	String action = request.getParameter("action"); 
 	System.out.println("articleId============="+articleId);
-	//System.out.println("action============="+action);
+	System.out.println("action============="+action);
 %>
 <script type="text/javascript">
 	var articleId = "<%=articleId %>";
+	var action = "<%=action %>";
 </script>
 </head>
 <body>
@@ -93,10 +94,21 @@
 									<div class="col-md-12">
 										<div class="col-md-12">
 											<label style="line-height:90px;margin-top:-70px;">文章摘要：</label>
-											<textarea id="excerpt" name="excerpt" class="form-control" style="width:76%;height:90px;"
+											<textarea id="excerpt" name="excerpt" class="form-control" style="width:76%;height:90px;resize:none;"
 													maxlength="200" onchange="this.value=this.value.substring(0, 200)" 
 													onkeydown="this.value=this.value.substring(0, 200)" 
 													onkeyup="this.value=this.value.substring(0, 200)"></textarea>
+										</div>
+									</div>
+									<br>&nbsp;<br>
+									<div class="col-md-12">
+										<div class="col-md-12">
+											<span class="input-icon icon-right"> 
+												文章标签：
+												<input type="text" id="keyWords" placeholder="（添加Tag，你的内容能被更多人看到）" name="keyWords" 
+														class="form-control" style="width:50%;">
+												（最多添加5个标签，多个标签之间用“，”隔开）
+											</span>
 										</div>
 									</div>
 									<br>&nbsp;<br>
@@ -115,10 +127,16 @@
 												</label>
 											</span>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-6" id="editArticleContentDiv">
 											<span class="input-icon icon-right"> 
 												<a onclick="openEditArticleDiv()">编辑文章内容</a>
 												<input type="hidden" id="content" value="">
+											</span>
+										</div>
+										<div class="col-md-6" id="showArticleContentDiv" style="display: none;">
+											<span class="input-icon icon-right"> 
+												<!-- <a onclick="openShowArticleDiv()">查看文章内容</a>
+												<input type="hidden" id="content" value=""> -->
 											</span>
 										</div>
 									</div>
@@ -131,6 +149,12 @@
 												onclick='returnArticleMain();' type="button">取消</button>
 										</div>
 									</div>
+									<div class="col-md-12" id="showButton" style="display: none;">
+										<div style="float: right;margin-right: 18%;">
+											<button data-dismiss="modal" class="btn btn-default shiny"
+												onclick='returnArticleMain();' type="button">取消</button>
+										</div>
+									</div>
 									<br>&nbsp;<br>
 								</div>
 							</div>
@@ -139,6 +163,35 @@
 				</div>
 				<!-- editArticle -->
 				<div class="modal modal-darkorange" id="editArticleDiv">
+					<div class="modal-dialog" style="margin:0px auto;width:100%;height:100%;">
+						<div class="modal-content" style="height:100%;">
+							<div class="modal-header">
+								<button aria-hidden="true" data-dismiss="modal" class="close"
+									type="button" onclick="closeEditArticleDiv();">×</button>
+								<h4 class="modal-title">编辑文章</h4>
+							</div>
+							<div class="modal-body" style="height:84%;">
+								<div class="bootbox-body" style="height:100%;">
+									<div class="row" style="padding: 10px;height:100%;" >
+										<div style="width: 100%;height: 100%;overflow: auto">
+											<script id="editor" type="text/plain" style="width:100%;margin-left:0px;height:75%;"></script>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-default" type="button"
+									onclick="returnArticleInfo();">确定</button>
+								<button data-dismiss="modal" class="btn btn-default"
+									onclick="closeEditArticleDiv();" type="button">返回</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<!-- showArticle -->
+				<div class="modal modal-darkorange" id="showArticleDiv">
 					<div class="modal-dialog" style="margin:0px auto;width:100%;height:100%;">
 						<div class="modal-content" style="height:100%;">
 							<div class="modal-header">
@@ -210,7 +263,7 @@ function init(articleId) {
 			    	var str = data.contentStr;
 			    	$("#content").val(str);
 			    }
-			    
+			    $("#keyWords").val(result.keyWordsStr);
 			}
 		}
 	}); 
@@ -269,6 +322,18 @@ function saveEditCheck(){
 		alert("请选择文章类型！");
 		return false;
 	}
+	var keyWordsStr = $("#keyWords").val();
+	var index = keyWordsStr.indexOf("，");
+	if(index < 0){
+		var keyWords = keyWordsStr.split(",");
+		if(keyWords.length > 5){
+			alert("最多添加5个标签！");
+			return false;
+		}
+	} else {
+		alert("标签中的逗号请用英文逗号！");
+		return false;
+	}
 	if($("input[name='isFree']:checked").val() == "0"){
 		if($("#articlePrice").val() <= 0){
 			alert("价格必须是正数！");
@@ -290,6 +355,7 @@ function saveEdit(){
 		var articlePriceId = $("#articlePriceId").val();
 		var excerpt = $("#excerpt").val();
 		var content = $("#content").val();
+		var keyWords = $("#keyWords").val();
 		$.ajax({
 			url : rootPath+"/Article/editArticleInfoById.do",
 			type : "post",
@@ -305,7 +371,8 @@ function saveEdit(){
 				"content" : content, 
 				"articlePriceId" : articlePriceId,
 				"articlePrice" : articlePrice,
-				"articlePriceOld" : articlePriceOld
+				"articlePriceOld" : articlePriceOld,
+				"keyWords" : keyWords
 			},
 			success : function(result) {
 				result = JSON.parse(result);
@@ -318,6 +385,15 @@ function saveEdit(){
 			}
 		});
 	}
+}
+
+function openShowArticleDiv(){
+	alert($("#content").val());
+	$("#showArticleDiv").show();
+}  
+
+function closeShowArticleDiv(){
+	$("#showArticleDiv").hide();
 }
 
 function initFirstClasstify(){
@@ -405,16 +481,33 @@ function queryPriceInfo(articleId){
 $(document).ready(function(){
 	queryArticleClassifyInfo(articleId);
 	init(articleId);
-	$("input[name='isFree']").click(function(){
-		if($(this).val()=="1"){
-			$("#articlePriceLable").hide();
-		} else {
-			queryPriceInfo(articleId);
-			$("#articlePriceLable").show();
-		}
-	});
-	//创建编辑器
-	ue = UE.getEditor('editor');
+	if(action == "show"){
+		$("#title").attr("disabled","disabled");
+		$("#state").attr("disabled","disabled");
+		$("#nocomment").attr("disabled","disabled");
+		$("#articleFirClass").attr("disabled","disabled");
+		$("#articlePrice").attr("disabled","disabled");
+		$("#articleSecClass").attr("disabled","disabled");
+		$("#excerpt").attr("disabled","disabled");
+		$("#keyWords").attr("disabled","disabled");
+		$("input[name='isFree']").attr("disabled","disabled");
+		$("#editButton").hide();
+		$("#showButton").show();
+		$("h5[class='widget-caption']").html("查看文章");
+		$("#editArticleContentDiv").hide();
+		$("#showArticleContentDiv").show();
+	} else {
+		$("input[name='isFree']").click(function(){
+			if($(this).val()=="1"){
+				$("#articlePriceLable").hide();
+			} else {
+				queryPriceInfo(articleId);
+				$("#articlePriceLable").show();
+			}
+		});
+		//创建编辑器
+		ue = UE.getEditor('editor');
+	}
 });
 </script>
 </html>

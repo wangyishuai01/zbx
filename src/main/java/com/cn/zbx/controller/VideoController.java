@@ -27,7 +27,12 @@ public class VideoController {
 	@Autowired
 	IVideoMainService videoMainService;
 	
-	
+	/**
+	 * 视频主页面初始化方法
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/initVideoMain", method = { RequestMethod.GET, RequestMethod.POST })
 	public String initClassifyMain(HttpServletRequest request, HttpServletResponse response){
@@ -62,6 +67,13 @@ public class VideoController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 根据视频id更新视频信息
+	 * @param request
+	 * @param response
+	 * @param video
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/updateSelectById", method = { RequestMethod.GET, RequestMethod.POST })
 	public String updateSelectById(HttpServletRequest request, HttpServletResponse response, VideoMain video){
@@ -162,6 +174,13 @@ public class VideoController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 根据条件查询视频
+	 * @param request
+	 * @param response
+	 * @param video
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/selectVideoByParam", method = { RequestMethod.GET, RequestMethod.POST })
 	public String selectVideoByParam(HttpServletRequest request, HttpServletResponse response, VideoMain video){
@@ -211,6 +230,13 @@ public class VideoController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 删除视频信息
+	 * @param request
+	 * @param response
+	 * @param videoId
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/deleteVideoById", method = { RequestMethod.GET, RequestMethod.POST })
 	public String deleteVideoById(HttpServletRequest request, HttpServletResponse response, String videoId){

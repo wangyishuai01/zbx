@@ -495,7 +495,7 @@ $(document).ready(function(){
 	if(action == "edit"){
 		$("#relationArticleName").dblclick(openEditRelationArticleDiv);
 	}
-	if(action == "show"){relationArticleName
+	if(action == "show"){
 		$("#videoName").attr("disabled","disabled");
 		$("#videoPrice").attr("disabled","disabled");
 		$("#isCanComment").attr("disabled","disabled");
