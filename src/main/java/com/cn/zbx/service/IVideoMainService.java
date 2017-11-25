@@ -29,8 +29,8 @@ public interface IVideoMainService {
 	
 	int selectCountBySelectParam(VideoMain record);
 	
-	boolean editVideoInfoByVideoId(Map<String, Object> mapParam);
+	boolean editVideoInfoByVideoId(Map<String, Object> mapParam) throws Exception;
 	
-	boolean addVideoInfo(Map<String, Object> mapParam);
+	boolean addVideoInfo(Map<String, Object> mapParam) throws Exception;
 	
 }

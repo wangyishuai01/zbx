@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cn.zbx.dao.CustomerMapper;
 import com.cn.zbx.pojo.Customer;
@@ -44,6 +46,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	 * 根据条件修改客户信息
 	 */
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public int updateByPrimaryKeySelective(Customer record) {
 		// TODO Auto-generated method stub
 		return customerMapper.updateByPrimaryKeySelective(record);

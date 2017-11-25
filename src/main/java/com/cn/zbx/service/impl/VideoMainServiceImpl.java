@@ -49,6 +49,7 @@ public class VideoMainServiceImpl implements IVideoMainService {
 	 * 
 	 */
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public int deleteByPrimaryKey(Integer id) {
 		// TODO Auto-generated method stub
 		return VideoMainMapper.deleteByPrimaryKey(id);
@@ -58,6 +59,7 @@ public class VideoMainServiceImpl implements IVideoMainService {
 	 * 根据主键修改视频信息
 	 */
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public int updateByPrimaryKeySelective(VideoMain record) {
 		// TODO Auto-generated method stub
 		return VideoMainMapper.updateByPrimaryKeySelective(record);
@@ -77,6 +79,7 @@ public class VideoMainServiceImpl implements IVideoMainService {
 	 * 插入视频信息
 	 */
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public int insertSelective(VideoMain record) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -106,9 +109,11 @@ public class VideoMainServiceImpl implements IVideoMainService {
 
 	/**
 	 * 编辑视频信息功能 包括价格
+	 * @throws Exception 
 	 */
 	@Override
-	public boolean editVideoInfoByVideoId(Map<String, Object> mapParam) {
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public boolean editVideoInfoByVideoId(Map<String, Object> mapParam) throws Exception {
 		// TODO Auto-generated method stub
 		Date currentDate = new Date();
 		VideoMain video = new VideoMain();
@@ -116,60 +121,11 @@ public class VideoMainServiceImpl implements IVideoMainService {
 		String videoPriceId = String.valueOf(mapParam.get("videoPriceId"));
 		String videoPrice = String.valueOf(mapParam.get("videoPrice"));
 		String videoPriceOld = String.valueOf(mapParam.get("videoPriceOld"));
-		try {
-			video = (VideoMain)MapUtil.mapToBean(mapParam, video.getClass());
-			int num = VideoMainMapper.updateByPrimaryKeySelective(video);
-			
-			if(num > 0 && !videoPrice.equals(videoPriceOld) && video.getIsfree() == 0){
-				if(!StringUtils.isNotEmpty(videoPriceId)){
-					price.setType(2);
-					price.setProductId(video.getId());
-					price.setPrice(Double.valueOf(videoPrice));
-					price.setPlayNumber(0);
-					price.setSumPrice(0.00);
-					price.setAgainPayDays(10);
-					price.setMakedate(currentDate);
-					price.setModifydate(currentDate);
-					int num1 = PriceMapper.insertSelective(price);
-					if(num1 <= 0){
-						return false;
-					}
-				} else {
-					price.setId(Integer.valueOf(videoPriceId));
-					price.setPrice(Double.valueOf(videoPrice));
-					price.setModifydate(currentDate);
-					int num1 = PriceMapper.updateByPrimaryKeySelective(price);
-					if(num1 <= 0){
-						return false;
-					}
-				}
-			} else if(num <= 0){
-				return false;
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * 新增视频信息 包括价格
-	 */
-	@Override
-	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	public boolean addVideoInfo(Map<String, Object> mapParam) {
-		// TODO Auto-generated method stub
-		Date currentDate = new Date();
-		VideoMain video = new VideoMain();
-		Price price = new Price();
-		String videoPrice = String.valueOf(mapParam.get("videoPrice"));
-		try {
-			video = (VideoMain)MapUtil.mapToBean(mapParam, video.getClass());
-			int num = VideoMainMapper.insertSelective(video);
-			
-			if(num > 0 && video.getIsfree() == 0){
+		video = (VideoMain)MapUtil.mapToBean(mapParam, video.getClass());
+		int num = VideoMainMapper.updateByPrimaryKeySelective(video);
+		
+		if(num > 0 && !videoPrice.equals(videoPriceOld) && video.getIsfree() == 0){
+			if(!StringUtils.isNotEmpty(videoPriceId)){
 				price.setType(2);
 				price.setProductId(video.getId());
 				price.setPrice(Double.valueOf(videoPrice));
@@ -182,12 +138,50 @@ public class VideoMainServiceImpl implements IVideoMainService {
 				if(num1 <= 0){
 					return false;
 				}
-			} else if(num <= 0){
+			} else {
+				price.setId(Integer.valueOf(videoPriceId));
+				price.setPrice(Double.valueOf(videoPrice));
+				price.setModifydate(currentDate);
+				int num1 = PriceMapper.updateByPrimaryKeySelective(price);
+				if(num1 <= 0){
+					return false;
+				}
+			}
+		} else if(num <= 0){
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 新增视频信息 包括价格
+	 * @throws Exception 
+	 */
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public boolean addVideoInfo(Map<String, Object> mapParam) throws Exception {
+		// TODO Auto-generated method stub
+		Date currentDate = new Date();
+		VideoMain video = new VideoMain();
+		Price price = new Price();
+		String videoPrice = String.valueOf(mapParam.get("videoPrice"));
+		video = (VideoMain)MapUtil.mapToBean(mapParam, video.getClass());
+		int num = VideoMainMapper.insertSelective(video);
+		
+		if(num > 0 && video.getIsfree() == 0){
+			price.setType(2);
+			price.setProductId(video.getId());
+			price.setPrice(Double.valueOf(videoPrice));
+			price.setPlayNumber(0);
+			price.setSumPrice(0.00);
+			price.setAgainPayDays(10);
+			price.setMakedate(currentDate);
+			price.setModifydate(currentDate);
+			int num1 = PriceMapper.insertSelective(price);
+			if(num1 <= 0){
 				return false;
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} else if(num <= 0){
 			return false;
 		}
 		return true;

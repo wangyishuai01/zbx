@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cn.zbx.dao.TclassifyMapper;
 import com.cn.zbx.pojo.Tclassify;
@@ -34,6 +36,7 @@ public class TClassifyServiceImpl implements ITClassifyService {
 	 * 根据主键删除分类信息
 	 */
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public int deleteByPrimaryKey(Integer id) {
 		// TODO Auto-generated method stub
 		return tClassifyMapper.deleteByPrimaryKey(id);
@@ -43,6 +46,7 @@ public class TClassifyServiceImpl implements ITClassifyService {
 	 * 根据主键修改分类信息
 	 */
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public int updateByPrimaryKeySelective(Tclassify record) {
 		// TODO Auto-generated method stub
 		return tClassifyMapper.updateByPrimaryKeySelective(record);
@@ -61,6 +65,7 @@ public class TClassifyServiceImpl implements ITClassifyService {
 	 * 插入分类信息
 	 */
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public int insertSelective(Tclassify record) {
 		// TODO Auto-generated method stub
 		return tClassifyMapper.insertSelective(record);

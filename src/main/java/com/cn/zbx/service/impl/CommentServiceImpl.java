@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cn.zbx.dao.CommentMapper;
 import com.cn.zbx.pojo.Comment;
@@ -35,6 +37,7 @@ public class CommentServiceImpl implements ICommentService {
 	 * 根据主键删除评论信息
 	 */
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public int deleteByPrimaryKey(Integer id) {
 		// TODO Auto-generated method stub
 		return commentMapper.deleteByPrimaryKey(id);
@@ -53,6 +56,7 @@ public class CommentServiceImpl implements ICommentService {
 	 * 插入评论信息
 	 */
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public int insertSelective(Comment record) {
 		// TODO Auto-generated method stub
 		return commentMapper.insertSelective(record);

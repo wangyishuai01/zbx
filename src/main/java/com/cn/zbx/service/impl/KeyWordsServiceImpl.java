@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cn.zbx.dao.KeyWordsMapper;
 import com.cn.zbx.pojo.KeyWords;
@@ -36,6 +38,7 @@ public class KeyWordsServiceImpl implements IKeyWordsService {
 	 * 根据主键删除关键词信息
 	 */
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public int deleteByPrimaryKey(Integer id) {
 		// TODO Auto-generated method stub
 		return keyWordsMapper.deleteByPrimaryKey(id);
@@ -45,6 +48,7 @@ public class KeyWordsServiceImpl implements IKeyWordsService {
 	 * 根据主键修改关键词信息
 	 */
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public int updateByPrimaryKeySelective(KeyWords record) {
 		// TODO Auto-generated method stub
 		return keyWordsMapper.updateByPrimaryKeySelective(record);
@@ -63,6 +67,7 @@ public class KeyWordsServiceImpl implements IKeyWordsService {
 	 * 插入关键词信息
 	 */
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public int insertSelective(KeyWords record) {
 		// TODO Auto-generated method stub
 		return keyWordsMapper.insertSelective(record);
