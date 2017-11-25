@@ -62,7 +62,16 @@
    
   </select>
   
-  
+  <select id="selectDateAndCount" resultType="com.cn.zbx.vo.StatisticsVO" parameterType="com.cn.zbx.vo.StatisticsVO" >
+    select 
+    	DATE_FORMAT(create_date, "%Y-%m-%d") as , COUNT(1) as count
+    from statistics
+    where 
+    create_date between #{startDate} and #{endDate}
+    GROUP BY DATE_FORMAT(create_date, "%Y-%m-%d")
+    ORDER BY create_date asc;
+   
+  </select>
   
   
 </mapper>
