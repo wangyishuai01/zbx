@@ -20,18 +20,27 @@ public class PriceServiceImpl implements IPriceService {
 	@Autowired
 	PriceMapper PriceMapper;
 
+	/**
+	 * 根据条件查询价格信息
+	 */
 	@Override
 	public List<Price> selectPriceBySelectParam(Price record) {
 		// TODO Auto-generated method stub
 		return PriceMapper.selectPriceBySelectParam(record);
 	}
 
+	/**
+	 * 根据条件查询价格数
+	 */
 	@Override
 	public int selectCountBySelectParam(Price record) {
 		// TODO Auto-generated method stub
 		return PriceMapper.selectCountBySelectParam(record);
 	}
 
+	/**
+	 * 插入价格信息
+	 */
 	@Override
 	public int insertSelective(Price record) {
 		// TODO Auto-generated method stub

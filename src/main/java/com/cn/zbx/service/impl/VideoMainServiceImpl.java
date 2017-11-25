@@ -33,42 +33,71 @@ public class VideoMainServiceImpl implements IVideoMainService {
 	@Autowired
 	PriceMapper PriceMapper;
 
+	/**
+	 * 根据条件查询视频信息
+	 * 参数类型 VideoVO 
+	 * 返回 List<VideoVO>
+	 */
 	@Override
 	public List<VideoVO> selectBySelectParam(VideoVO record) {
 		// TODO Auto-generated method stub
 		return VideoMainMapper.selectBySelectParam(record);
 	}
 
+	/**
+	 * 根据主键删除视频信息
+	 * 
+	 */
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
 		// TODO Auto-generated method stub
 		return VideoMainMapper.deleteByPrimaryKey(id);
 	}
 
+	/**
+	 * 根据主键修改视频信息
+	 */
 	@Override
 	public int updateByPrimaryKeySelective(VideoMain record) {
 		// TODO Auto-generated method stub
 		return VideoMainMapper.updateByPrimaryKeySelective(record);
 	}
 
+	/**
+	 * 根据条件查询视频数
+	 * 参数类型 VideoVO 
+	 */
 	@Override
 	public int selectCountBySelectParam(VideoVO record) {
 		// TODO Auto-generated method stub
 		return VideoMainMapper.selectCountBySelectParam(record);
 	}
 
+	/**
+	 * 插入视频信息
+	 */
 	@Override
 	public int insertSelective(VideoMain record) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	/**
+	 * 根据条件查询视频信息
+	 * 参数类型 VideoMain 
+	 * 返回 List<VideoMain>
+	 */
 	@Override
 	public List<VideoMain> selectBySelectParam(VideoMain record) {
 		// TODO Auto-generated method stub
 		return VideoMainMapper.selectBySelectParam1(record);
 	}
 
+	/**
+	 * 根据条件查询视频数
+	 * 参数类型 VideoMain 
+	 * 返回 List<VideoMain>
+	 */
 	@Override
 	public int selectCountBySelectParam(VideoMain record) {
 		// TODO Auto-generated method stub

@@ -47,6 +47,9 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 	@Autowired
 	KeyRelationMapper keyRelationMapper;
 
+	/**
+	 * 查询多个 分类对应的文章数
+	 */
 	@Override
 	public List<TClassifyVO> selectCountByClassIds(List<Tclassify> list) {
 		// TODO Auto-generated method stub
@@ -61,6 +64,9 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 		return resultList;
 	}
 
+	/**
+	 * 根据条件查询文章信息
+	 */
 	@Override
 	public List<ArticleVO> selectBySelectParam(ArticleMain record) {
 		// TODO Auto-generated method stub
@@ -68,30 +74,45 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 		return resultList;
 	}
 
+	/**
+	 * 根据条件查询文章数
+	 */
 	@Override
 	public Integer selectCountBySelectParam(ArticleMain record) {
 		// TODO Auto-generated method stub
 		return articleMainMapper.selectCountBySelectParam(record);
 	}
 
+	/**
+	 * 根据主键删除文章信息
+	 */
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
 		// TODO Auto-generated method stub
 		return articleMainMapper.deleteByPrimaryKey(id);
 	}
 
+	/**
+	 * 根据主键查询文章信息
+	 */
 	@Override
 	public ArticleMain selectByPrimaryKey(Integer id) {
 		// TODO Auto-generated method stub
 		return articleMainMapper.selectByPrimaryKey(id);
 	}
 
+	/**
+	 * 根据主键修改文章信息
+	 */
 	@Override
 	public int updateByPrimaryKeySelective(ArticleMain record) {
 		// TODO Auto-generated method stub
 		return articleMainMapper.updateByPrimaryKeySelective(record);
 	}
 
+	/**
+	 * 根据条件查询文章信息（不包含文章内容）
+	 */
 	@Override
 	public List<ArticleMain> selectArticleNoContentBySelectParam(
 			ArticleMain record) {
@@ -116,6 +137,9 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 		return resultList;
 	}
 
+	/**
+	 * 根据文章id查询对应的分类（二级和一级分类）
+	 */
 	@Override
 	public Map<String, Object> selectClassifyByArticleId(Integer id) {
 		// TODO Auto-generated method stub

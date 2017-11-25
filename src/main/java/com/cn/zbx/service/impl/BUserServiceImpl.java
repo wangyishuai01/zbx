@@ -13,6 +13,9 @@ public class BUserServiceImpl implements IBUserService {
 	@Autowired
 	BUserMapper bUserMapper;
 
+	/**
+	 * 根据用户名查询用户信息
+	 */
 	@Override
 	public BUser queryUserByName(String userCode) {
 		// TODO Auto-generated method stub
