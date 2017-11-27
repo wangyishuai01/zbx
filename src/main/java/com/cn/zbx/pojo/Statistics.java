@@ -13,9 +13,9 @@ public class Statistics extends BasicPojo{
 
     private Integer userId;//用户Id
 
-    private Integer commentToId;//文章id/视屏id
+    private Integer productId;//文章id/视屏id
 
-    private String type;//类型：1：文章 2：视频
+    private String productType;//类型：1：文章 2：视频
 
     private Date createDate;
     
@@ -36,20 +36,20 @@ public class Statistics extends BasicPojo{
 		this.userId = userId;
 	}
 
-	public Integer getCommentToId() {
-		return commentToId;
+	public Integer getProductId() {
+		return productId;
 	}
 
-	public void setCommentToId(Integer commentToId) {
-		this.commentToId = commentToId;
+	public void setProductId(Integer productId) {
+		this.productId = productId;
 	}
 
-	public String getType() {
-		return type;
+	public String getProductType() {
+		return productType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setProductType(String productType) {
+		this.productType = productType;
 	}
 
 	public Date getCreateDate() {

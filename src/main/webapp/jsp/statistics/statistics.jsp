@@ -83,7 +83,7 @@
                                     </div>
                                     
                                     
-                                    <div id="main1" style="width: 1000px;height: 500px;display: none"></div>
+                                    <div id="main1" style="width: 1200px;height: 500px;display: none"></div>
                                     <div id="main2" style="width: 1000px;height: 500px;display: none"></div>
                                     <div id="main3" style="width: 1000px;height: 500px;display: none"></div>
 								</div>
@@ -165,13 +165,13 @@ function init(){
 				        series: [{
 				            name: '文章',
 				            type: 'bar',
-				            barWidth : 30,
+				            barWidth : 10,
 				            center: ['50%','50%'],
 				            data: seriesDataArticle
 				        },{
 				            name: '视频',
 				            type: 'bar',
-				            barWidth : 30,
+				            barWidth : 10,
 				            center: ['50%','50%'],
 				            data: seriesDataVideo
 				        }]
@@ -180,7 +180,6 @@ function init(){
 				    //显示图报
 				    var iconIsShow = document.getElementById("iconIsShow");
 					iconIsShow.style.display="block";
-				    
 			} else {
 				alert("查询数据为空！");
 			}
@@ -372,13 +371,13 @@ function getBar(){
 	        series: [{
 	            name: '文章',
 	            type: 'bar',
-	            barWidth : 30,
+	            barWidth : 10,
 	            center: ['50%','50%'],
 	            data: seriesDataArticle
 	        },{
 	            name: '视频',
 	            type: 'bar',
-	            barWidth : 30,
+	            barWidth : 10,
 	            center: ['50%','50%'],
 	            data: seriesDataVideo
 	        }]

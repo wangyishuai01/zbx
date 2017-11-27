@@ -19,6 +19,8 @@ public class StatisticsVO {
 	private String[] dataStr;
 	
 	private String[] countStr;
+	
+	private String dateType;
 
 	public Date getCreateDate() {
 		return createDate;
@@ -76,5 +78,12 @@ public class StatisticsVO {
 		this.countStr = countStr;
 	}
 
+	public String getDateType() {
+		return dateType;
+	}
+
+	public void setDateType(String dateType) {
+		this.dateType = dateType;
+	}
     
 }
