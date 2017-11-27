@@ -22,11 +22,11 @@ DROP TABLE IF EXISTS `statistics`;
 CREATE TABLE `statistics` (
   `statistics_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `user_id` int(11) NOT NULL COMMENT '用户id',
-  `commenttoid` int(11) NOT NULL COMMENT '文章id/视屏id',
-  `type` char(1) NOT NULL DEFAULT '1' COMMENT '类型：1：文章 2：视频',
+  `product_id` int(11) NOT NULL COMMENT '文章id/视屏id',
+  `product_type` char(1) NOT NULL DEFAULT '1' COMMENT '类型：1：文章 2：视频',
   `create_date` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`statistics_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of statistics

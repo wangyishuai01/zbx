@@ -21,6 +21,8 @@ public class StatisticsVO {
 	private String[] countStr;
 	
 	private String dateType;
+	
+	private char productType;
 
 	public Date getCreateDate() {
 		return createDate;
@@ -84,6 +86,14 @@ public class StatisticsVO {
 
 	public void setDateType(String dateType) {
 		this.dateType = dateType;
+	}
+
+	public char getProductType() {
+		return productType;
+	}
+
+	public void setProductType(char productType) {
+		this.productType = productType;
 	}
     
 }

@@ -104,7 +104,6 @@ var rootPath = "${pageContext.request.contextPath}";
 
 var xAxisArticle=[];
 var seriesDataArticle=[];
-var xAxisVideo=[];
 var seriesDataVideo=[];
 
 function init(){
@@ -141,8 +140,7 @@ function init(){
 				result = result.data;
 				xAxisArticle = result[0];
 				seriesDataArticle = result[1];
-				xAxisVideo = result[0];
-				seriesDataVideo = result[1];
+				seriesDataVideo = result[2];
 				var main1 = document.getElementById("main1");
 				main1.style.display="block";
 				var main2 = document.getElementById("main2");

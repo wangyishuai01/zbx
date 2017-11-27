@@ -63,7 +63,7 @@
   </select>
 
    <select id="selectDateAndCount" resultType="string" parameterType="com.cn.zbx.vo.StatisticsVO" >
-     select  function_statistics(#{startDate},#{endDate},#{dateType}) from dual;
+     select  function_statistics(#{startDate},#{endDate},#{dateType},#{productType}) from dual;
   </select>
 
 </mapper>

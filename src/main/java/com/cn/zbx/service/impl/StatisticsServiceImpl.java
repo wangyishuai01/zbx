@@ -27,33 +27,59 @@ public class StatisticsServiceImpl implements IStatisticsService {
 	@Override
 	public List selectDateAndCount(StatisticsVO record) {
 		// TODO Auto-generated method stub
-		String svList = statisticsMapper.selectDateAndCount(record);
+		//统计文章
+		record.setProductType('1');
+		String articleList = statisticsMapper.selectDateAndCount(record);
+		//统计视频
+		record.setProductType('2');
+		String videoList = statisticsMapper.selectDateAndCount(record);
 		List list = new ArrayList();
 		if("hour".equals(record.getDateType())){
-			int [] countStr = new int[24];
-			String [] dataStr = new String[24];
-			String[] strs=svList.split("\\|");
+			//文章
+			int [] articleCountStr = new int[24];
+			String [] articleDataStr = new String[24];
+			String[] strs=articleList.split("\\|");
 			for(int i=0,len=strs.length;i<len;i++){
 				String s = strs[i].toString();
 				String[] str=s.split(" ");
 				String[] ss = str[1].split(":");
-				dataStr[i] = ss[0];
-				countStr[i] = Integer.parseInt(ss[1]);
+				articleDataStr[i] = ss[0];
+				articleCountStr[i] = Integer.parseInt(ss[1]);
 				}
-			list.add(dataStr);
-			list.add(countStr);
+			list.add(articleDataStr);
+			list.add(articleCountStr);
+			//视频
+			int [] videoCountStr = new int[24];
+			String[] videostrs=videoList.split("\\|");
+			for(int i=0,len=videostrs.length;i<len;i++){
+				String s = videostrs[i].toString();
+				String[] str=s.split(" ");
+				String[] ss = str[1].split(":");
+				videoCountStr[i] = Integer.parseInt(ss[1]);
+				}
+			list.add(videoCountStr);
 		}else {
-			String[] strs=svList.split("\\|");
-			int [] countStr = new int[strs.length];
-			String [] dataStr = new String[strs.length];
+			//文章
+			String[] strs=articleList.split("\\|");
+			int [] articleCountStr = new int[strs.length];
+			String [] articleDataStr = new String[strs.length];
 			for(int i=0,len=strs.length;i<len;i++){
 				String s = strs[i].toString();
 				String[] str=s.split(":");
-				dataStr[i] = str[0];
-				countStr[i] = Integer.parseInt(str[1]);
+				articleDataStr[i] = str[0];
+				articleCountStr[i] = Integer.parseInt(str[1]);
 				}
-			list.add(dataStr);
-			list.add(countStr);
+			list.add(articleDataStr);
+			list.add(articleCountStr);
+			//视频
+			String[] videostrs=videoList.split("\\|");
+			int [] videoCountStr = new int[strs.length];
+			for(int i=0,len=videostrs.length;i<len;i++){
+				String s = videostrs[i].toString();
+				String[] str=s.split(":");
+				videoCountStr[i] = Integer.parseInt(str[1]);
+				}
+			list.add(videoCountStr);
 		}
 		
 		return list;
