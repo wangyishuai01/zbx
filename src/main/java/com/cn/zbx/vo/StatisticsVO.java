@@ -12,9 +12,13 @@ public class StatisticsVO {
 	
 	private Integer customerId;//客户Id
 	
-	private Date startDate;
+	private String startDate;
 	
-	private Date endDate;
+	private String endDate;
+	
+	private String[] dataStr;
+	
+	private String[] countStr;
 
 	public Date getCreateDate() {
 		return createDate;
@@ -32,19 +36,19 @@ public class StatisticsVO {
 		this.count = count;
 	}
 
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 
@@ -54,6 +58,22 @@ public class StatisticsVO {
 
 	public void setCustomerId(Integer customerId) {
 		this.customerId = customerId;
+	}
+
+	public String[] getDataStr() {
+		return dataStr;
+	}
+
+	public void setDataStr(String[] dataStr) {
+		this.dataStr = dataStr;
+	}
+
+	public String[] getCountStr() {
+		return countStr;
+	}
+
+	public void setCountStr(String[] countStr) {
+		this.countStr = countStr;
 	}
 
     

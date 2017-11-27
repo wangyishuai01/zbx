@@ -64,7 +64,7 @@
   
   <select id="selectDateAndCount" resultType="com.cn.zbx.vo.StatisticsVO" parameterType="com.cn.zbx.vo.StatisticsVO" >
     select 
-    	DATE_FORMAT(create_date, "%Y-%m-%d") as , COUNT(1) as count
+    	DATE_FORMAT(create_date, "%Y-%m-%d") as createDate, COUNT(1) as count
     from statistics
     where 
     create_date between #{startDate} and #{endDate}
@@ -72,6 +72,16 @@
     ORDER BY create_date asc;
    
   </select>
-  
-  
+
+   <select id="selectHourAndCount" resultType="com.cn.zbx.vo.StatisticsVO" parameterType="com.cn.zbx.vo.StatisticsVO" >
+     <![CDATA[
+    select 
+    	DATE_FORMAT(create_date, "%Y-%m-%d %H:%i") as createDate, COUNT(1) as count
+    from statistics
+    
+    GROUP BY DATE_FORMAT(create_date, "%Y-%m-%d %H")
+    ORDER BY create_date asc
+     ]]>
+  </select>
+
 </mapper>

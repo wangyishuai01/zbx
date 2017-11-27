@@ -15,5 +15,8 @@ import com.cn.zbx.vo.StatisticsVO;
 public interface IStatisticsService {
 
 	int selectCountBySelectParam(Statistics record);
+	
 	List<StatisticsVO> selectDateAndCount(StatisticsVO record);
+	
+	List selectHourAndCount(StatisticsVO record);
 }

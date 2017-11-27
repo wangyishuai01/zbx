@@ -9,5 +9,7 @@ public interface StatisticsMapper {
 
     int selectCountBySelectParam(Statistics record);
     List<StatisticsVO> selectDateAndCount(StatisticsVO record);
+    
+    List<StatisticsVO> selectHourAndCount(StatisticsVO record);
 
 }
