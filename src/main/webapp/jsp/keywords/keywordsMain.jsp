@@ -57,7 +57,7 @@
 											<th width="5%" style="text-align: center;">序号</th>
 											<th width="50%">关键词</th>
 											<th width="15%" style="text-align: center;">文章数</th>
-											<th width="15%" style="text-align: center;">视频数</th>
+											<!-- <th width="15%" style="text-align: center;">视频数</th> -->
 											<th width="15%" style="text-align: center;">操作</th>
 										</tr>
 									</thead>
@@ -242,7 +242,7 @@ function init(){
 							+ "<th style='text-align: center;'>"+((pageCount-1)*pageSize+(i+1))+"</th>"
 							+ "<th>"+res.name+"</th>"
 							+ "<th style='text-align: center;'>"+res.articleCount+"</th>"
-							+ "<th style='text-align: center;'>"+res.videoCount+"</th>"
+							//+ "<th style='text-align: center;'>"+res.videoCount+"</th>"
 							+ "<th style='text-align: center;'><a href='javascript:editKeyWords("+res.id+")'>编辑</a> "
 							+ "| <a href='javascript:deleteKeyWords("+res.id+")'>删除</a><br>";
 					str += "</tr>";

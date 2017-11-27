@@ -158,7 +158,7 @@
 							<div class="modal-header">
 								<button aria-hidden="true" data-dismiss="modal" class="close"
 									type="button" onclick="closeEditRelationArticleDiv();">×</button>
-								<h4 class="modal-title">更新关联文章</h4>
+								<h4 class="modal-title">添加关联文章</h4>
 							</div>
 							<div class="modal-body">
 								<div class="bootbox-body">
@@ -262,7 +262,7 @@ function queryArticleInfo(){
 	var classifyId = $("#videoSecClass").val();
 	var articleState = $("#articleState").val();
 	$.ajax({
-		url : rootPath+"/Article/selectArticleMainByParam.do",
+		url : rootPath+"/Article/selectArticleMainByParamNoRelationVideo.do",
 		type : "post",
 		dataType : "json",
 		data : {
@@ -294,7 +294,7 @@ function queryArticleInfo(){
 					$('.table:eq(0)').find('tbody').append(str);
 				}
 			} else {
-				alert("查询数据为空！");
+				alert("没有可关联的文章，请先添加文章！");
 			}
 		}
 	});

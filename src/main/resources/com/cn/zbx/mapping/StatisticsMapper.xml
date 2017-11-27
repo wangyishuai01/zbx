@@ -4,12 +4,12 @@
   <resultMap id="BaseResultMap" type="com.cn.zbx.pojo.Statistics" >
     <id column="statistics_id" property="id" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="commenttoid" property="commentToId" jdbcType="INTEGER" />
-    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="product_type" property="productType" jdbcType="CHAR" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    statistics_id, user_id, commenttoid, type, create_date
+    statistics_id, user_id, productId, productType, create_date
   </sql>
   <select id="selectBySelectParam" resultMap="BaseResultMap" parameterType="com.cn.zbx.pojo.Statistics" >
     select 
@@ -23,10 +23,10 @@
       and user_id = #{userId,jdbcType=INTEGER}
     </if>
     <if test="commentToId != null" >
-      and commenttoid = #{commentToId,jdbcType=INTEGER}
+      and product_id = #{productId,jdbcType=INTEGER}
     </if>
     <if test="type != null" >
-      and type = #{type,jdbcType=CHAR}
+      and product_type = #{productType,jdbcType=CHAR}
     </if>
     <if test="createDate != null" >
       and create_date = #{createDate,jdbcType=TIMESTAMP}
@@ -34,9 +34,9 @@
   </select>
   <insert id="insert" parameterType="com.cn.zbx.pojo.Statistics" keyProperty="id" useGeneratedKeys="true">
     insert into statistics (statistics_id, user_id, 
-    	commenttoid, type, create_date)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{commentToId,jdbcType=INTEGER}, 
-      #{type,jdbcType=CHAR}, #{createDate,jdbcType=TIMESTAMP}
+    	product_id, product_type, create_date)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
+      #{productType,jdbcType=CHAR}, #{createDate,jdbcType=TIMESTAMP}
       )
   </insert>
   <select id="selectCountBySelectParam" resultType="int" parameterType="com.cn.zbx.pojo.Statistics" >
@@ -51,18 +51,19 @@
       and user_id = #{userId,jdbcType=INTEGER}
     </if>
     <if test="commentToId != null" >
-      and commenttoid = #{commentToId,jdbcType=INTEGER}
+      and product_id = #{productId,jdbcType=INTEGER}
     </if>
     <if test="type != null" >
-      and type = #{type,jdbcType=CHAR}
+      and product_type = #{productType,jdbcType=CHAR}
     </if>
     <if test="createDate != null" >
       and create_date = #{createDate,jdbcType=TIMESTAMP}
     </if>
    
   </select>
-  
-  
-  
-  
+
+   <select id="selectDateAndCount" resultType="string" parameterType="com.cn.zbx.vo.StatisticsVO" >
+     select  function_statistics(#{startDate},#{endDate},#{dateType}) from dual;
+  </select>
+
 </mapper>

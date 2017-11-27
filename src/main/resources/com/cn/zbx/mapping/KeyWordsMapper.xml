@@ -22,7 +22,7 @@
     delete from keywords
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.cn.zbx.pojo.KeyWords" >
+  <insert id="insert" parameterType="com.cn.zbx.pojo.KeyWords" keyProperty="id" useGeneratedKeys="true">
     insert into keywords (id, name, excerpt, 
       state, makedate, modifydate
       )
@@ -30,7 +30,7 @@
       #{state,jdbcType=INTEGER}, #{makedate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.KeyWords" >
+  <insert id="insertSelective" parameterType="com.cn.zbx.pojo.KeyWords" keyProperty="id" useGeneratedKeys="true">
     insert into keywords
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -113,7 +113,7 @@
       and id = #{id,jdbcType=INTEGER}
     </if>
     <if test="name != null" >
-      and name like '%${name}%'
+      and name = #{name,jdbcType=VARCHAR}
     </if>
     <if test="excerpt != null" >
       and excerpt = #{excerpt,jdbcType=VARCHAR}
@@ -140,7 +140,7 @@
       and id = #{id,jdbcType=INTEGER}
     </if>
     <if test="name != null" >
-      and name like '%${name}%'
+      and name = #{name,jdbcType=VARCHAR}
     </if>
     <if test="excerpt != null" >
       and excerpt = #{excerpt,jdbcType=VARCHAR}
@@ -160,5 +160,25 @@
      	 limit #{startLimit}, #{pageSize}
       </if>
     </if>
+  </select>
+  
+  <select id="selectByProductId" resultType="com.cn.zbx.pojo.KeyWords" parameterType="java.util.Map" >
+    select 
+    	* 
+    from keywords kw 
+    where 
+    	kw.id in(
+		    	select 
+		    		kr.keywordsid 
+		    	from keyrelation kr 
+		    	<where>
+			    	<if test="relationType != null" >
+				      and kr.relationtype = #{relationType,jdbcType=TIMESTAMP}
+				    </if>
+				    <if test="productId != null" >
+				      and kr.productid = #{productId,jdbcType=TIMESTAMP}
+				    </if>
+		    	</where>
+		    	)
   </select>
 </mapper>

@@ -110,15 +110,17 @@ function init(){
 	pageSize = $("#pageSelect").val();
 	var articleTitle = $("#articleTitle").val();
 	var classifyId = $("#articleSecClass").val();
+	var keyWords = $("#articleKey").val()
 	$.ajax({
-		url : rootPath+"/Article/ArticleList.do",
+		url : rootPath+"/Article/initArticleMain.do",
 		type : "post",
 		dataType : "json",
 		data : {
 			"pageCount" : pageCount,
 			"pageSize" : pageSize,
 			"title" : articleTitle,
-			"classid" : classifyId
+			"classid" : classifyId,
+			"keyWords" : keyWords
 		},
 		success : function(result) {
 			$("tr[class='comment_tr']").remove();
@@ -143,10 +145,10 @@ function init(){
 					}else{
 						str += "<th style='text-align: center;color: red;'>禁止</th>";
 					}
-					str += "<th style='text-align: center;'><a href='javascript:editArticle("+res.id+")'>编辑</a>"
-						+ " | <a href='javascript:showOneComment("+res.id+")'>视频</a>"
+					str += "<th style='text-align: center;'><a href='javascript:showArticle("+res.id+")'>查看</a>"
+						+ " | <a href='javascript:editArticle("+res.id+")'>编辑</a>"
 						+ "<br><a href='javascript:deleteArticle("+res.id+")'>删除</a>"
-						+ " | <a href=''>分类</a></th>";
+						+ " | <a href=''>统计</a></th>";
 					str += "</tr>";
 					$('.table').find('tbody').append(str);
 				}
@@ -291,7 +293,10 @@ function tab(data) {
 }
 
 function editArticle(articleId){
-	openUrl("/jsp/article/editArticle.jsp?articleId="+articleId);
+	openUrl("/jsp/article/showAndEditArticle.jsp?articleId="+articleId+"&action=edit");
+}
+function showArticle(articleId){
+	openUrl("/jsp/article/showAndEditArticle.jsp?articleId="+articleId+"&action=show");
 }
 
 $(document).ready(function(){

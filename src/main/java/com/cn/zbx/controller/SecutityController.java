@@ -53,6 +53,14 @@ public class SecutityController {
 	@Qualifier("bUserLimitService")
 	private IBUserLimitService bUserLimitService;
 
+	/**
+	 * 用户登陆
+	 * @param m
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws SQLException
+	 */
 	@RequestMapping(value = { "/login" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public String login(Model m, HttpServletRequest request, HttpServletResponse response)
 			throws SQLException {
@@ -98,6 +106,13 @@ public class SecutityController {
 		}
 	}
 	
+	/**
+	 * 用户退出方法
+	 * @param m
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value = { "/logoutAction" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public String logout_v1(Model m, HttpServletRequest request, HttpServletResponse response) {
 		CookiesUtil.delAllCookies(request, response);
