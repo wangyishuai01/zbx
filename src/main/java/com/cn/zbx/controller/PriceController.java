@@ -24,6 +24,13 @@ public class PriceController {
 	@Autowired
 	IPriceService priceService;
 	
+	/**
+	 * 根据条件查询价格信息
+	 * @param request
+	 * @param response
+	 * @param price
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/selectPriceByParam", method = { RequestMethod.GET, RequestMethod.POST })
 	public String selectVideoByParam(HttpServletRequest request, HttpServletResponse response, Price price){

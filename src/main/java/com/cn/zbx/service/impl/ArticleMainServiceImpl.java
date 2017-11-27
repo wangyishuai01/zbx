@@ -47,6 +47,9 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 	@Autowired
 	KeyRelationMapper keyRelationMapper;
 
+	/**
+	 * 查询多个 分类对应的文章数
+	 */
 	@Override
 	public List<TClassifyVO> selectCountByClassIds(List<Tclassify> list) {
 		// TODO Auto-generated method stub
@@ -61,6 +64,9 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 		return resultList;
 	}
 
+	/**
+	 * 根据条件查询文章信息
+	 */
 	@Override
 	public List<ArticleVO> selectBySelectParam(ArticleMain record) {
 		// TODO Auto-generated method stub
@@ -68,30 +74,47 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 		return resultList;
 	}
 
+	/**
+	 * 根据条件查询文章数
+	 */
 	@Override
 	public Integer selectCountBySelectParam(ArticleMain record) {
 		// TODO Auto-generated method stub
 		return articleMainMapper.selectCountBySelectParam(record);
 	}
 
+	/**
+	 * 根据主键删除文章信息
+	 */
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public int deleteByPrimaryKey(Integer id) {
 		// TODO Auto-generated method stub
 		return articleMainMapper.deleteByPrimaryKey(id);
 	}
 
+	/**
+	 * 根据主键查询文章信息
+	 */
 	@Override
 	public ArticleMain selectByPrimaryKey(Integer id) {
 		// TODO Auto-generated method stub
 		return articleMainMapper.selectByPrimaryKey(id);
 	}
 
+	/**
+	 * 根据主键修改文章信息
+	 */
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public int updateByPrimaryKeySelective(ArticleMain record) {
 		// TODO Auto-generated method stub
 		return articleMainMapper.updateByPrimaryKeySelective(record);
 	}
 
+	/**
+	 * 根据条件查询文章信息（不包含文章内容）
+	 */
 	@Override
 	public List<ArticleMain> selectArticleNoContentBySelectParam(
 			ArticleMain record) {
@@ -116,6 +139,9 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 		return resultList;
 	}
 
+	/**
+	 * 根据文章id查询对应的分类（二级和一级分类）
+	 */
 	@Override
 	public Map<String, Object> selectClassifyByArticleId(Integer id) {
 		// TODO Auto-generated method stub
@@ -124,10 +150,11 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 
 	/**
 	 * 编辑文章信息功能 包括价格 和 关键词
+	 * @throws Exception 
 	 */
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	public boolean editArticleInfoByArticleId(Map<String, Object> mapParam) {
+	public boolean editArticleInfoByArticleId(Map<String, Object> mapParam) throws Exception {
 		// TODO Auto-generated method stub
 		Date currentDate = new Date();
 		ArticleMain article = new ArticleMain();
@@ -135,69 +162,63 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 		String articlePriceId = String.valueOf(mapParam.get("articlePriceId"));
 		String articlePrice = String.valueOf(mapParam.get("articlePrice"));
 		String articlePriceOld = String.valueOf(mapParam.get("articlePriceOld"));
-		try {
-			article = (ArticleMain)MapUtil.mapToBean(mapParam, article.getClass());
-			articleMainMapper.updateByPrimaryKeySelective(article);
-			
-			if(!articlePrice.equals(articlePriceOld) && article.getIsfree() == 0){
-				if(!StringUtils.isNotEmpty(articlePriceId)){
-					price.setType(1);
-					price.setProductId(article.getId());
-					price.setPrice(Double.valueOf(articlePrice));
-					price.setPlayNumber(0);
-					price.setSumPrice(0.00);
-					price.setAgainPayDays(10);
-					price.setMakedate(currentDate);
-					price.setModifydate(currentDate);
-					PriceMapper.insertSelective(price);
-					
+		article = (ArticleMain)MapUtil.mapToBean(mapParam, article.getClass());
+		articleMainMapper.updateByPrimaryKeySelective(article);
+		
+		if(!articlePrice.equals(articlePriceOld) && article.getIsfree() == 0){
+			if(!StringUtils.isNotEmpty(articlePriceId)){
+				price.setType(1);
+				price.setProductId(article.getId());
+				price.setPrice(Double.valueOf(articlePrice));
+				price.setPlayNumber(0);
+				price.setSumPrice(0.00);
+				price.setAgainPayDays(10);
+				price.setMakedate(currentDate);
+				price.setModifydate(currentDate);
+				PriceMapper.insertSelective(price);
+				
+			} else {
+				price.setId(Integer.valueOf(articlePriceId));
+				price.setPrice(Double.valueOf(articlePrice));
+				price.setModifydate(currentDate);
+				PriceMapper.updateByPrimaryKeySelective(price);
+				
+			}
+		}
+		if(mapParam.get("keyWords") != null){
+			String[] keyWords = (String[])mapParam.get("keyWords");
+			KeyWords keyWordsParam = null;
+			KeyRelation KeyRelationParam = new KeyRelation();
+			KeyRelationParam.setRelationtype(1);
+			KeyRelationParam.setProductid(article.getId());
+			//修改关键词之前先删除之前所有的关键词
+			keyRelationMapper.deleteBySelective(KeyRelationParam);
+			for(int i=0; i<keyWords.length; i++){
+				int keyWordsId = 0;
+				keyWordsParam = new KeyWords();
+				KeyRelationParam = new KeyRelation();
+				keyWordsParam.setName(keyWords[i]);
+				List<KeyWordsVO> keyWordsList = keyWordsMapper.selectBySelectParam(keyWordsParam);
+				if(keyWordsList != null && keyWordsList.size() != 0){
+					keyWordsId = keyWordsList.get(0).getId();
 				} else {
-					price.setId(Integer.valueOf(articlePriceId));
-					price.setPrice(Double.valueOf(articlePrice));
-					price.setModifydate(currentDate);
-					PriceMapper.updateByPrimaryKeySelective(price);
-					
+					keyWordsParam.setState(1);
+					keyWordsParam.setMakedate(currentDate);
+					keyWordsParam.setModifydate(currentDate);
+					keyWordsMapper.insertSelective(keyWordsParam);
+					keyWordsId = keyWordsParam.getId();
 				}
-			}
-			if(mapParam.get("keyWords") != null){
-				String[] keyWords = (String[])mapParam.get("keyWords");
-				KeyWords keyWordsParam = null;
-				KeyRelation KeyRelationParam = new KeyRelation();
+				KeyRelationParam.setKeywordsid(keyWordsId);
 				KeyRelationParam.setRelationtype(1);
 				KeyRelationParam.setProductid(article.getId());
-				//修改关键词之前先删除之前所有的关键词
-				keyRelationMapper.deleteBySelective(KeyRelationParam);
-				for(int i=0; i<keyWords.length; i++){
-					int keyWordsId = 0;
-					keyWordsParam = new KeyWords();
-					KeyRelationParam = new KeyRelation();
-					keyWordsParam.setName(keyWords[i]);
-					List<KeyWordsVO> keyWordsList = keyWordsMapper.selectBySelectParam(keyWordsParam);
-					if(keyWordsList != null && keyWordsList.size() != 0){
-						keyWordsId = keyWordsList.get(0).getId();
-					} else {
-						keyWordsParam.setState(1);
-						keyWordsParam.setMakedate(currentDate);
-						keyWordsParam.setModifydate(currentDate);
-						keyWordsMapper.insertSelective(keyWordsParam);
-						keyWordsId = keyWordsParam.getId();
-					}
-					KeyRelationParam.setKeywordsid(keyWordsId);
-					KeyRelationParam.setRelationtype(1);
-					KeyRelationParam.setProductid(article.getId());
-					//添加新的关键词
-					keyRelationMapper.insert(KeyRelationParam);
-				}
-			} else {//修改关键词时如果不输入则删除之前所有的关键词
-				KeyRelation KeyRelationParam = new KeyRelation();
-				KeyRelationParam.setRelationtype(1);
-				KeyRelationParam.setProductid(article.getId());
-				keyRelationMapper.deleteBySelective(KeyRelationParam);
+				//添加新的关键词
+				keyRelationMapper.insert(KeyRelationParam);
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
+		} else {//修改关键词时如果不输入则删除之前所有的关键词
+			KeyRelation KeyRelationParam = new KeyRelation();
+			KeyRelationParam.setRelationtype(1);
+			KeyRelationParam.setProductid(article.getId());
+			keyRelationMapper.deleteBySelective(KeyRelationParam);
 		}
 		return true;
 	}
@@ -226,7 +247,6 @@ public class ArticleMainServiceImpl implements IArticleMainService {
 			price.setAgainPayDays(10);
 			price.setMakedate(currentDate);
 			price.setModifydate(currentDate);
-//			throw new RuntimeException("hehe"); 
 			int num1 = PriceMapper.insertSelective(price);
 			if(num1 <= 0){
 				return false;

@@ -128,15 +128,15 @@
 											</span>
 										</div>
 										<div class="col-md-6" id="editArticleContentDiv">
-											<span class="input-icon icon-right"> 
+											<span class="input-icon icon-right" onmouseover="this.style.cursor='pointer'"> 
 												<a onclick="openEditArticleDiv()">编辑文章内容</a>
 												<input type="hidden" id="content" value="">
 											</span>
 										</div>
 										<div class="col-md-6" id="showArticleContentDiv" style="display: none;">
-											<span class="input-icon icon-right"> 
-												<!-- <a onclick="openShowArticleDiv()">查看文章内容</a>
-												<input type="hidden" id="content" value=""> -->
+											<span class="input-icon icon-right" onmouseover="this.style.cursor='pointer'"> 
+												<a onclick="openShowArticleDiv()">查看文章内容</a>
+												<input type="hidden" id="content" value="">
 											</span>
 										</div>
 									</div>
@@ -163,35 +163,6 @@
 				</div>
 				<!-- editArticle -->
 				<div class="modal modal-darkorange" id="editArticleDiv">
-					<div class="modal-dialog" style="margin:0px auto;width:100%;height:100%;">
-						<div class="modal-content" style="height:100%;">
-							<div class="modal-header">
-								<button aria-hidden="true" data-dismiss="modal" class="close"
-									type="button" onclick="closeEditArticleDiv();">×</button>
-								<h4 class="modal-title">编辑文章</h4>
-							</div>
-							<div class="modal-body" style="height:84%;">
-								<div class="bootbox-body" style="height:100%;">
-									<div class="row" style="padding: 10px;height:100%;" >
-										<div style="width: 100%;height: 100%;overflow: auto">
-											<script id="editor" type="text/plain" style="width:100%;margin-left:0px;height:75%;"></script>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button class="btn btn-default" type="button"
-									onclick="returnArticleInfo();">确定</button>
-								<button data-dismiss="modal" class="btn btn-default"
-									onclick="closeEditArticleDiv();" type="button">返回</button>
-							</div>
-						</div>
-						<!-- /.modal-content -->
-					</div>
-					<!-- /.modal-dialog -->
-				</div>
-				<!-- showArticle -->
-				<div class="modal modal-darkorange" id="showArticleDiv">
 					<div class="modal-dialog" style="margin:0px auto;width:100%;height:100%;">
 						<div class="modal-content" style="height:100%;">
 							<div class="modal-header">
@@ -388,13 +359,8 @@ function saveEdit(){
 }
 
 function openShowArticleDiv(){
-	alert($("#content").val());
-	$("#showArticleDiv").show();
+	window.open(rootPath+"/jsp/article/showArticleContent.html?articleId="+articleId+"&classifyId="+$("#articleSecClass").val());
 }  
-
-function closeShowArticleDiv(){
-	$("#showArticleDiv").hide();
-}
 
 function initFirstClasstify(){
 	var articleFirClassOld = $("#articleFirClassOld").val();

@@ -17,6 +17,9 @@ public class BUserLimitServiceImpl implements IBUserLimitService {
 	@Autowired
 	BUserLimitMapper bUserLimitMapper;
 
+	/**
+	 * 根据用户查询菜单权限
+	 */
 	@Override
 	public List<Menu> queryUserMenuByUser(BUser user) {
 		// TODO Auto-generated method stub

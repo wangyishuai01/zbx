@@ -170,6 +170,10 @@ public class VideoController {
 			// TODO Auto-generated catch block
 			resultMap.put("msg", "数据转化错误！");
 			resultMap.put("success", false);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			resultMap.put("msg", "数据提交错误！");
+			resultMap.put("success", false);
 		}
 		return JSONObject.toJSONString(resultMap);
 	}
@@ -310,6 +314,10 @@ public class VideoController {
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			resultMap.put("msg", "数据转化错误！");
+			resultMap.put("success", false);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			resultMap.put("msg", "数据提交错误！");
 			resultMap.put("success", false);
 		}
 		return JSONObject.toJSONString(resultMap);

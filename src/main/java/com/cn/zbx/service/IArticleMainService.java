@@ -33,7 +33,7 @@ public interface IArticleMainService {
 	
 	Map<String, Object> selectClassifyByArticleId(Integer id);
 	
-	boolean editArticleInfoByArticleId(Map<String, Object> mapParam);
+	boolean editArticleInfoByArticleId(Map<String, Object> mapParam) throws Exception ;
 	
 	boolean addArticleInfo(Map<String, Object> mapParam) throws Exception ;
 	

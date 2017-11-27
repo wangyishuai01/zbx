@@ -94,7 +94,7 @@
 		var Aoption = "";
 		for(var i=0; i<LoneList.length; i++){
 			Aoption += "<a class='btn' style='height: 45px;color: white; font-size: 20px; background-color: #2970e4; border-color: #2970e4; border-radius: 0px;' " + 
-			"onclick=\"openUrl('" + LoneList[i].path + "');\" " + 
+			"onclick=\"openUrl('" + LoneList[i].path + "');btnclick(" + LoneList[i].id + ");\" " + 
 			"id='navigatColor_" + LoneList[i].id + "'>" + LoneList[i].name + "</a>";
 		}
 		$("#LOne").append(Aoption);

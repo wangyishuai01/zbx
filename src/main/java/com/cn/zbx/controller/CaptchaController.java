@@ -26,6 +26,12 @@ public class CaptchaController {
 	@Autowired
 	ICaptchaService captchaService;
 	
+	/**
+	 * 获取验证码
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/getCaptcha", method = { RequestMethod.GET, RequestMethod.POST })
 	public String getCaptcha(HttpServletRequest request, HttpServletResponse response){
@@ -56,6 +62,12 @@ public class CaptchaController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 验证码校验
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/checked", method = { RequestMethod.GET, RequestMethod.POST })
 	public String check(HttpServletRequest request, HttpServletResponse response){

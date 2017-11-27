@@ -27,6 +27,12 @@ public class CustomerController {
 	@Autowired
 	ICustomerService customerService;
 	
+	/**
+	 * 用户主页面初始化方法
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/initCustomerMain", method = { RequestMethod.GET, RequestMethod.POST })
 	public String iniCustomerMain(HttpServletRequest request, HttpServletResponse response){
@@ -54,6 +60,12 @@ public class CustomerController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 编辑用户状态
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/customerEditState", method = { RequestMethod.GET, RequestMethod.POST })
 	public String customerEditState(HttpServletRequest request, HttpServletResponse response){
@@ -80,6 +92,12 @@ public class CustomerController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 修改用户密码
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/customerEditPassword", method = { RequestMethod.GET, RequestMethod.POST })
 	public String customerEditPassword(HttpServletRequest request, HttpServletResponse response){

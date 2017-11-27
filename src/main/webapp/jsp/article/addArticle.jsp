@@ -114,7 +114,7 @@
 											</span>
 										</div>
 										<div class="col-md-6">
-											<span class="input-icon icon-right"> 
+											<span class="input-icon icon-right" onmouseover="this.style.cursor='pointer'"> 
 												<a onclick="openEditArticleDiv()">编辑文章内容</a>
 												<input type="hidden" id="content" value="">
 											</span>

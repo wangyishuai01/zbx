@@ -26,6 +26,12 @@ public class CommentController {
 	@Autowired
 	ICommentService commentService;
 	
+	/**
+	 * 评论主页面初始化方法
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/initCommentMain", method = { RequestMethod.GET, RequestMethod.POST })
 	public String iniCommentMain(HttpServletRequest request, HttpServletResponse response){
@@ -53,6 +59,12 @@ public class CommentController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 根据id删除评论
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/deleteById", method = { RequestMethod.GET, RequestMethod.POST })
 	public String deleteById(HttpServletRequest request, HttpServletResponse response){
@@ -71,6 +83,12 @@ public class CommentController {
 		return JSONObject.toJSONString(resultMap);
 	}
 	
+	/**
+	 * 添加评论
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/addtComment", method = { RequestMethod.GET, RequestMethod.POST })
 	public String addtComment(HttpServletRequest request, HttpServletResponse response){
