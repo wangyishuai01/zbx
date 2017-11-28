@@ -87,4 +87,12 @@ public class KeyWordsVO {
 	public void setVideoCount(Integer videoCount) {
 		this.videoCount = videoCount;
 	}
+
+	@Override
+	public String toString() {
+		return "KeyWordsVO [id=" + id + ", name=" + name + ", excerpt="
+				+ excerpt + ", state=" + state + ", makedate=" + makedate
+				+ ", modifydate=" + modifydate + ", articleCount="
+				+ articleCount + ", videoCount=" + videoCount + "]";
+	}
 }

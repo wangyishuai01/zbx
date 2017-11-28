@@ -123,5 +123,15 @@ public class CommentVO {
 	public void setModifydate(Date modifydate) {
 		this.modifydate = modifydate;
 	}
-    
+
+	@Override
+	public String toString() {
+		return "CommentVO [id=" + id + ", title=" + title + ", comment="
+				+ comment + ", commenttype=" + commenttype + ", customerId="
+				+ customerId + ", customerName=" + customerName
+				+ ", commentToId=" + commentToId + ", spareField1="
+				+ spareField1 + ", spareField2=" + spareField2
+				+ ", spareField3=" + spareField3 + ", makedate=" + makedate
+				+ ", modifydate=" + modifydate + "]";
+	}
 }

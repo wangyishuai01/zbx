@@ -103,4 +103,12 @@ public class Menu{
     public void setModifydate(Date modifydate) {
         this.modifydate = modifydate;
     }
+
+	@Override
+	public String toString() {
+		return "Menu [id=" + id + ", name=" + name + ", pid=" + pid
+				+ ", order=" + order + ", level=" + level + ", excerpt="
+				+ excerpt + ", path=" + path + ", isdisplay=" + isdisplay
+				+ ", makedate=" + makedate + ", modifydate=" + modifydate + "]";
+	}
 }

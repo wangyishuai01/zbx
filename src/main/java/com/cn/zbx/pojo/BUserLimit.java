@@ -35,4 +35,10 @@ public class BUserLimit extends BasicPojo{
     public void setMenuId(Integer menuId) {
         this.menuId = menuId;
     }
+
+	@Override
+	public String toString() {
+		return "BUserLimit [id=" + id + ", buserId=" + buserId + ", menuId="
+				+ menuId + "]";
+	}
 }

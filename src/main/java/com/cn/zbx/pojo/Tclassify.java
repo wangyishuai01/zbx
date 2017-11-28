@@ -108,4 +108,12 @@ public class Tclassify extends BasicPojo{
     public void setModifydate(Date modifydate) {
         this.modifydate = modifydate;
     }
+
+	@Override
+	public String toString() {
+		return "Tclassify [id=" + id + ", code=" + code + ", name=" + name
+				+ ", pid=" + pid + ", torder=" + torder + ", level=" + level
+				+ ", excerpt=" + excerpt + ", isdisplay=" + isdisplay
+				+ ", makedate=" + makedate + ", modifydate=" + modifydate + "]";
+	}
 }

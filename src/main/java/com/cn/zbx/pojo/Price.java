@@ -97,4 +97,12 @@ public class Price extends BasicPojo{
     public void setModifydate(Date modifydate) {
         this.modifydate = modifydate;
     }
+
+	@Override
+	public String toString() {
+		return "Price [id=" + id + ", type=" + type + ", productId="
+				+ productId + ", price=" + price + ", playNumber=" + playNumber
+				+ ", sumPrice=" + sumPrice + ", againPayDays=" + againPayDays
+				+ ", makedate=" + makedate + ", modifydate=" + modifydate + "]";
+	}
 }

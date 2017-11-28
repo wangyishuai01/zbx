@@ -163,4 +163,16 @@ public class CustomerVO {
 	public void setSpareField3(String spareField3) {
 		this.spareField3 = spareField3;
 	}
+
+	@Override
+	public String toString() {
+		return "CustomerVO [id=" + id + ", name=" + name + ", password="
+				+ password + ", mobile=" + mobile + ", email=" + email
+				+ ", realname=" + realname + ", sex=" + sex + ", age=" + age
+				+ ", birthday=" + birthday + ", makedate=" + makedate
+				+ ", modifydate=" + modifydate + ", isdisable=" + isdisable
+				+ ", logindate=" + logindate + ", spareField1=" + spareField1
+				+ ", spareField2=" + spareField2 + ", spareField3="
+				+ spareField3 + "]";
+	}
 }

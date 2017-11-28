@@ -87,4 +87,12 @@ public class Comment extends BasicPojo {
     public void setModifydate(Date modifydate) {
         this.modifydate = modifydate;
     }
+
+	@Override
+	public String toString() {
+		return "Comment [id=" + id + ", title=" + title + ", comment="
+				+ comment + ", commenttype=" + commenttype + ", customerId="
+				+ customerId + ", makedate=" + makedate + ", modifydate="
+				+ modifydate + ", commentToId=" + commentToId + "]";
+	}
 }

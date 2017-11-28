@@ -1,5 +1,6 @@
 package com.cn.zbx.pojo;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class ArticleMain extends BasicPojo{
@@ -125,4 +126,14 @@ public class ArticleMain extends BasicPojo{
     public void setContent(byte[] content) {
         this.content = content;
     }
+
+	@Override
+	public String toString() {
+		return "ArticleMain [id=" + id + ", title=" + title + ", imgurl="
+				+ imgurl + ", classid=" + classid + ", excerpt=" + excerpt
+				+ ", isfree=" + isfree + ", nocomment=" + nocomment
+				+ ", state=" + state + ", makedate=" + makedate
+				+ ", modifydate=" + modifydate + ", content="
+				+ Arrays.toString(content) + ", contentStr=" + contentStr + "]";
+	}
 }

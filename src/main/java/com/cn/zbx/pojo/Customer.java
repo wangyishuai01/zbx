@@ -127,4 +127,14 @@ public class Customer extends BasicPojo{
 	public void setIsdisable(Integer isdisable) {
 		this.isdisable = isdisable;
 	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", name=" + name + ", password="
+				+ password + ", mobile=" + mobile + ", email=" + email
+				+ ", realname=" + realname + ", sex=" + sex + ", age=" + age
+				+ ", birthday=" + birthday + ", makedate=" + makedate
+				+ ", modifydate=" + modifydate + ", isdisable=" + isdisable
+				+ "]";
+	}
 }

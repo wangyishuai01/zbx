@@ -56,4 +56,10 @@ public class Captcha extends BasicPojo {
     public void setStartX(Integer startX) {
         this.startX = startX;
     }
+
+	@Override
+	public String toString() {
+		return "Captcha [sid=" + sid + ", random=" + random + ", bigImg="
+				+ bigImg + ", litImg=" + litImg + ", startX=" + startX + "]";
+	}
 }

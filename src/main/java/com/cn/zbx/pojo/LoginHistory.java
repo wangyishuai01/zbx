@@ -72,4 +72,12 @@ public class LoginHistory {
     public void setModifydate(Date modifydate) {
         this.modifydate = modifydate;
     }
+
+	@Override
+	public String toString() {
+		return "LoginHistory [id=" + id + ", customerId=" + customerId
+				+ ", customerName=" + customerName + ", loginIp=" + loginIp
+				+ ", loginAddress=" + loginAddress + ", makedate=" + makedate
+				+ ", modifydate=" + modifydate + "]";
+	}
 }
