@@ -10,7 +10,7 @@ public class CommentVO {
 
     private String comment;
 
-    private String commenttype;
+    private Integer commenttype;
 
     private Integer customerId;
     
@@ -52,11 +52,11 @@ public class CommentVO {
 		this.comment = comment;
 	}
 
-	public String getCommenttype() {
+	public Integer getCommenttype() {
 		return commenttype;
 	}
 
-	public void setCommenttype(String commenttype) {
+	public void setCommenttype(Integer commenttype) {
 		this.commenttype = commenttype;
 	}
 

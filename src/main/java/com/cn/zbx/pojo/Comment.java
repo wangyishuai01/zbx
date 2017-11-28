@@ -14,7 +14,7 @@ public class Comment extends BasicPojo {
 
     private String comment;
 
-    private String commenttype;
+    private Integer commenttype;
 
     private Integer customerId;
 
@@ -56,12 +56,12 @@ public class Comment extends BasicPojo {
         this.comment = comment == null ? null : comment.trim();
     }
 
-    public String getCommenttype() {
+    public Integer getCommenttype() {
         return commenttype;
     }
 
-    public void setCommenttype(String commenttype) {
-        this.commenttype = commenttype == null ? null : commenttype.trim();
+    public void setCommenttype(Integer commenttype) {
+        this.commenttype = commenttype;
     }
 
     public Integer getCustomerId() {

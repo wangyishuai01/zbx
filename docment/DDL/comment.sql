@@ -23,7 +23,7 @@ CREATE TABLE `comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) DEFAULT NULL,
   `comment` varchar(200) DEFAULT NULL,
-  `commenttype` char(1) DEFAULT '1' COMMENT '评论类型：1：文章 2：视屏',
+  `commenttype` int(1) DEFAULT 1 COMMENT '评论类型：1：文章 2：视屏',
   `customer_id` int(11) DEFAULT NULL,
   `makedate` datetime NOT NULL,
   `modifydate` datetime NOT NULL,
