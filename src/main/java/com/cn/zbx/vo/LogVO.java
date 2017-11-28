@@ -3,7 +3,7 @@ package com.cn.zbx.vo;
 import java.util.Date;
 
 
-public class StatisticsVO {
+public class LogVO {
     /** TODO */
 
 	private Date createDate;
@@ -22,7 +22,7 @@ public class StatisticsVO {
 	
 	private String dateType;
 	
-	private char productType;
+	private Integer productType;
 
 	public Date getCreateDate() {
 		return createDate;
@@ -88,12 +88,14 @@ public class StatisticsVO {
 		this.dateType = dateType;
 	}
 
-	public char getProductType() {
+	public Integer getProductType() {
 		return productType;
 	}
 
-	public void setProductType(char productType) {
+	public void setProductType(Integer productType) {
 		this.productType = productType;
 	}
+
+	
     
 }

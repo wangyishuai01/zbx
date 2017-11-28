@@ -2,7 +2,7 @@ package com.cn.zbx.pojo;
 
 import java.util.Date;
 
-public class Statistics extends BasicPojo{
+public class BLog extends BasicPojo{
 
 	/**
 	 * 统计
@@ -15,7 +15,7 @@ public class Statistics extends BasicPojo{
 
     private Integer productId;//文章id/视屏id
 
-    private String productType;//类型：1：文章 2：视频
+    private Integer productType;//类型：1：文章 2：视频
 
     private Date createDate;
     
@@ -44,11 +44,11 @@ public class Statistics extends BasicPojo{
 		this.productId = productId;
 	}
 
-	public String getProductType() {
+	public Integer getProductType() {
 		return productType;
 	}
 
-	public void setProductType(String productType) {
+	public void setProductType(Integer productType) {
 		this.productType = productType;
 	}
 

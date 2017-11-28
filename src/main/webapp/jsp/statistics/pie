@@ -1,0 +1,64 @@
+//饼图
+function getPie(){
+	var main1 = document.getElementById("main1");
+	main1.style.display="none";
+	var main2 = document.getElementById("main2");
+	main2.style.display="none";
+	var main3 = document.getElementById("main3");
+	main3.style.display="block";
+	var myChart = echarts.init(document.getElementById('main3'));
+	/* var pieArticleData=[];
+	for(var i=0;i<seriesDataArticle.length;i++){
+		var obj ={value:seriesDataArticle[i],name:"文章"};
+		pieArticleData[i]=obj;
+	}
+	var pieVideoData=[];
+	for(var i=0;i<seriesDataVideo.length;i++){
+		var obj ={value:seriesDataVideo[i],name:"视频"};
+		pieVideoData[i]=obj;
+	} */
+    var option = {
+      title: {
+        text: '文章/视频统计',
+        x:'center'
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)>"
+        //饼图中{a}表示系列名称，{b}表示数据项名称，{c}表示数值，{d}表示百分比
+      },
+      legend: {//图例
+        orient: 'vertical',
+        left: 'left',
+        data: ['文章','视频']
+      },
+      series: [{
+        name: '文章',
+        type: 'pie',
+        radius: '55%',
+        data: [{value:235,name:'AAAA'},
+               {value:275,name:'BBBB'}],
+        itemStyle: {     //itemStyle有正常显示：normal，有鼠标hover的高亮显示：emphasis
+          emphasis:{//normal显示阴影,与shadow有关的都是阴影的设置
+            shadowBlur:10,//阴影大小
+            shadowOffsetX:0,//阴影水平方向上的偏移
+            shadowColor:'rgba(0,0,0,0.5)'//阴影颜色
+          }
+        }
+      },{
+          name: '视频',
+          type: 'pie',
+          radius: '55%',
+          data: [{value:235,name:'AAAA'},
+                 {value:275,name:'BBBB'}],
+          itemStyle: {     //itemStyle有正常显示：normal，有鼠标hover的高亮显示：emphasis
+            emphasis:{//normal显示阴影,与shadow有关的都是阴影的设置
+              shadowBlur:10,//阴影大小
+              shadowOffsetX:0,//阴影水平方向上的偏移
+              shadowColor:'rgba(0,0,0,0.5)'//阴影颜色
+            }
+          }
+        }]
+    };
+    myChart.setOption(option);
+}

@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cn.zbx.dao.StatisticsMapper;
-import com.cn.zbx.pojo.Statistics;
+import com.cn.zbx.pojo.BLog;
 import com.cn.zbx.service.IStatisticsService;
-import com.cn.zbx.vo.StatisticsVO;
+import com.cn.zbx.vo.LogVO;
 
 @Service(value="StatisticsService")
 public class StatisticsServiceImpl implements IStatisticsService {
@@ -18,21 +18,23 @@ public class StatisticsServiceImpl implements IStatisticsService {
 	StatisticsMapper statisticsMapper;
 
 	@Override
-	public int selectCountBySelectParam(Statistics record) {
+	public int selectCountBySelectParam(BLog record) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public List selectDateAndCount(StatisticsVO record) {
+	public List selectDateAndCount(LogVO record) {
 		// TODO Auto-generated method stub
 		//统计文章
-		record.setProductType('1');
+		record.setProductType(1);
 		String articleList = statisticsMapper.selectDateAndCount(record);
 		//统计视频
-		record.setProductType('2');
+		record.setProductType(2);
 		String videoList = statisticsMapper.selectDateAndCount(record);
+		//购买视频
+		String cusBuyHistoryList = statisticsMapper.selectCusBuyHistoryByDateAndCount(record);
 		List list = new ArrayList();
 		if("hour".equals(record.getDateType())){
 			//文章
@@ -58,6 +60,16 @@ public class StatisticsServiceImpl implements IStatisticsService {
 				videoCountStr[i] = Integer.parseInt(ss[1]);
 				}
 			list.add(videoCountStr);
+			//购买视频
+			int [] cusBuyHistoryCountStr = new int[24];
+			String[] cusBuyHistorystrs=cusBuyHistoryList.split("\\|");
+			for(int i=0,len=cusBuyHistorystrs.length;i<len;i++){
+				String s = cusBuyHistorystrs[i].toString();
+				String[] str=s.split(" ");
+				String[] ss = str[1].split(":");
+				cusBuyHistoryCountStr[i] = Integer.parseInt(ss[1]);
+				}
+			list.add(cusBuyHistoryCountStr);
 		}else {
 			//文章
 			String[] strs=articleList.split("\\|");
@@ -80,6 +92,15 @@ public class StatisticsServiceImpl implements IStatisticsService {
 				videoCountStr[i] = Integer.parseInt(str[1]);
 				}
 			list.add(videoCountStr);
+			//购买视频
+			String[] cusBuyHistorystrs=cusBuyHistoryList.split("\\|");
+			int [] cusBuyHistoryCountStr = new int[strs.length];
+			for(int i=0,len=cusBuyHistorystrs.length;i<len;i++){
+				String s = cusBuyHistorystrs[i].toString();
+				String[] str=s.split(":");
+				cusBuyHistoryCountStr[i] = Integer.parseInt(str[1]);
+				}
+			list.add(cusBuyHistoryCountStr);
 		}
 		
 		return list;

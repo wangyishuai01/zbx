@@ -1,13 +1,13 @@
 package com.cn.zbx.dao;
 
-import com.cn.zbx.pojo.Statistics;
-import com.cn.zbx.vo.StatisticsVO;
+import com.cn.zbx.pojo.BLog;
+import com.cn.zbx.vo.LogVO;
 
 public interface StatisticsMapper {
 
-    int selectCountBySelectParam(Statistics record);
+    int selectCountBySelectParam(BLog record);
     
-    String selectDateAndCount(StatisticsVO record);
+    String selectDateAndCount(LogVO record);
     
-
+    String selectCusBuyHistoryByDateAndCount(LogVO record);
 }

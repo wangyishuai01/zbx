@@ -3,8 +3,8 @@ package com.cn.zbx.service;
 
 import java.util.List;
 
-import com.cn.zbx.pojo.Statistics;
-import com.cn.zbx.vo.StatisticsVO;
+import com.cn.zbx.pojo.BLog;
+import com.cn.zbx.vo.LogVO;
 
 /**
  * @Class Name IBUserLimitService
@@ -14,8 +14,8 @@ import com.cn.zbx.vo.StatisticsVO;
 
 public interface IStatisticsService {
 
-	int selectCountBySelectParam(Statistics record);
+	int selectCountBySelectParam(BLog record);
 	
-	List selectDateAndCount(StatisticsVO record);
+	List selectDateAndCount(LogVO record);
 	
 }

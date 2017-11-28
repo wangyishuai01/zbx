@@ -1,7 +1,7 @@
 -- dstart 开始时间 dend 结束时间 dflag[hour|day|month|year] 时间间隔
 -- 返回每个时间段的时间和数量字符串 eg：时间1:数量1|时间2:数量2|时间3:数量3...
-Drop function if exists function_statistics;
-CREATE FUNCTION function_statistics(dstart TIMESTAMP, dend TIMESTAMP, dflag VARCHAR(10),productType INT(1))
+Drop function if exists function_paymoney;
+CREATE FUNCTION function_paymoney(dstart TIMESTAMP, dend TIMESTAMP, dflag VARCHAR(10),buyType INT(1))
 RETURNS VARCHAR(1000)
 BEGIN
 	DECLARE dateBox TIMESTAMP;
@@ -15,9 +15,9 @@ BEGIN
 		WHEN dflag = 'year' THEN SET dformat = '%Y';
 	END CASE;
 	WHILE dateBox <= dend DO 
-		SELECT CONCAT(resultMap,'|',DATE_FORMAT(dateBox,dformat),':',count(1)) INTO resultMap FROM blog WHERE 
-		DATE_FORMAT(create_date,dformat) = DATE_FORMAT(dateBox,dformat)
-		AND product_type = productType;
+		SELECT CONCAT(resultMap,'|',DATE_FORMAT(dateBox,dformat),':',sum(pay_money)) INTO resultMap FROM cus_buy_history WHERE 
+		DATE_FORMAT(makedate,dformat) = DATE_FORMAT(dateBox,dformat)
+		AND buy_type = buyType;
 		CASE 
 			WHEN dflag = 'hour' THEN set dateBox = date_add(dateBox, interval 1 hour);
 			WHEN dflag = 'day' THEN set dateBox = date_add(dateBox, interval 1 day);

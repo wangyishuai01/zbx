@@ -85,7 +85,9 @@
                                     
                                     <div id="main1" style="width: 1200px;height: 500px;display: none"></div>
                                     <div id="main2" style="width: 1000px;height: 500px;display: none"></div>
-                                    <div id="main3" style="width: 1000px;height: 500px;display: none"></div>
+                                    <!-- 点击视频与购买视频统计 -->
+                                    <div id="cusbuyhistory1" style="width: 1200px;height: 500px;display: none"></div>
+                                    <div id="cusbuyhistory2" style="width: 1000px;height: 500px;display: none"></div>
 								</div>
 								
 							</div>
@@ -105,6 +107,7 @@ var rootPath = "${pageContext.request.contextPath}";
 var xAxisArticle=[];
 var seriesDataArticle=[];
 var seriesDataVideo=[];
+var seriesDataCusBuyHistory=[];
 
 function init(){
 	
@@ -141,12 +144,16 @@ function init(){
 				xAxisArticle = result[0];
 				seriesDataArticle = result[1];
 				seriesDataVideo = result[2];
+				seriesDataCusBuyHistory = result[3];
 				var main1 = document.getElementById("main1");
 				main1.style.display="block";
 				var main2 = document.getElementById("main2");
 				main2.style.display="none";
-				var main3 = document.getElementById("main3");
-				main3.style.display="none";
+				
+				var cusbuyhistory1 = document.getElementById("cusbuyhistory1");
+				cusbuyhistory1.style.display="block";
+				var cusbuyhistory2 = document.getElementById("cusbuyhistory2");
+				cusbuyhistory2.style.display="none";
 				var myChart = echarts.init(document.getElementById("main1"));
 				var option = {
 				        title: {
@@ -175,6 +182,35 @@ function init(){
 				        }]
 				    };
 				    myChart.setOption(option);
+				    //点击视频与购买视频统计
+				var myChart1 = echarts.init(document.getElementById("cusbuyhistory1"));
+				var option1 = {
+				        title: {
+				            text: '点击视频与购买视频统计'
+				        },
+				        tooltip: {},
+				        legend: {
+				            data:['点击视频','购买视频']
+				        },
+				        xAxis: {
+				            data: xAxisArticle
+				        },
+				        yAxis: {},
+				        series: [{
+				            name: '点击视频',
+				            type: 'bar',
+				            barWidth : 10,
+				            center: ['50%','50%'],
+				            data: seriesDataVideo
+				        },{
+				            name: '购买视频',
+				            type: 'bar',
+				            barWidth : 10,
+				            center: ['50%','50%'],
+				            data: seriesDataCusBuyHistory
+				        }]
+				    };
+				    myChart1.setOption(option1);
 				    //显示图报
 				    var iconIsShow = document.getElementById("iconIsShow");
 					iconIsShow.style.display="block";
@@ -242,81 +278,20 @@ $('#qEndTime').datetimepicker({
 }).on('changeDate',function(e){  
     $('#qBeginTime').datetimepicker('setEndDate',$('#qEndTime').val());  
 });
-//饼图
-function getPie(){
-	var main1 = document.getElementById("main1");
-	main1.style.display="none";
-	var main2 = document.getElementById("main2");
-	main2.style.display="block";
-	var main3 = document.getElementById("main3");
-	main3.style.display="none";
-	var myChart = echarts.init(document.getElementById('main2'));
-	/* var pieArticleData=[];
-	for(var i=0;i<seriesDataArticle.length;i++){
-		var obj ={value:seriesDataArticle[i],name:"文章"};
-		pieArticleData[i]=obj;
-	}
-	var pieVideoData=[];
-	for(var i=0;i<seriesDataVideo.length;i++){
-		var obj ={value:seriesDataVideo[i],name:"视频"};
-		pieVideoData[i]=obj;
-	} */
-    var option = {
-      title: {
-        text: '文章/视频统计',
-        x:'center'
-      },
-      tooltip: {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)>"
-        //饼图中{a}表示系列名称，{b}表示数据项名称，{c}表示数值，{d}表示百分比
-      },
-      legend: {//图例
-        orient: 'vertical',
-        left: 'left',
-        data: ['文章','视频']
-      },
-      series: [{
-        name: '文章',
-        type: 'pie',
-        radius: '55%',
-        data: [{value:235,name:'AAAA'},
-               {value:275,name:'BBBB'}],
-        itemStyle: {     //itemStyle有正常显示：normal，有鼠标hover的高亮显示：emphasis
-          emphasis:{//normal显示阴影,与shadow有关的都是阴影的设置
-            shadowBlur:10,//阴影大小
-            shadowOffsetX:0,//阴影水平方向上的偏移
-            shadowColor:'rgba(0,0,0,0.5)'//阴影颜色
-          }
-        }
-      },{
-          name: '视频',
-          type: 'pie',
-          radius: '55%',
-          data: [{value:235,name:'AAAA'},
-                 {value:275,name:'BBBB'}],
-          itemStyle: {     //itemStyle有正常显示：normal，有鼠标hover的高亮显示：emphasis
-            emphasis:{//normal显示阴影,与shadow有关的都是阴影的设置
-              shadowBlur:10,//阴影大小
-              shadowOffsetX:0,//阴影水平方向上的偏移
-              shadowColor:'rgba(0,0,0,0.5)'//阴影颜色
-            }
-          }
-        }]
-    };
-    myChart.setOption(option);
-}
+
 //折线图
 function getLine(){
 	var main1 = document.getElementById("main1");
 	main1.style.display="none";
 	var main2 = document.getElementById("main2");
-	main2.style.display="none";
-	var main3 = document.getElementById("main3");
-	main3.style.display="block";
+	main2.style.display="block";
 	
+	var cusbuyhistory1 = document.getElementById("cusbuyhistory1");
+	cusbuyhistory1.style.display="none";
+	var cusbuyhistory2 = document.getElementById("cusbuyhistory2");
+	cusbuyhistory2.style.display="block";
 	// 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main3'));
+    var myChart = echarts.init(document.getElementById('main2'));
 
     // 指定图表的配置项和数据
     var option = {
@@ -344,6 +319,32 @@ function getLine(){
 
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
+    
+    //点击视频与购买视频
+    var myChart1 = echarts.init(document.getElementById('cusbuyhistory2'));
+    var option1 = {
+        title: {
+            text: '点击视频与购买视频统计'
+        },
+        tooltip: {},
+        legend: {
+            data:['点击视频','购买视频']
+        },
+        xAxis: {
+            data: xAxisArticle
+        },
+        yAxis: {},
+        series: [{
+            name: '点击视频',
+            type: 'line',
+            data: seriesDataVideo
+        },{
+            name: '购买视频',
+            type: 'line',
+            data: seriesDataCusBuyHistory
+        }]
+    };
+    myChart1.setOption(option1);
 }
 //柱状图
 function getBar(){
@@ -351,8 +352,11 @@ function getBar(){
 	main1.style.display="block";
 	var main2 = document.getElementById("main2");
 	main2.style.display="none";
-	var main3 = document.getElementById("main3");
-	main3.style.display="none";
+	
+	var cusbuyhistory1 = document.getElementById("cusbuyhistory1");
+	cusbuyhistory1.style.display="block";
+	var cusbuyhistory2 = document.getElementById("cusbuyhistory2");
+	cusbuyhistory2.style.display="none";
 	var myChart = echarts.init(document.getElementById("main1"));
 	var option = {
 	        title: {
@@ -381,6 +385,35 @@ function getBar(){
 	        }]
 	    };
 	    myChart.setOption(option);
+	    //点击视频与购买视频统计
+		var myChart1 = echarts.init(document.getElementById("cusbuyhistory1"));
+		var option1 = {
+		        title: {
+		            text: '点击视频与购买视频统计'
+		        },
+		        tooltip: {},
+		        legend: {
+		            data:['点击视频','购买视频']
+		        },
+		        xAxis: {
+		            data: xAxisArticle
+		        },
+		        yAxis: {},
+		        series: [{
+		            name: '点击视频',
+		            type: 'bar',
+		            barWidth : 10,
+		            center: ['50%','50%'],
+		            data: seriesDataVideo
+		        },{
+		            name: '购买视频',
+		            type: 'bar',
+		            barWidth : 10,
+		            center: ['50%','50%'],
+		            data: seriesDataCusBuyHistory
+		        }]
+		    };
+		    myChart1.setOption(option1);
 }
 
 function  btnCount_Click(){  
@@ -388,24 +421,19 @@ function  btnCount_Click(){
 	var endDate = $("#qEndTime").val();
     
     if(beginDate==""||endDate==""){
-    	//alert('kong');
     	return;
     }
     var days = DateDiff(beginDate,endDate);
-    if(days>1 && days<=30){
-    	//alert('1-30');
+    if(days>=1 && days<=30){
     	$("#dateSpace").find("option").remove();
     	$('#dateSpace').append("<option value='1'>天</option><option value='2'>月</option><option value='3'>年</option>");
     }else if(days>30&&days<=365){
-    	//alert('30-365');
     	$("#dateSpace").find("option").remove();
     	$('#dateSpace').append("<option value='2'>月</option><option value='3'>年</option>");
     }else if(days>365){
-    	//alert('365');
     	$("#dateSpace").find("option").remove();
     	$('#dateSpace').append("<option value='3'>年</option>");
     }else{
-    	//alert('1');
     	$("#dateSpace").find("option").remove();
     	$('#dateSpace').append("<option value='0'>时</option><option value='1'>天</option><option value='2'>月</option><option value='3'>年</option>");
     }

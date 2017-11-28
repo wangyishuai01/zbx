@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.cn.zbx.pojo.Comment;
 import com.cn.zbx.service.IStatisticsService;
-import com.cn.zbx.vo.StatisticsVO;
+import com.cn.zbx.vo.LogVO;
 
 @Controller
 @RequestMapping(value="/statistics")
@@ -43,7 +43,7 @@ public class StatisticsController {
 		
 		List list = new ArrayList();
 		//文章访问量
-		StatisticsVO record = new StatisticsVO();
+		LogVO record = new LogVO();
 		if(!"".equals(startDate)){
 			record.setStartDate(startDate);
 		}
