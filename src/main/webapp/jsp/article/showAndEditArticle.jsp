@@ -44,12 +44,12 @@
 						<div class="widget">
 						<div class="widget-header ">
 								<h5 class="widget-caption">编辑文章</h5>
-								<div class="widget-buttons">
+								<!-- <div class="widget-buttons">
 									<a href="#" data-toggle="maximize"></a> <a href="#"
 										data-toggle="collapse" onclick="tab('pro');"> <i
 										class="fa fa-minus" id="pro-i"></i>
 									</a> <a href="#" data-toggle="dispose"></a>
-								</div>
+								</div> -->
 							</div>
 							<div class="widget-body" id="pro">
 								<div style="margin-left: 11%;">
@@ -158,37 +158,25 @@
 									<br>&nbsp;<br>
 								</div>
 							</div>
-						</div>
-					</div>
-				</div>
-				<!-- editArticle -->
-				<div class="modal modal-darkorange" id="editArticleDiv">
-					<div class="modal-dialog" style="margin:0px auto;width:100%;height:100%;">
-						<div class="modal-content" style="height:100%;">
-							<div class="modal-header">
-								<button aria-hidden="true" data-dismiss="modal" class="close"
-									type="button" onclick="closeEditArticleDiv();">×</button>
-								<h4 class="modal-title">编辑文章</h4>
-							</div>
-							<div class="modal-body" style="height:84%;">
-								<div class="bootbox-body" style="height:100%;">
-									<div class="row" style="padding: 10px;height:100%;" >
-										<div style="width: 100%;height: 100%;overflow: auto">
-											<script id="editor" type="text/plain" style="width:100%;margin-left:0px;height:75%;"></script>
+							<div class="widget-body" id="editArticleDiv" style="display:none;">
+								<div class="modal-body" style="height:84%;">
+									<div class="bootbox-body" style="height:100%;">
+										<div class="row" style="padding: 10px;height:100%;" >
+											<div style="width: 100%;height: 100%;overflow: auto">
+												<script id="editor" type="text/plain" style="width:100%;margin-left:0px;height:300px;"></script>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="modal-footer">
-								<button class="btn btn-default" type="button"
-									onclick="returnArticleInfo();">确定</button>
-								<button data-dismiss="modal" class="btn btn-default"
-									onclick="closeEditArticleDiv();" type="button">返回</button>
+								<div class="modal-footer">
+									<button class="btn btn-default" type="button"
+										onclick="returnArticleInfo();">确定</button>
+									<button data-dismiss="modal" class="btn btn-default"
+										onclick="closeEditArticleDiv();" type="button">返回</button>
+								</div>
 							</div>
 						</div>
-						<!-- /.modal-content -->
 					</div>
-					<!-- /.modal-dialog -->
 				</div>
 				
 			</div>
@@ -267,10 +255,12 @@ function queryArticleClassifyInfo(articleId){
 function openEditArticleDiv(){
 	ue.setContent($("#content").val());
 	$("#editArticleDiv").show();
+	$("#pro").hide();
 }  
 
 function closeEditArticleDiv(){
 	$("#editArticleDiv").hide();
+	$("#pro").show();
 }
 
 function returnArticleInfo(){
@@ -278,6 +268,7 @@ function returnArticleInfo(){
 	$("#content").val(content);
 	$("#editArticleDiv").hide();
 	ue.setContent('');
+	$("#pro").show();
 }
 
 function saveEditCheck(){
