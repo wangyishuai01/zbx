@@ -1,5 +1,6 @@
 package com.cn.zbx.vo;
 
+import java.util.Arrays;
 import java.util.Date;
 
 
@@ -96,6 +97,14 @@ public class LogVO {
 		this.productType = productType;
 	}
 
-	
-    
+
+	@Override
+	public String toString() {
+		return "LogVO [createDate=" + createDate + ", count=" + count
+				+ ", customerId=" + customerId + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", dataStr="
+				+ Arrays.toString(dataStr) + ", countStr="
+				+ Arrays.toString(countStr) + ", dateType=" + dateType
+				+ ", productType=" + productType + "]";
+	}
 }

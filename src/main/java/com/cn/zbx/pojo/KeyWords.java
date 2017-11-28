@@ -67,4 +67,11 @@ public class KeyWords extends BasicPojo{
     public void setModifydate(Date modifydate) {
         this.modifydate = modifydate;
     }
+
+	@Override
+	public String toString() {
+		return "KeyWords [id=" + id + ", name=" + name + ", excerpt=" + excerpt
+				+ ", state=" + state + ", makedate=" + makedate
+				+ ", modifydate=" + modifydate + "]";
+	}
 }

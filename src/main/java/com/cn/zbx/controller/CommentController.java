@@ -106,7 +106,7 @@ public class CommentController {
 			Comment commentParam = new Comment();
 			commentParam.setTitle(commentTitle);
 			commentParam.setComment(comment);
-			commentParam.setCommenttype(commentType);
+			commentParam.setCommenttype(Integer.valueOf(commentType));
 			commentParam.setCustomerId(Integer.valueOf(customerId));
 			commentParam.setMakedate(currentDate);
 			commentParam.setModifydate(currentDate);

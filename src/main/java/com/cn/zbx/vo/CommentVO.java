@@ -10,7 +10,7 @@ public class CommentVO {
 
     private String comment;
 
-    private String commenttype;
+    private Integer commenttype;
 
     private Integer customerId;
     
@@ -52,11 +52,11 @@ public class CommentVO {
 		this.comment = comment;
 	}
 
-	public String getCommenttype() {
+	public Integer getCommenttype() {
 		return commenttype;
 	}
 
-	public void setCommenttype(String commenttype) {
+	public void setCommenttype(Integer commenttype) {
 		this.commenttype = commenttype;
 	}
 
@@ -123,5 +123,15 @@ public class CommentVO {
 	public void setModifydate(Date modifydate) {
 		this.modifydate = modifydate;
 	}
-    
+
+	@Override
+	public String toString() {
+		return "CommentVO [id=" + id + ", title=" + title + ", comment="
+				+ comment + ", commenttype=" + commenttype + ", customerId="
+				+ customerId + ", customerName=" + customerName
+				+ ", commentToId=" + commentToId + ", spareField1="
+				+ spareField1 + ", spareField2=" + spareField2
+				+ ", spareField3=" + spareField3 + ", makedate=" + makedate
+				+ ", modifydate=" + modifydate + "]";
+	}
 }

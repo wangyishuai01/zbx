@@ -1,5 +1,7 @@
 package com.cn.zbx.vo;
 
+import java.util.Arrays;
+
 import com.cn.zbx.pojo.ArticleMain;
 
 public class ArticleVO extends ArticleMain{
@@ -26,5 +28,11 @@ public class ArticleVO extends ArticleMain{
 
 	public void setKeyWords(String[] keyWords) {
 		this.keyWords = keyWords;
+	}
+
+	@Override
+	public String toString() {
+		return "ArticleVO [commentCount=" + commentCount + ", keyWords="
+				+ Arrays.toString(keyWords) + "]";
 	}
 }

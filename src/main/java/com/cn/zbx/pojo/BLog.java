@@ -60,5 +60,10 @@ public class BLog extends BasicPojo{
 		this.createDate = createDate;
 	}
 
-    
+	@Override
+	public String toString() {
+		return "Statistics [id=" + id + ", userId=" + userId + ", productId="
+				+ productId + ", productType=" + productType + ", createDate="
+				+ createDate + "]";
+	}
 }

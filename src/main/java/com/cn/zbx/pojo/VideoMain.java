@@ -127,4 +127,13 @@ public class VideoMain extends BasicPojo{
     public void setModifydate(Date modifydate) {
         this.modifydate = modifydate;
     }
+
+	@Override
+	public String toString() {
+		return "VideoMain [id=" + id + ", title=" + title + ", videopath="
+				+ videopath + ", imgurl=" + imgurl + ", articleid=" + articleid
+				+ ", suffix=" + suffix + ", size=" + size + ", playtime="
+				+ playtime + ", isfree=" + isfree + ", nocomment=" + nocomment
+				+ ", makedate=" + makedate + ", modifydate=" + modifydate + "]";
+	}
 }

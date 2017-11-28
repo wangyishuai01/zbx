@@ -40,4 +40,11 @@ public class KeyRelation {
     public void setProductid(Integer productid) {
         this.productid = productid;
     }
+
+	@Override
+	public String toString() {
+		return "KeyRelation [id=" + id + ", keywordsid=" + keywordsid
+				+ ", relationtype=" + relationtype + ", productid=" + productid
+				+ "]";
+	}
 }

@@ -92,4 +92,13 @@ public class CusBuyHistory {
     public void setModifydate(Date modifydate) {
         this.modifydate = modifydate;
     }
+
+	@Override
+	public String toString() {
+		return "CusBuyHistory [id=" + id + ", customerId=" + customerId
+				+ ", customerName=" + customerName + ", buyType=" + buyType
+				+ ", productId=" + productId + ", payType=" + payType
+				+ ", payMoney=" + payMoney + ", makedate=" + makedate
+				+ ", modifydate=" + modifydate + "]";
+	}
 }

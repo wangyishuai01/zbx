@@ -170,4 +170,16 @@ public class VideoVO extends BasicPojo{
 	public void setClassid(Integer classid) {
 		this.classid = classid;
 	}
+
+	@Override
+	public String toString() {
+		return "VideoVO [id=" + id + ", title=" + title + ", videopath="
+				+ videopath + ", imgurl=" + imgurl + ", articleid=" + articleid
+				+ ", suffix=" + suffix + ", size=" + size + ", playtime="
+				+ playtime + ", isfree=" + isfree + ", nocomment=" + nocomment
+				+ ", makedate=" + makedate + ", modifydate=" + modifydate
+				+ ", articleTitle=" + articleTitle + ", buyCount=" + buyCount
+				+ ", commentCount=" + commentCount + ", classid=" + classid
+				+ "]";
+	}
 }

@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="comment" property="comment" jdbcType="VARCHAR" />
-    <result column="commenttype" property="commenttype" jdbcType="CHAR" />
+    <result column="commenttype" property="commenttype" jdbcType="INTEGER" />
     <result column="customer_id" property="customerId" jdbcType="INTEGER" />
     <result column="makedate" property="makedate" jdbcType="TIMESTAMP" />
     <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
@@ -29,7 +29,7 @@
       commenttype, customer_id, makedate, 
       modifydate,commenttoid)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
-      #{commenttype,jdbcType=CHAR}, #{customerId,jdbcType=INTEGER}, #{makedate,jdbcType=TIMESTAMP}, 
+      #{commenttype,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, #{makedate,jdbcType=TIMESTAMP}, 
       #{modifydate,jdbcType=TIMESTAMP}),#{commentToId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.cn.zbx.pojo.Comment" keyProperty="id" useGeneratedKeys="true">
@@ -71,7 +71,7 @@
         #{comment,jdbcType=VARCHAR},
       </if>
       <if test="commenttype != null" >
-        #{commenttype,jdbcType=CHAR},
+        #{commenttype,jdbcType=INTEGER},
       </if>
       <if test="customerId != null" >
         #{customerId,jdbcType=INTEGER},
@@ -97,7 +97,7 @@
         comment = #{comment,jdbcType=VARCHAR},
       </if>
       <if test="commenttype != null" >
-        commenttype = #{commenttype,jdbcType=CHAR},
+        commenttype = #{commenttype,jdbcType=INTEGER},
       </if>
       <if test="customerId != null" >
         customer_id = #{customerId,jdbcType=INTEGER},
@@ -118,7 +118,7 @@
     update comment
     set title = #{title,jdbcType=VARCHAR},
       comment = #{comment,jdbcType=VARCHAR},
-      commenttype = #{commenttype,jdbcType=CHAR},
+      commenttype = #{commenttype,jdbcType=INTEGER},
       customer_id = #{customerId,jdbcType=INTEGER},
       makedate = #{makedate,jdbcType=TIMESTAMP},
       modifydate = #{modifydate,jdbcType=TIMESTAMP},
@@ -141,7 +141,7 @@
       and com.comment = #{comment,jdbcType=VARCHAR}
     </if>
     <if test="commenttype != null" >
-      and com.commenttype = #{commenttype,jdbcType=CHAR}
+      and com.commenttype = #{commenttype,jdbcType=INTEGER}
     </if>
     <if test="customerId != null" >
       and com.customer_id = #{customerId,jdbcType=INTEGER}
@@ -180,7 +180,7 @@
       and com.comment = #{comment,jdbcType=VARCHAR}
     </if>
     <if test="commenttype != null" >
-      and com.commenttype = #{commenttype,jdbcType=CHAR}
+      and com.commenttype = #{commenttype,jdbcType=INTEGER}
     </if>
     <if test="customerId != null" >
       and com.customer_id = #{customerId,jdbcType=INTEGER}
