@@ -322,4 +322,69 @@ public class VideoController {
 		}
 		return JSONObject.toJSONString(resultMap);
 	}
+	
+	/**
+	 * 根据视频id查询视频
+	 * @param request
+	 * @param response
+	 * @param video
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/selectVideoById", method = { RequestMethod.GET, RequestMethod.POST })
+	public String selectVideoById(HttpServletRequest request, HttpServletResponse response, String videoId){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		if(videoId == null || "".equals(videoId)){
+			resultMap.put("success", false);
+			resultMap.put("errorMsg", "查询Id为空！");
+			return JSONObject.toJSONString(resultMap);
+		}
+		VideoMain video = videoMainService.selectByPrimaryKey(Integer.valueOf(videoId));
+		if(video != null){
+			resultMap.put("data", video);
+			resultMap.put("success", true);
+		} else {
+			resultMap.put("success", false);
+			resultMap.put("errorMsg", "查询数据为空！");
+		}
+		return JSONObject.toJSONString(resultMap);
+	}
+	
+	/**
+	 * 根据分类id查询相关视频
+	 * @param request
+	 * @param response
+	 * @param video
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/selectRelationVideoByClassifyId", method = { RequestMethod.GET, RequestMethod.POST })
+	public String selectRelationVideoByClassifyId(HttpServletRequest request, HttpServletResponse response){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		String pageCount = request.getParameter("pageCount");
+		String pageSize = request.getParameter("pageSize");
+		String classifyId = request.getParameter("classifyId");
+		
+		VideoVO videoParam = new VideoVO();
+		if(classifyId != null && !"".equals(classifyId)){
+			videoParam.setClassid(Integer.valueOf(classifyId));
+		}
+		if(pageCount != null || !"".equals(pageCount)){
+			videoParam.setPageCount(Integer.valueOf(pageCount));
+		}
+		if(pageSize != null || !"".equals(pageSize)){
+			videoParam.setPageSize(Integer.valueOf(pageSize));
+		}
+		List<VideoVO> videoVOList = videoMainService.selectBySelectParam(videoParam);
+		if(videoVOList != null && videoVOList.size() != 0){
+			resultMap.put("data", videoVOList);
+			resultMap.put("success", true);
+		} else {
+			resultMap.put("success", false);
+			resultMap.put("errorMsg", "查询数据为空！");
+		}
+		return JSONObject.toJSONString(resultMap);
+	}
 }

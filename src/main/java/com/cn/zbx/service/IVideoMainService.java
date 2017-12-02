@@ -33,4 +33,6 @@ public interface IVideoMainService {
 	
 	boolean addVideoInfo(Map<String, Object> mapParam) throws Exception;
 	
+	VideoMain selectByPrimaryKey(Integer id);
+	
 }
