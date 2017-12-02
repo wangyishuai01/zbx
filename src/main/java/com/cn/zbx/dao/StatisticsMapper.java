@@ -10,4 +10,5 @@ public interface StatisticsMapper {
     String selectDateAndCount(LogVO record);
     
     String selectCusBuyHistoryByDateAndCount(LogVO record);
+    String selectPayMoneyByDateAndCount(LogVO record);
 }

@@ -18,4 +18,7 @@ public interface IStatisticsService {
 	
 	List selectDateAndCount(LogVO record);
 	
+	List selectDateAndCountByBuyVedio(LogVO record);
+	
+	List selectDateAndCountByBuyMoney(LogVO record);
 }

@@ -70,7 +70,7 @@
      select  function_cusbuyhistory(#{startDate},#{endDate},#{dateType},#{productType}) from dual;
   </select>
   <!-- 效益统计 -->
-   <select id="selectpayMoneyByDateAndCount" resultType="string" parameterType="com.cn.zbx.vo.LogVO" >
+   <select id="selectPayMoneyByDateAndCount" resultType="string" parameterType="com.cn.zbx.vo.LogVO" >
      select  function_paymoney(#{startDate},#{endDate},#{dateType},#{productType}) from dual;
   </select>
 </mapper>

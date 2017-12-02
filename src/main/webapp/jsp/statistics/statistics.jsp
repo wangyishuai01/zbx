@@ -72,22 +72,37 @@
 										</select> 
 										
 										<span>用户名：</span>
-										<input  class="form-control" style="width:200px;" id="userName" />
+										<input  class="form-control" style="width:100px;" id="userName" />
 										<a class="btn btn-default shiny" onclick="init();">查询</a>
+										<span>统计类型：</span>
+										<select class="form-control"style="width:100px;" id="selectType" onchange="init();" >  
+											<option value="0" selected = "selected" >访问量统计</option>
+											<option value="1">点击视频与购买视频统计</option>
+											<option value="2">效益统计</option>
+										</select> 
 								</div>
 									<div class="tools" id="iconIsShow"style="float:right ;display: none">
-                                       <!--饼图 <a href="javascript:;"   onclick="getPie()" class="fa fa-circle-o-notch" > </a> -->
-                                       <a href="javascript:;"  onclick="getBar()" class="fa fa-bar-chart-o"   > </a>
-                                       <a href="javascript:;"  onclick="getLine()" class="fa fa-bars"   > </a>
-                                       <a href="javascript:;"  onclick="getBar()" class="fa fa-refresh"   > </a>
+                                       <a href="javascript:;"  onclick="getBar(0)" class="fa fa-bar-chart-o"   > </a>
+                                       <a href="javascript:;"  onclick="getLine(0)" class="fa fa-bars"   > </a>
+                                    </div>
+                                    <div class="tools" id="iconIsShow1"style="float:right ;display: none">
+                                       <a href="javascript:;"  onclick="getBar(1)" class="fa fa-bar-chart-o"   > </a>
+                                       <a href="javascript:;"  onclick="getLine(1)" class="fa fa-bars"   > </a>
+                                    </div>
+                                    <div class="tools" id="iconIsShow2"style="float:right ;display: none">
+                                       <a href="javascript:;"  onclick="getBar(2)" class="fa fa-bar-chart-o"   > </a>
+                                       <a href="javascript:;"  onclick="getLine(2)" class="fa fa-bars"   > </a>
                                     </div>
                                     
-                                    
-                                    <div id="main1" style="width: 1200px;height: 500px;display: none"></div>
-                                    <div id="main2" style="width: 1000px;height: 500px;display: none"></div>
+                                    <!-- 文章与视频统计 -->
+                                    <div id="main1" style="width: 1200px;height: 400px;display: none"></div>
+                                    <div id="main2" style="width: 1000px;height: 400px;display: none"></div>
                                     <!-- 点击视频与购买视频统计 -->
-                                    <div id="cusbuyhistory1" style="width: 1200px;height: 500px;display: none"></div>
-                                    <div id="cusbuyhistory2" style="width: 1000px;height: 500px;display: none"></div>
+                                    <div id="cusbuyhistory1" style="width: 1200px;height: 400px;display: none"></div>
+                                    <div id="cusbuyhistory2" style="width: 1000px;height: 400px;display: none"></div>
+                                    <!-- 效益 -->
+                                    <div id="buyMoney1" style="width: 1200px;height: 400px;display: none"></div>
+                                    <div id="buyMoney2" style="width: 1000px;height: 400px;display: none"></div>
 								</div>
 								
 							</div>
@@ -98,7 +113,6 @@
 			<!-- /Page Body -->
 		</div>
 		<!-- /Page Content -->
-	</div>
 </body>
 <script type="text/javascript">
 
@@ -107,10 +121,10 @@ var rootPath = "${pageContext.request.contextPath}";
 var xAxisArticle=[];
 var seriesDataArticle=[];
 var seriesDataVideo=[];
-var seriesDataCusBuyHistory=[];
-
+var statisticsType="";
 function init(){
-	
+	var select = document.getElementById("selectType");
+	statisticsType=select.value;
 	var beginDate = $("#qBeginTime").val();
 	var endDate = $("#qEndTime").val();
 	var userName = $("#userName").val();
@@ -133,87 +147,169 @@ function init(){
 			"beginDate" : beginDate,
 			"endDate" : endDate,
 			"userName" : userName,
-			"dateSpace" : dateSpace
+			"dateSpace" : dateSpace,
+			"statisticsType" : statisticsType
 		},
 		success : function(result) {
 			result = JSON.parse(result);
 			console.log(result);
 			if(result.success){
-				
 				result = result.data;
-				xAxisArticle = result[0];
-				seriesDataArticle = result[1];
-				seriesDataVideo = result[2];
-				seriesDataCusBuyHistory = result[3];
-				var main1 = document.getElementById("main1");
-				main1.style.display="block";
-				var main2 = document.getElementById("main2");
-				main2.style.display="none";
-				
-				var cusbuyhistory1 = document.getElementById("cusbuyhistory1");
-				cusbuyhistory1.style.display="block";
-				var cusbuyhistory2 = document.getElementById("cusbuyhistory2");
-				cusbuyhistory2.style.display="none";
-				var myChart = echarts.init(document.getElementById("main1"));
-				var option = {
-				        title: {
-				            text: '文章/视频统计'
-				        },
-				        tooltip: {},
-				        legend: {
-				            data:['文章','视频']
-				        },
-				        xAxis: {
-				            data: xAxisArticle
-				        },
-				        yAxis: {},
-				        series: [{
-				            name: '文章',
-				            type: 'bar',
-				            barWidth : 10,
-				            center: ['50%','50%'],
-				            data: seriesDataArticle
-				        },{
-				            name: '视频',
-				            type: 'bar',
-				            barWidth : 10,
-				            center: ['50%','50%'],
-				            data: seriesDataVideo
-				        }]
-				    };
-				    myChart.setOption(option);
-				    //点击视频与购买视频统计
-				var myChart1 = echarts.init(document.getElementById("cusbuyhistory1"));
-				var option1 = {
-				        title: {
-				            text: '点击视频与购买视频统计'
-				        },
-				        tooltip: {},
-				        legend: {
-				            data:['点击视频','购买视频']
-				        },
-				        xAxis: {
-				            data: xAxisArticle
-				        },
-				        yAxis: {},
-				        series: [{
-				            name: '点击视频',
-				            type: 'bar',
-				            barWidth : 10,
-				            center: ['50%','50%'],
-				            data: seriesDataVideo
-				        },{
-				            name: '购买视频',
-				            type: 'bar',
-				            barWidth : 10,
-				            center: ['50%','50%'],
-				            data: seriesDataCusBuyHistory
-				        }]
-				    };
-				    myChart1.setOption(option1);
-				    //显示图报
-				    var iconIsShow = document.getElementById("iconIsShow");
-					iconIsShow.style.display="block";
+				if(statisticsType==0){
+					xAxisArticle = result[0];
+					seriesDataArticle = result[1];
+					seriesDataVideo = result[2];
+					var main1 = document.getElementById("main1");
+					main1.style.display="block";
+					var main2 = document.getElementById("main2");
+					main2.style.display="none";
+					var cusbuyhistory1 = document.getElementById("cusbuyhistory1");
+					cusbuyhistory1.style.display="none";
+					var cusbuyhistory2 = document.getElementById("cusbuyhistory2");
+					cusbuyhistory2.style.display="none";
+					var buyMoney1 = document.getElementById("buyMoney1");
+					buyMoney1.style.display="none";
+					var buyMoney2 = document.getElementById("buyMoney2");
+					buyMoney2.style.display="none";
+					var myChart = echarts.init(document.getElementById("main1"));
+					var option = {
+					        title: {
+					            text: '文章/视频访问量'
+					        },
+					        tooltip: {},
+					        legend: {
+					            data:['文章','视频']
+					        },
+					        xAxis: {
+					            data: xAxisArticle
+					        },
+					        yAxis: {},
+					        series: [{
+					            name: '文章',
+					            type: 'bar',
+					            barWidth : 10,
+					            center: ['50%','50%'],
+					            data: seriesDataArticle
+					        },{
+					            name: '视频',
+					            type: 'bar',
+					            barWidth : 10,
+					            center: ['50%','50%'],
+					            data: seriesDataVideo
+					        }]
+					    };
+					    myChart.setOption(option);
+					  //显示图报
+					    var iconIsShow = document.getElementById("iconIsShow");
+						iconIsShow.style.display="block";
+						//显示图报
+					    var iconIsShow = document.getElementById("iconIsShow1");
+						iconIsShow.style.display="none";
+						//显示图报
+					    var iconIsShow = document.getElementById("iconIsShow2");
+						iconIsShow.style.display="none";
+				}
+				if(statisticsType==1){//点击视频与购买视频统计
+					xAxisArticle = result[0];
+					seriesDataArticle = result[1];
+					seriesDataVideo = result[2];
+					var main1 = document.getElementById("main1");
+					main1.style.display="none";
+					var main2 = document.getElementById("main2");
+					main2.style.display="none";
+					var cusbuyhistory1 = document.getElementById("cusbuyhistory1");
+					cusbuyhistory1.style.display="block";
+					var cusbuyhistory2 = document.getElementById("cusbuyhistory2");
+					cusbuyhistory2.style.display="none";
+					var buyMoney1 = document.getElementById("buyMoney1");
+					buyMoney1.style.display="none";
+					var buyMoney2 = document.getElementById("buyMoney2");
+					buyMoney2.style.display="none";
+					var myChart = echarts.init(document.getElementById("cusbuyhistory1"));
+					var option = {
+					        title: {
+					            text: '点击视频与购买视频统计'
+					        },
+					        tooltip: {},
+					        legend: {
+					            data:['点击视频','购买视频']
+					        },
+					        xAxis: {
+					            data: xAxisArticle
+					        },
+					        yAxis: {},
+					        series: [{
+					            name: '点击视频',
+					            type: 'bar',
+					            barWidth : 10,
+					            center: ['50%','50%'],
+					            data: seriesDataArticle
+					        },{
+					            name: '购买视频',
+					            type: 'bar',
+					            barWidth : 10,
+					            center: ['50%','50%'],
+					            data: seriesDataVideo
+					        }]
+					    };
+					    myChart.setOption(option);
+					  //显示图报
+					    var iconIsShow = document.getElementById("iconIsShow1");
+						iconIsShow.style.display="block";
+						//显示图报
+					    var iconIsShow = document.getElementById("iconIsShow");
+						iconIsShow.style.display="none";
+						//显示图报
+					    var iconIsShow = document.getElementById("iconIsShow2");
+						iconIsShow.style.display="none";
+				}
+				if(statisticsType==2){//效益统计
+					xAxisArticle = result[0];
+					seriesDataArticle = result[1];
+					var main1 = document.getElementById("main1");
+					main1.style.display="none";
+					var main2 = document.getElementById("main2");
+					main2.style.display="none";
+					var cusbuyhistory1 = document.getElementById("cusbuyhistory1");
+					cusbuyhistory1.style.display="none";
+					var cusbuyhistory2 = document.getElementById("cusbuyhistory2");
+					cusbuyhistory2.style.display="none";
+					var buyMoney1 = document.getElementById("buyMoney1");
+					buyMoney1.style.display="block";
+					var buyMoney2 = document.getElementById("buyMoney2");
+					buyMoney2.style.display="none";
+					var myChart = echarts.init(document.getElementById("buyMoney1"));
+					var option = {
+					        title: {
+					            text: '效益统计'
+					        },
+					        tooltip: {},
+					        legend: {
+					            data:['效益']
+					        },
+					        xAxis: {
+					            data: xAxisArticle
+					        },
+					        yAxis: {},
+					        series: [{
+					            name: '效益',
+					            type: 'bar',
+					            barWidth : 10,
+					            center: ['50%','50%'],
+					            data: seriesDataArticle
+					        }]
+					    };
+					    myChart.setOption(option);
+					  //显示图报
+					    var iconIsShow = document.getElementById("iconIsShow2");
+						iconIsShow.style.display="block";
+						//显示图报
+					    var iconIsShow = document.getElementById("iconIsShow");
+						iconIsShow.style.display="none";
+						//显示图报
+					    var iconIsShow = document.getElementById("iconIsShow1");
+						iconIsShow.style.display="none";
+				}    
 			} else {
 				alert("查询数据为空！");
 			}
@@ -281,86 +377,25 @@ $('#qEndTime').datetimepicker({
 
 //折线图
 function getLine(){
-	var main1 = document.getElementById("main1");
-	main1.style.display="none";
-	var main2 = document.getElementById("main2");
-	main2.style.display="block";
-	
-	var cusbuyhistory1 = document.getElementById("cusbuyhistory1");
-	cusbuyhistory1.style.display="none";
-	var cusbuyhistory2 = document.getElementById("cusbuyhistory2");
-	cusbuyhistory2.style.display="block";
-	// 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main2'));
-
-    // 指定图表的配置项和数据
-    var option = {
-        title: {
-            text: '文章/视频统计'
-        },
-        tooltip: {},
-        legend: {
-            data:['文章','视频']
-        },
-        xAxis: {
-            data: xAxisArticle
-        },
-        yAxis: {},
-        series: [{
-            name: '文章',
-            type: 'line',
-            data: seriesDataArticle
-        },{
-            name: '视频',
-            type: 'line',
-            data: seriesDataVideo
-        }]
-    };
-
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-    
-    //点击视频与购买视频
-    var myChart1 = echarts.init(document.getElementById('cusbuyhistory2'));
-    var option1 = {
-        title: {
-            text: '点击视频与购买视频统计'
-        },
-        tooltip: {},
-        legend: {
-            data:['点击视频','购买视频']
-        },
-        xAxis: {
-            data: xAxisArticle
-        },
-        yAxis: {},
-        series: [{
-            name: '点击视频',
-            type: 'line',
-            data: seriesDataVideo
-        },{
-            name: '购买视频',
-            type: 'line',
-            data: seriesDataCusBuyHistory
-        }]
-    };
-    myChart1.setOption(option1);
-}
-//柱状图
-function getBar(){
-	var main1 = document.getElementById("main1");
-	main1.style.display="block";
-	var main2 = document.getElementById("main2");
-	main2.style.display="none";
-	
-	var cusbuyhistory1 = document.getElementById("cusbuyhistory1");
-	cusbuyhistory1.style.display="block";
-	var cusbuyhistory2 = document.getElementById("cusbuyhistory2");
-	cusbuyhistory2.style.display="none";
-	var myChart = echarts.init(document.getElementById("main1"));
-	var option = {
+	if(statisticsType==0){
+		var main1 = document.getElementById("main1");
+		main1.style.display="none";
+		var main2 = document.getElementById("main2");
+		main2.style.display="block";
+		var cusbuyhistory1 = document.getElementById("cusbuyhistory1");
+		cusbuyhistory1.style.display="none";
+		var cusbuyhistory2 = document.getElementById("cusbuyhistory2");
+		cusbuyhistory2.style.display="none";
+		var buyMoney1 = document.getElementById("buyMoney1");
+		buyMoney1.style.display="none";
+		var buyMoney2 = document.getElementById("buyMoney2");
+		buyMoney2.style.display="none";
+		// 基于准备好的dom，初始化echarts实例
+	    var myChart = echarts.init(document.getElementById('main2'));
+	    // 指定图表的配置项和数据
+	    var option = {
 	        title: {
-	            text: '文章/视频统计'
+	            text: '文章/视频访问量'
 	        },
 	        tooltip: {},
 	        legend: {
@@ -372,22 +407,156 @@ function getBar(){
 	        yAxis: {},
 	        series: [{
 	            name: '文章',
-	            type: 'bar',
-	            barWidth : 10,
-	            center: ['50%','50%'],
+	            type: 'line',
 	            data: seriesDataArticle
 	        },{
 	            name: '视频',
-	            type: 'bar',
-	            barWidth : 10,
-	            center: ['50%','50%'],
+	            type: 'line',
 	            data: seriesDataVideo
 	        }]
 	    };
+	    // 使用刚指定的配置项和数据显示图表。
 	    myChart.setOption(option);
-	    //点击视频与购买视频统计
-		var myChart1 = echarts.init(document.getElementById("cusbuyhistory1"));
-		var option1 = {
+	}
+	//点击视频与购买视频
+	if(statisticsType==1){
+		var main1 = document.getElementById("main1");
+		main1.style.display="none";
+		var main2 = document.getElementById("main2");
+		main2.style.display="none";
+		var cusbuyhistory1 = document.getElementById("cusbuyhistory1");
+		cusbuyhistory1.style.display="none";
+		var cusbuyhistory2 = document.getElementById("cusbuyhistory2");
+		cusbuyhistory2.style.display="block";
+		var buyMoney1 = document.getElementById("buyMoney1");
+		buyMoney1.style.display="none";
+		var buyMoney2 = document.getElementById("buyMoney2");
+		buyMoney2.style.display="none";
+		// 基于准备好的dom，初始化echarts实例
+	    var myChart = echarts.init(document.getElementById('cusbuyhistory2'));
+	    // 指定图表的配置项和数据
+	    var option = {
+	    		title: {
+	                text: '点击视频与购买视频统计'
+	            },
+	            tooltip: {},
+	            legend: {
+	                data:['点击视频','购买视频']
+	            },
+	            xAxis: {
+	                data: xAxisArticle
+	            },
+	            yAxis: {},
+	            series: [{
+	                name: '点击视频',
+	                type: 'line',
+	                data: seriesDataArticle
+	            },{
+	                name: '购买视频',
+	                type: 'line',
+	                data: seriesDataVideo
+	            }]
+	        };
+	    myChart.setOption(option);
+	}
+	//点击视频与购买视频
+	if(statisticsType==2){
+		var main1 = document.getElementById("main1");
+		main1.style.display="none";
+		var main2 = document.getElementById("main2");
+		main2.style.display="none";
+		var cusbuyhistory1 = document.getElementById("cusbuyhistory1");
+		cusbuyhistory1.style.display="none";
+		var cusbuyhistory2 = document.getElementById("cusbuyhistory2");
+		cusbuyhistory2.style.display="none";
+		var buyMoney1 = document.getElementById("buyMoney1");
+		buyMoney1.style.display="none";
+		var buyMoney2 = document.getElementById("buyMoney2");
+		buyMoney2.style.display="block";
+		// 基于准备好的dom，初始化echarts实例
+	    var myChart = echarts.init(document.getElementById('buyMoney2'));
+	    // 指定图表的配置项和数据
+	    var option = {
+	    		title: {
+	                text: '效益统计'
+	            },
+	            tooltip: {},
+	            legend: {
+	                data:['效益']
+	            },
+	            xAxis: {
+	                data: xAxisArticle
+	            },
+	            yAxis: {},
+	            series: [{
+	                name: '效益',
+	                type: 'line',
+	                data: seriesDataArticle
+	            }]
+	        };
+	    myChart.setOption(option);
+	}
+
+}
+//柱状图
+function getBar(){
+	if(statisticsType==0){
+		var main1 = document.getElementById("main1");
+		main1.style.display="block";
+		var main2 = document.getElementById("main2");
+		main2.style.display="none";
+		var cusbuyhistory1 = document.getElementById("cusbuyhistory1");
+		cusbuyhistory1.style.display="none";
+		var cusbuyhistory2 = document.getElementById("cusbuyhistory2");
+		cusbuyhistory2.style.display="none";
+		var buyMoney1 = document.getElementById("buyMoney1");
+		buyMoney1.style.display="none";
+		var buyMoney2 = document.getElementById("buyMoney2");
+		buyMoney2.style.display="none";
+		var myChart = echarts.init(document.getElementById("main1"));
+		var option = {
+		        title: {
+		            text: '文章/视频访问量'
+		        },
+		        tooltip: {},
+		        legend: {
+		            data:['文章','视频']
+		        },
+		        xAxis: {
+		            data: xAxisArticle
+		        },
+		        yAxis: {},
+		        series: [{
+		            name: '文章',
+		            type: 'bar',
+		            barWidth : 10,
+		            center: ['50%','50%'],
+		            data: seriesDataArticle
+		        },{
+		            name: '视频',
+		            type: 'bar',
+		            barWidth : 10,
+		            center: ['50%','50%'],
+		            data: seriesDataVideo
+		        }]
+		    };
+		    myChart.setOption(option);
+	}
+	if(statisticsType==1){//点击视频与购买视频统计
+		var main1 = document.getElementById("main1");
+		main1.style.display="none";
+		var main2 = document.getElementById("main2");
+		main2.style.display="none";
+		var cusbuyhistory1 = document.getElementById("cusbuyhistory1");
+		cusbuyhistory1.style.display="block";
+		var cusbuyhistory2 = document.getElementById("cusbuyhistory2");
+		cusbuyhistory2.style.display="none";
+		var buyMoney1 = document.getElementById("buyMoney1");
+		buyMoney1.style.display="none";
+		var buyMoney2 = document.getElementById("buyMoney2");
+		buyMoney2.style.display="none";
+		var myChart = echarts.init(document.getElementById("cusbuyhistory1"));
+		var option = {
 		        title: {
 		            text: '点击视频与购买视频统计'
 		        },
@@ -404,16 +573,53 @@ function getBar(){
 		            type: 'bar',
 		            barWidth : 10,
 		            center: ['50%','50%'],
-		            data: seriesDataVideo
+		            data: seriesDataArticle
 		        },{
 		            name: '购买视频',
 		            type: 'bar',
 		            barWidth : 10,
 		            center: ['50%','50%'],
-		            data: seriesDataCusBuyHistory
+		            data: seriesDataVideo
 		        }]
 		    };
-		    myChart1.setOption(option1);
+		    myChart.setOption(option);
+	}
+	if(statisticsType==2){//效益统计
+		var main1 = document.getElementById("main1");
+		main1.style.display="none";
+		var main2 = document.getElementById("main2");
+		main2.style.display="none";
+		var cusbuyhistory1 = document.getElementById("cusbuyhistory1");
+		cusbuyhistory1.style.display="none";
+		var cusbuyhistory2 = document.getElementById("cusbuyhistory2");
+		cusbuyhistory2.style.display="none";
+		var buyMoney1 = document.getElementById("buyMoney1");
+		buyMoney1.style.display="block";
+		var buyMoney2 = document.getElementById("buyMoney2");
+		buyMoney2.style.display="none";
+		var myChart = echarts.init(document.getElementById("cusbuyhistory1"));
+		var option = {
+		        title: {
+		            text: '效益统计'
+		        },
+		        tooltip: {},
+		        legend: {
+		            data:['效益']
+		        },
+		        xAxis: {
+		            data: xAxisArticle
+		        },
+		        yAxis: {},
+		        series: [{
+		            name: '效益',
+		            type: 'bar',
+		            barWidth : 10,
+		            center: ['50%','50%'],
+		            data: seriesDataArticle
+		        }]
+		    };
+		    myChart.setOption(option);
+	}    
 }
 
 function  btnCount_Click(){  

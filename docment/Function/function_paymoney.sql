@@ -15,7 +15,7 @@ BEGIN
 		WHEN dflag = 'year' THEN SET dformat = '%Y';
 	END CASE;
 	WHILE dateBox <= dend DO 
-		SELECT CONCAT(resultMap,'|',DATE_FORMAT(dateBox,dformat),':',sum(pay_money)) INTO resultMap FROM cus_buy_history WHERE 
+		SELECT CONCAT(resultMap,'|',DATE_FORMAT(dateBox,dformat),':',ifnull(sum(pay_money),0)) INTO resultMap FROM cus_buy_history WHERE 
 		DATE_FORMAT(makedate,dformat) = DATE_FORMAT(dateBox,dformat)
 		AND buy_type = buyType;
 		CASE 

@@ -40,7 +40,7 @@ public class StatisticsController {
 		String endDate = request.getParameter("endDate");
 		String userName = request.getParameter("userName");
 		String dateSpace = request.getParameter("dateSpace");
-		
+		String statisticsType = request.getParameter("statisticsType");
 		List list = new ArrayList();
 		//文章访问量
 		LogVO record = new LogVO();
@@ -52,21 +52,44 @@ public class StatisticsController {
 		}
 		if("0".equals(dateSpace)){//时
 			record.setDateType("hour");
-			list = statisticsService.selectDateAndCount(record);
+			if("0".equals(statisticsType)){//文章与视频
+				list = statisticsService.selectDateAndCount(record);
+			}else if("1".equals(statisticsType)){//点击视频与购买视频
+				list = statisticsService.selectDateAndCountByBuyVedio(record);
+			}else if("2".equals(statisticsType)){//效益
+				list = statisticsService.selectDateAndCountByBuyMoney(record);
+			}
 		}
 		if("1".equals(dateSpace)){//天
 			record.setDateType("day");
-			list = statisticsService.selectDateAndCount(record);
+			if("0".equals(statisticsType)){//文章与视频
+				list = statisticsService.selectDateAndCount(record);
+			}else if("1".equals(statisticsType)){//点击视频与购买视频
+				list = statisticsService.selectDateAndCountByBuyVedio(record);
+			}else if("2".equals(statisticsType)){//效益
+				list = statisticsService.selectDateAndCountByBuyMoney(record);
+			}
 		}
 		if("2".equals(dateSpace)){//月
 			record.setDateType("month");
-			list = statisticsService.selectDateAndCount(record);
+			if("0".equals(statisticsType)){//文章与视频
+				list = statisticsService.selectDateAndCount(record);
+			}else if("1".equals(statisticsType)){//点击视频与购买视频
+				list = statisticsService.selectDateAndCountByBuyVedio(record);
+			}else if("2".equals(statisticsType)){//效益
+				list = statisticsService.selectDateAndCountByBuyMoney(record);
+			}
 		}
 		if("3".equals(dateSpace)){//年
 			record.setDateType("year");
-			list = statisticsService.selectDateAndCount(record);
+			if("0".equals(statisticsType)){//文章与视频
+				list = statisticsService.selectDateAndCount(record);
+			}else if("1".equals(statisticsType)){//点击视频与购买视频
+				list = statisticsService.selectDateAndCountByBuyVedio(record);
+			}else if("2".equals(statisticsType)){//效益
+				list = statisticsService.selectDateAndCountByBuyMoney(record);
+			}
 		}
-		
 		resultMap.put("data", list);
 		resultMap.put("success", true);
 		
