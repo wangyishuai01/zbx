@@ -63,14 +63,14 @@
   </select>
 <!-- 文章视频访问量统计 -->
    <select id="selectDateAndCount" resultType="string" parameterType="com.cn.zbx.vo.LogVO" >
-     select  function_statistics(#{startDate},#{endDate},#{dateType},#{productType}) from dual;
+     select  function_statistics(#{startDate},#{endDate},#{dateType},#{productType},#{userId}) from dual;
   </select>
 <!-- 点击视频与购买视频统计 -->
    <select id="selectCusBuyHistoryByDateAndCount" resultType="string" parameterType="com.cn.zbx.vo.LogVO" >
-     select  function_cusbuyhistory(#{startDate},#{endDate},#{dateType},#{productType}) from dual;
+     select  function_cusbuyhistory(#{startDate},#{endDate},#{dateType},#{productType},#{userId}) from dual;
   </select>
   <!-- 效益统计 -->
    <select id="selectPayMoneyByDateAndCount" resultType="string" parameterType="com.cn.zbx.vo.LogVO" >
-     select  function_paymoney(#{startDate},#{endDate},#{dateType},#{productType}) from dual;
+     select  function_paymoney(#{startDate},#{endDate},#{dateType},#{productType},#{userId}) from dual;
   </select>
 </mapper>

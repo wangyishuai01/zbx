@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cn.zbx.dao.CustomerMapper;
 import com.cn.zbx.pojo.Comment;
+import com.cn.zbx.pojo.Customer;
 import com.cn.zbx.service.IStatisticsService;
+import com.cn.zbx.vo.CustomerVO;
 import com.cn.zbx.vo.LogVO;
 
 @Controller
@@ -29,6 +32,9 @@ public class StatisticsController {
 	
 	@Autowired
 	IStatisticsService statisticsService;
+	
+	@Autowired
+	CustomerMapper customerMapper;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@ResponseBody
@@ -41,9 +47,18 @@ public class StatisticsController {
 		String userName = request.getParameter("userName");
 		String dateSpace = request.getParameter("dateSpace");
 		String statisticsType = request.getParameter("statisticsType");
+		Customer cv = new Customer();
+		cv.setName(userName);
+		List<CustomerVO> cvlist = customerMapper.selectBySelectParam(cv);
+		int userid=0;
+		if(cvlist.size()>0){
+			userid = cvlist.get(0).getId();
+		}
+		
 		List list = new ArrayList();
 		//文章访问量
 		LogVO record = new LogVO();
+		record.setUserId(userid);
 		if(!"".equals(startDate)){
 			record.setStartDate(startDate);
 		}

@@ -24,6 +24,17 @@ public class LogVO {
 	private String dateType;
 	
 	private Integer productType;
+	
+	private int userId;
+	
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 
 	public Date getCreateDate() {
 		return createDate;
