@@ -187,4 +187,13 @@ public class VideoMainServiceImpl implements IVideoMainService {
 		return true;
 	}
 
+	/**
+	 * 根据视频id查询视频
+	 */
+	@Override
+	public VideoMain selectByPrimaryKey(Integer id) {
+		// TODO Auto-generated method stub
+		return VideoMainMapper.selectByPrimaryKey(id);
+	}
+
 }

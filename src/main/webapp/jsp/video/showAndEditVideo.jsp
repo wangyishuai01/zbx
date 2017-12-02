@@ -127,7 +127,7 @@
 									<div class="col-md-12" id="showButton" style="display: none;">
 										<div style="float: right;margin-right: 18%;">
 											<button class="btn btn-default shiny" type="button"
-												onclick="">浏览查看视频</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												onclick="showVideo();">浏览查看视频</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<button data-dismiss="modal" class="btn btn-default shiny"
 												onclick='returnVideoMain();' type="button">返回</button>
 										</div>
@@ -472,6 +472,10 @@ function closeEditRelationArticleDiv(){
 
 function returnVideoMain(){
 	openUrl("/jsp/video/videoMain.jsp");
+}
+
+function showVideo(){
+	window.open(rootPath+"/jsp/video/showVideoDetail.html?videoId="+videoId+"&classifyId="+$("#videoSecClass1").val());
 }
 
 function tab(data) {
