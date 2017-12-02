@@ -21,4 +21,6 @@ public interface CustomerMapper {
     List<CustomerVO> selectBySelectParam(Customer record);
     
     int selectCountBySelectParam(Customer record);
+    
+    List<Customer> selectByUserName(String userName);
 }

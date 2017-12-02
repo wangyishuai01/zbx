@@ -254,5 +254,12 @@
       </if>
     </if>
    </select>
+   
+   <select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
   
 </mapper>

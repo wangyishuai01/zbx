@@ -47,9 +47,10 @@ public class StatisticsController {
 		String userName = request.getParameter("userName");
 		String dateSpace = request.getParameter("dateSpace");
 		String statisticsType = request.getParameter("statisticsType");
-		Customer cv = new Customer();
-		cv.setName(userName);
-		List<CustomerVO> cvlist = customerMapper.selectBySelectParam(cv);
+		List<Customer> cvlist = new ArrayList<Customer>();
+		if(!"".equals(userName)){
+			cvlist = customerMapper.selectByUserName(userName);
+		}
 		int userid=0;
 		if(cvlist.size()>0){
 			userid = cvlist.get(0).getId();
